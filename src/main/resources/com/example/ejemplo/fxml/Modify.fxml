@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #151928;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ejemplo.controller.ModifyController">
+
+    <VBox alignment="CENTER" prefHeight="390.0" prefWidth="590.0" spacing="10.0" style="-fx-background-color: #edf1ff;" translateX="5.0" translateY="5.0">
+        <Label alignment="CENTER" prefHeight="69.0" prefWidth="291.0" text="Modificar Usuario" translateY="-40.0">
+            <font>
+                <javafx.scene.text.Font size="30.0" />
+            </font>
+        </Label>
+
+        <HBox spacing="10">
+            <Label text="Nombre:">
+            <font>
+               <Font size="18.0" />
+            </font></Label>
+            <TextField fx:id="txtName" style="-fx-background-color: transparent;" >
+            <font>
+               <Font size="14.0" />
+            </font></TextField>
+            <Label text="Teléfono:">
+            <font>
+               <Font size="18.0" />
+            </font></Label>
+            <TextField fx:id="txtPhone" style="-fx-background-color: transparent;">
+            <font>
+               <Font size="14.0" />
+            </font></TextField>
+        </HBox>
+        <HBox alignment="CENTER" spacing="10" translateY="20.0">
+            <Label text="Email:">
+            <font>
+               <Font size="18.0" />
+            </font></Label>
+            <TextField fx:id="txtEmail" style="-fx-background-color: transparent;">
+            <font>
+               <Font size="14.0" />
+            </font></TextField>
+         <Label prefHeight="27.0" prefWidth="101.0" text="Contraseña:">
+            <font>
+               <Font size="18.0" />
+            </font>
+         </Label>
+         <TextField fx:id="txtPassword" style="-fx-background-color: transparent;">
+            <font>
+               <Font size="14.0" />
+            </font>
+         </TextField>
+        </HBox>
+        <HBox spacing="10" />
+        <HBox alignment="CENTER" spacing="10" translateY="20.0">
+            <Label text="Rol:">
+            <font>
+               <Font size="18.0" />
+            </font></Label>
+         <ChoiceBox prefWidth="150.0" style="-fx-background-color: transparent;"  fx:id="roleChoiceBox" />
+        </HBox>
+        <HBox alignment="CENTER" spacing="10" />
+        <HBox alignment="CENTER" prefHeight="37.0" prefWidth="544.0" spacing="10" translateY="40.0">
+         <Button fx:id="btnAccept" onAction="#handleAccept" mnemonicParsing="false" prefHeight="37.0" prefWidth="112.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Accept">
+            <font>
+               <Font size="16.0" />
+            </font>
+         </Button>
+         <Button fx:id="btnCancel" mnemonicParsing="false" prefHeight="37.0" prefWidth="112.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Cancel">
+            <font>
+               <Font size="16.0" />
+            </font>
+         </Button>
+        </HBox>
+      <padding>
+         <Insets left="20.0" right="20.0" />
+      </padding>
+    </VBox>
+
+</AnchorPane>
