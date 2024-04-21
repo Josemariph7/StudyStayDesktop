@@ -1,7 +1,5 @@
 package com.example.ejemplo.controller;
 
-import com.example.ejemplo.dao.CommentDAO;
-
 import java.util.List;
 
 /**

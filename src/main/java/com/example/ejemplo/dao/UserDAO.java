@@ -24,7 +24,7 @@ public class UserDAO {
         List<User> userList = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT * FROM users")) {
+             ResultSet resultSet = statement.executeQuery("SELECT * FROM Users")) {
 
             while (resultSet.next()) {
                 User user = mapUser(resultSet);
@@ -42,18 +42,23 @@ public class UserDAO {
      * @return true si se creó correctamente, false de lo contrario
      */
     public boolean create(User user) {
-        String sql = "INSERT INTO users (Name, Email, Password, Phone, Role, RegistrationDate, ProfilePicture) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Users (Name, LastName, Email, Password, Phone, BirthDate, " +
+                "Gender, DNI, ProfilePicture, Bio, isAdmin) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, user.getName());
-            statement.setString(2, user.getEmail());
-            statement.setString(3, user.getPassword());
-            statement.setString(4, user.getPhone());
-            statement.setString(5, user.getRole().toString());
-            statement.setObject(6, user.getRegistrationDate());
-            statement.setString(7, user.getProfilePicture());
+            statement.setString(2, user.getLastName());
+            statement.setString(3, user.getEmail());
+            statement.setString(4, user.getPassword());
+            statement.setString(5, user.getPhone());
+            statement.setObject(6, user.getBirthDate());
+            statement.setString(7, user.getGender().toString());
+            statement.setString(8, user.getDni());
+            statement.setBytes(9, user.getProfilePicture());
+            statement.setString(10, user.getBio());
+            statement.setBoolean(11, user.isAdmin());
 
             int rowsAffected = statement.executeUpdate();
             return rowsAffected > 0;
@@ -69,19 +74,23 @@ public class UserDAO {
      * @return true si se actualizó correctamente, false de lo contrario
      */
     public boolean update(User user) {
-        String sql = "UPDATE users SET Name=?, Email=?, Password=?, Phone=?, Role=?, RegistrationDate=?, " +
-                "ProfilePicture=? WHERE UserId=?";
+        String sql = "UPDATE Users SET Name=?, LastName=?, Email=?, Password=?, Phone=?, BirthDate=?, " +
+                "Gender=?, DNI=?, ProfilePicture=?, Bio=?, isAdmin=? WHERE UserId=?";
         try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, user.getName());
-            statement.setString(2, user.getEmail());
-            statement.setString(3, user.getPassword());
-            statement.setString(4, user.getPhone());
-            statement.setString(5, user.getRole().toString());
-            statement.setObject(6, user.getRegistrationDate());
-            statement.setString(7, user.getProfilePicture());
-            statement.setLong(8, user.getUserId());
+            statement.setString(2, user.getLastName());
+            statement.setString(3, user.getEmail());
+            statement.setString(4, user.getPassword());
+            statement.setString(5, user.getPhone());
+            statement.setObject(6, user.getBirthDate());
+            statement.setString(7, user.getGender().toString());
+            statement.setString(8, user.getDni());
+            statement.setBytes(9, user.getProfilePicture()); // Setear el arreglo de bytes para la imagen de perfil
+            statement.setString(10, user.getBio());
+            statement.setBoolean(11, user.isAdmin());
+            statement.setLong(12, user.getUserId());
 
             int rowsAffected = statement.executeUpdate();
             return rowsAffected > 0;
@@ -97,7 +106,7 @@ public class UserDAO {
      * @return true si se eliminó correctamente, false de lo contrario
      */
     public boolean delete(Long userId) {
-        String sql = "DELETE FROM users WHERE UserId=?";
+        String sql = "DELETE FROM Users WHERE UserId=?";
         try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
@@ -120,12 +129,16 @@ public class UserDAO {
         User user = new User();
         user.setUserId(resultSet.getLong("UserId"));
         user.setName(resultSet.getString("Name"));
+        user.setLastName(resultSet.getString("LastName"));
         user.setEmail(resultSet.getString("Email"));
         user.setPassword(resultSet.getString("Password"));
         user.setPhone(resultSet.getString("Phone"));
-        user.setRole(User.UserRole.valueOf(resultSet.getString("Role")));
-        user.setRegistrationDate(resultSet.getTimestamp("RegistrationDate").toLocalDateTime());
-        user.setProfilePicture(resultSet.getString("ProfilePicture"));
+        user.setBirthDate(resultSet.getDate("BirthDate").toLocalDate().atStartOfDay());
+        user.setGender(User.Gender.valueOf(resultSet.getString("Gender")));
+        user.setDni(resultSet.getString("DNI"));
+        user.setProfilePicture(resultSet.getBytes("ProfilePicture"));
+        user.setBio(resultSet.getString("Bio"));
+        user.setAdmin(resultSet.getBoolean("isAdmin"));
         return user;
     }
 }

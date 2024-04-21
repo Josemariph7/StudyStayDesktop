@@ -1,6 +1,7 @@
 package com.example.ejemplo.model;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,7 +18,7 @@ public class User {
     private LocalDateTime birthDate; // Fecha de nacimiento del usuario
     private Gender gender; // Género del usuario
     private String dni; // Documento nacional de identidad del usuario
-    private String profilePicture; // URL de la imagen de perfil del usuario
+    private byte[] profilePicture; // URL de la imagen de perfil del usuario
     private String bio; // Descripción o biografía del usuario
     private boolean isAdmin; // Indica si el usuario es administrador del sistema
     private List<Booking> bookings; // Lista de reservas realizadas por el usuario
@@ -39,7 +40,7 @@ public class User {
     public User() {
     }
 
-    public User(String name, String lastName, String email, String password, String phone, LocalDateTime birthDate, Gender gender, String dni, String profilePicture, String bio, boolean isAdmin) {
+    public User(String name, String lastName, String email, String password, String phone, LocalDateTime birthDate, Gender gender, String dni, byte[] profilePicture, String bio, boolean isAdmin) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;
@@ -127,11 +128,11 @@ public class User {
         this.dni = dni;
     }
 
-    public String getProfilePicture() {
+    public byte[] getProfilePicture() {
         return profilePicture;
     }
 
-    public void setProfilePicture(String profilePicture) {
+    public void setProfilePicture(byte[] profilePicture) {
         this.profilePicture = profilePicture;
     }
 
@@ -200,7 +201,7 @@ public class User {
                 Objects.equals(birthDate, user.birthDate) &&
                 gender == user.gender &&
                 Objects.equals(dni, user.dni) &&
-                Objects.equals(profilePicture, user.profilePicture) &&
+                Arrays.equals(profilePicture, user.profilePicture) &&
                 Objects.equals(bio, user.bio);
     }
 
