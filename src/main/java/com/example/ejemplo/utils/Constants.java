@@ -9,8 +9,6 @@ public class Constants {
     public static final String SIGNIN_FXML = "/com/example/ejemplo/fxml/SignIn.fxml";
     public static final String SIGNUP_FXML = "/com/example/ejemplo/fxml/SignUp.fxml";
     public static final String DASHBOARD_ADMIN_FXML = "/com/example/ejemplo/fxml/DashboardAdmin.fxml";
-    public static final String DASHBOARD_STUDENT_FXML = "/com/example/ejemplo/fxml/DashboardStudent.fxml";
-    public static final String DASHBOARD_OWNER_FXML = "/com/example/ejemplo/fxml/DashboardOwner.fxml";
     public static final String SPLASH_SCREEN_FXML = "/com/example/ejemplo/fxml/SplashScreen.fxml";
     public static final String DEFAULT_PROFILE_PICTURE = "/com/example/ejemplo/profilepictures/default.png";
 
@@ -18,7 +16,6 @@ public class Constants {
     public static final String FILE_NOT_FOUND_ERROR = "No se pudo encontrar el archivo fxml";
     public static final String LOAD_VIEW_ERROR = "Error al cargar la vista de inicio de sesión.";
     public static final String IMAGE_SAVE_ERROR = "Error saving the image.";
-    public static final String INVALID_USER_ROLE = "Rol de usuario no reconocido";
     public static final String DASHBOARD_LOAD_ERROR = "No se pudo cargar el panel de control. Inténtalo de nuevo más tarde.";
     public static final String USER_EXISTS_ERROR = "El usuario ya existe.";
     public static final String DATABASE_ERROR = "Error al registrar el usuario: ";
