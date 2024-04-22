@@ -72,7 +72,12 @@ public class ItemAdminListController {
         lblName.setText(user.getName());
         lblEmail.setText(user.getEmail());
         lblPhone.setText(user.getPhone());
-        lblRole.setText(user.getRole().toString());
+        if(user.isAdmin()) {
+            lblRole.setText("Administrator");
+        }else{
+            lblRole.setText("User");
+        }
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedDate = user.getRegistrationDate().format(formatter);
         lblRegDate.setText(formattedDate);
@@ -133,7 +138,11 @@ public class ItemAdminListController {
         lblName.setText(user.getName());
         lblEmail.setText(user.getEmail());
         lblPhone.setText(user.getPhone());
-        lblRole.setText(user.getRole().toString());
+        if(user.isAdmin()) {
+            lblRole.setText("Administrator");
+        }else{
+            lblRole.setText("User");
+        }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedDate = user.getRegistrationDate().format(formatter);
         lblRegDate.setText(formattedDate);

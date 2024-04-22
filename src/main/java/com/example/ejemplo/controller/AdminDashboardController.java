@@ -64,8 +64,8 @@ public class AdminDashboardController implements Initializable {
     @FXML private Pane pnlForum;
     @FXML private Pane pnlAccommodations;
     @FXML private Label totalusers;
-    @FXML private Label totalstudents;
-    @FXML private Label totalowners;
+    @FXML private Label totalclients;
+    @FXML private Label totaladmins;
     @FXML private Label lastweek;
     @FXML private Circle circle;
     @FXML private Circle circleProfile;
@@ -119,17 +119,17 @@ public class AdminDashboardController implements Initializable {
     public void updateStatistics() {
         List<User> usersAux = userController.getAll();
         int totalUsers = 0;
-        int totalStudents = 0;
-        int totalOwners = 0;
+        int totalClients=0;
+        int totalAdmins = 0;
         int registeredLastWeek = 0;
 
         for (User user : usersAux) {
             totalUsers++;
-            if (user.getRole() == User.UserRole.STUDENT) {
-                totalStudents++;
+            if (!user.isAdmin()) {
+                totalClients++;
             }
-            if (user.getRole() == User.UserRole.OWNER) {
-                totalOwners++;
+            if (user.isAdmin()) {
+                totalAdmins++;
             }
             LocalDate registrationDate = user.getRegistrationDate().toLocalDate();
             if (registrationDate.isAfter(oneWeekAgo) || registrationDate.equals(oneWeekAgo)) {
@@ -137,8 +137,8 @@ public class AdminDashboardController implements Initializable {
             }
         }
         totalusers.setText(String.valueOf(totalUsers));
-        totalstudents.setText(String.valueOf(totalStudents));
-        totalowners.setText(String.valueOf(totalOwners));
+        totalclients.setText(String.valueOf(totalClients));
+        totaladmins.setText(String.valueOf(totalAdmins));
         lastweek.setText(String.valueOf(registeredLastWeek));
     }
 
@@ -212,7 +212,12 @@ public class AdminDashboardController implements Initializable {
         username.setText(currentUser.getName());
         namelabel.setText(currentUser.getName());
         idlabel.setText(String.valueOf(currentUser.getUserId()));
-        rolelabel.setText(currentUser.getRole().toString());
+        rolelabel.setText("");
+        if(currentUser.isAdmin()){
+            rolelabel.setText("Administrator");
+        }else{
+            rolelabel.setText("Client");
+        }
         passwordlabel.setText(currentUser.getPassword());
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedDate = currentUser.getRegistrationDate().format(formatter);
@@ -293,14 +298,22 @@ public class AdminDashboardController implements Initializable {
                 System.out.println(currentUser);
                 currentUser.setName(modifyController.txtName.getText());
                 currentUser.setPhone(modifyController.txtPhone.getText());
-                currentUser.setRole(modifyController.getUser().getRole());
+                if(modifyController.getUser().isAdmin()){
+                    currentUser.setAdmin(true);
+                }else{
+                    currentUser.setAdmin(false);
+                }
                 currentUser.setPassword(modifyController.txtPassword.getText());
                 currentUser.setEmail(modifyController.txtEmail.getText());
                 System.out.println(currentUser);
                 username.setText(currentUser.getName());
                 namelabel.setText(currentUser.getName());
                 idlabel.setText(String.valueOf(currentUser.getUserId()));
-                rolelabel.setText(currentUser.getRole().toString());
+                if(currentUser.isAdmin()){
+                    rolelabel.setText("Administrator");
+                }else{
+                    rolelabel.setText("Standard User");
+                }
                 passwordlabel.setText(currentUser.getPassword());
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 String formattedDate = currentUser.getRegistrationDate().format(formatter);
@@ -368,7 +381,7 @@ public class AdminDashboardController implements Initializable {
                 Image image = new Image(destFile.toURI().toString());
                 circle.setFill(new ImagePattern(image));
                 circleProfile.setFill(new ImagePattern(image));
-                currentUser.setProfilePicture(filename);
+                currentUser.setProfilePicture(filename.getBytes());
                 userController.update(currentUser);
             } catch (IOException e) {
                 e.printStackTrace();

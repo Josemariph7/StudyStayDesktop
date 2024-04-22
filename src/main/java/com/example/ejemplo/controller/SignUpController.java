@@ -1,7 +1,6 @@
 package com.example.ejemplo.controller;
 
 import com.example.ejemplo.model.User;
-import com.example.ejemplo.model.User.UserRole;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -12,6 +11,7 @@ import com.example.ejemplo.utils.Constants;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
@@ -33,8 +33,6 @@ public class SignUpController implements Initializable {
     @FXML
     public TextField passwordField2;
     @FXML
-    public ChoiceBox<UserRole> roleChoiceBox;
-    @FXML
     private Button signUpButton;
 
     public UserController userController = new UserController();
@@ -45,8 +43,6 @@ public class SignUpController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        roleChoiceBox.getItems().addAll(UserRole.values());
-        roleChoiceBox.getSelectionModel().selectFirst();
     }
 
     /**
@@ -55,10 +51,14 @@ public class SignUpController implements Initializable {
     @FXML
     public void signUp() {
         String email = signupEmailField.getText();
-        String fullName = fullNameField.getText();
+        String name = fullNameField.getText();
+        String lastname =
+                LocalDateTime birthDate =
+                User.Gender gender =
+            String dni
+            boolean isAdmin=
         String password = passwordField.getText();
         String phone = passwordField2.getText();
-        UserRole role = roleChoiceBox.getValue();
 
         // Validación de campos
         StringBuilder errors = new StringBuilder();
@@ -66,14 +66,17 @@ public class SignUpController implements Initializable {
         if (!validateName(fullName)) errors.append("El nombre debe contener al menos un apellido y solo caracteres válidos.\n");
         if (!validatePassword(password)) errors.append("La contraseña debe tener más de 8 caracteres y contener al menos una letra mayúscula y un número.\n");
         if (!validatePhone(phone)) errors.append("El teléfono debe comenzar con +34 seguido de 9 dígitos.\n");
+/*
+        VALIDAR LOS CAMPOS AÑADIDOS DESDE LAS MODIFICACIONES EN LA BASE DE DATOS
 
+       */
         if (errors.length() > 0) {
             showError(errors.toString());
             return;
         }
 
         // Verifica que todos los campos estén completos
-        if (email.isEmpty() || fullName.isEmpty() || password.isEmpty() || phone.isEmpty() || role == null) {
+        if (email.isEmpty() || fullName.isEmpty() || password.isEmpty() || phone.isEmpty()) {
             showError("Por favor, rellena todos los campos.");
             return;
         }
@@ -85,7 +88,8 @@ public class SignUpController implements Initializable {
                 return;
             }
             // Crea un nuevo objeto de usuario y lo guarda en la base de datos
-            User user = new User(fullName, email, password, phone, role);
+            User user = new User(fullName, email, password, phone); //MODIFICAR METODO PARA QUE RECOJA TODOS LOS DATOS NUEVOS (HAY QUE
+            // MODIFICAR LOS FXML PARA AÑADIR ANTES LOS NUEVOS COMPONENTES)
             userController.create(user);
             showSuccess("Registro exitoso.");
             // Limpia los campos después del registro exitoso

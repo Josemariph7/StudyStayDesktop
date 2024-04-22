@@ -25,8 +25,6 @@ public class ModifyController {
     public Button btnAccept;
     @FXML
     public Button btnCancel;
-    @FXML
-    private ChoiceBox<User.UserRole> roleChoiceBox;
 
     private User user;
     public UserController userController;
@@ -37,7 +35,7 @@ public class ModifyController {
      */
     public void handleAccept(ActionEvent actionEvent) {
         // Actualiza los datos del usuario con los valores de los campos
-        user.setRole(roleChoiceBox.getValue());
+        //user.setRole(roleChoiceBox.getValue());
         user.setEmail(txtEmail.getText());
         user.setName(txtName.getText());
         user.setPassword(txtPassword.getText());
@@ -72,8 +70,8 @@ public class ModifyController {
         this.user = user;
         // Configura los valores iniciales de los campos con los datos del usuario
         if (user != null) {
-            roleChoiceBox.getItems().addAll(User.UserRole.values());
-            roleChoiceBox.getSelectionModel().select(user.getRole());
+            //roleChoiceBox.getItems().addAll(User.UserRole.values());
+            //roleChoiceBox.getSelectionModel().select(user.getRole());
             txtName.setText(user.getName());
             txtEmail.setText(user.getEmail());
             txtPhone.setText(user.getPhone());

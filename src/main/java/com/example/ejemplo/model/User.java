@@ -16,6 +16,7 @@ public class User {
     private String password; // Contraseña del usuario
     private String phone; // Número de teléfono del usuario
     private LocalDateTime birthDate; // Fecha de nacimiento del usuario
+    private LocalDateTime registrationDate; // Fecha de nacimiento del usuario
     private Gender gender; // Género del usuario
     private String dni; // Documento nacional de identidad del usuario
     private byte[] profilePicture; // URL de la imagen de perfil del usuario
@@ -40,13 +41,14 @@ public class User {
     public User() {
     }
 
-    public User(String name, String lastName, String email, String password, String phone, LocalDateTime birthDate, Gender gender, String dni, byte[] profilePicture, String bio, boolean isAdmin) {
+    public User(String name, String lastName, String email, String password, String phone, LocalDateTime birthDate, LocalDateTime registrationDate, Gender gender, String dni, byte[] profilePicture, String bio, boolean isAdmin) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.phone = phone;
         this.birthDate = birthDate;
+        this.registrationDate= registrationDate;
         this.gender = gender;
         this.dni = dni;
         this.profilePicture = profilePicture;
@@ -55,6 +57,15 @@ public class User {
     }
 
     // Getters y setters
+
+
+    public LocalDateTime getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(LocalDateTime registrationDate) {
+        this.registrationDate = registrationDate;
+    }
 
     public Long getUserId() {
         return userId;
@@ -199,6 +210,7 @@ public class User {
                 Objects.equals(password, user.password) &&
                 Objects.equals(phone, user.phone) &&
                 Objects.equals(birthDate, user.birthDate) &&
+                Objects.equals(registrationDate, user.registrationDate) &&
                 gender == user.gender &&
                 Objects.equals(dni, user.dni) &&
                 Arrays.equals(profilePicture, user.profilePicture) &&
@@ -207,7 +219,8 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, name, lastName, email, password, phone, birthDate, gender, dni, profilePicture, bio, isAdmin);
+        return Objects.hash(userId, name, lastName, email, password, phone, birthDate, registrationDate, // Actualizado
+                gender, dni, profilePicture, bio, isAdmin);
     }
 
     @Override
@@ -220,6 +233,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", phone='" + phone + '\'' +
                 ", birthDate=" + birthDate +
+                ", registrationDate=" + registrationDate + // Actualizado
                 ", gender=" + gender +
                 ", dni='" + dni + '\'' +
                 ", profilePicture='" + profilePicture + '\'' +

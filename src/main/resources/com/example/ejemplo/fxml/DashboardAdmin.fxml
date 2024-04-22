@@ -337,7 +337,7 @@
                                 </VBox>
                                 <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                                     <children>
-                                        <Label fx:id="totalstudents" alignment="CENTER" text="0" textFill="#26bfbc">
+                                        <Label fx:id="totalclients" alignment="CENTER" text="0" textFill="#26bfbc">
                                             <font>
                                                 <Font name="System Bold" size="26.0" />
                                             </font>
@@ -351,7 +351,7 @@
                                 </VBox>
                                 <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                                     <children>
-                                        <Label fx:id="totalowners" alignment="CENTER" text="0" textFill="#fa5f7e">
+                                        <Label fx:id="totaladmins" alignment="CENTER" text="0" textFill="#fa5f7e">
                                             <font>
                                                 <Font name="System Bold" size="26.0" />
                                             </font>

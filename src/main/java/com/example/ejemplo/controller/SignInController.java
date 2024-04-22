@@ -56,7 +56,10 @@ public class SignInController {
         for (User user : userList) {
             if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
                 // Muestra la pantalla de carga (splash screen) mientras se carga el panel de control
-                showSplashScreen(() -> Platform.runLater(() -> loadDashboard(user.getRole(), user)));
+                if(user.isAdmin()) {
+                    showSplashScreen(() -> Platform.runLater(() -> loadDashboard(user)));
+                }
+                showError("Solo los usuarios con poderes de administrador pueden acceder al programa");
                 return;
             }
         }
@@ -65,26 +68,11 @@ public class SignInController {
 
     /**
      * Método para cargar el panel de control correspondiente según el rol del usuario.
-     * @param role Rol del usuario
      * @param user Objeto de usuario
      */
-    private void loadDashboard(User.UserRole role, User user) {
+    private void loadDashboard(User user) {
         String fxmlPath;
-        switch (role) {
-            case ADMINISTRATOR:
-                fxmlPath = Constants.DASHBOARD_ADMIN_FXML;
-                break;
-            case STUDENT:
-                fxmlPath = Constants.DASHBOARD_STUDENT_FXML;
-                break;
-            case OWNER:
-                fxmlPath = Constants.DASHBOARD_OWNER_FXML;
-                break;
-            default:
-                showError(Constants.INVALID_USER_ROLE);
-                return;
-        }
-
+        fxmlPath = Constants.DASHBOARD_ADMIN_FXML;
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent dashboard = loader.load();
@@ -92,35 +80,12 @@ public class SignInController {
             // Obtener el controlador cargado
             Object controller = loader.getController();
             System.out.println(controller);
-
-            // Verificar que el controlador cargado sea del tipo correcto
-            switch (role) {
-                case ADMINISTRATOR:
-                    if (!(controller instanceof AdminDashboardController)) {
-                        showError(Constants.DASHBOARD_LOAD_ERROR);
-                        return;
-                    }
-                    ((AdminDashboardController) controller).initData(user);
-                    break;
-                case STUDENT:
-                    if (!(controller instanceof StudentDashboardController)) {
-                        showError("Inicio de sesion Estudiante");
-                        return;
-                    }
-                    ((StudentDashboardController) controller).initData(user);
-                    break;
-                case OWNER:
-                    if (!(controller instanceof OwnerDashboardController)) {
-                        showError("Inicio de sesion Propietario");
-                        return;
-                    }
-                    ((OwnerDashboardController) controller).initData(user);
-                    break;
+            if (!(controller instanceof AdminDashboardController)) {
+                showError(Constants.DASHBOARD_LOAD_ERROR);
+                return;
             }
-
             Scene scene = new Scene(dashboard);
             Stage stage = (Stage) emailField.getScene().getWindow();
-
             stage.setScene(scene);
             stage.show();
 

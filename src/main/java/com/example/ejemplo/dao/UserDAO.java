@@ -42,9 +42,9 @@ public class UserDAO {
      * @return true si se creó correctamente, false de lo contrario
      */
     public boolean create(User user) {
-        String sql = "INSERT INTO Users (Name, LastName, Email, Password, Phone, BirthDate, " +
+        String sql = "INSERT INTO Users (Name, LastName, Email, Password, Phone, BirthDate, RegistrationDate, " +
                 "Gender, DNI, ProfilePicture, Bio, isAdmin) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
@@ -54,11 +54,12 @@ public class UserDAO {
             statement.setString(4, user.getPassword());
             statement.setString(5, user.getPhone());
             statement.setObject(6, user.getBirthDate());
-            statement.setString(7, user.getGender().toString());
-            statement.setString(8, user.getDni());
-            statement.setBytes(9, user.getProfilePicture());
-            statement.setString(10, user.getBio());
-            statement.setBoolean(11, user.isAdmin());
+            statement.setObject(7, user.getRegistrationDate()); // Nuevo campo
+            statement.setString(8, user.getGender().toString());
+            statement.setString(9, user.getDni());
+            statement.setBytes(10, user.getProfilePicture());
+            statement.setString(11, user.getBio());
+            statement.setBoolean(12, user.isAdmin());
 
             int rowsAffected = statement.executeUpdate();
             return rowsAffected > 0;
@@ -74,7 +75,7 @@ public class UserDAO {
      * @return true si se actualizó correctamente, false de lo contrario
      */
     public boolean update(User user) {
-        String sql = "UPDATE Users SET Name=?, LastName=?, Email=?, Password=?, Phone=?, BirthDate=?, " +
+        String sql = "UPDATE Users SET Name=?, LastName=?, Email=?, Password=?, Phone=?, BirthDate=?, RegistrationDate=?, " +
                 "Gender=?, DNI=?, ProfilePicture=?, Bio=?, isAdmin=? WHERE UserId=?";
         try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -85,12 +86,13 @@ public class UserDAO {
             statement.setString(4, user.getPassword());
             statement.setString(5, user.getPhone());
             statement.setObject(6, user.getBirthDate());
-            statement.setString(7, user.getGender().toString());
-            statement.setString(8, user.getDni());
-            statement.setBytes(9, user.getProfilePicture()); // Setear el arreglo de bytes para la imagen de perfil
-            statement.setString(10, user.getBio());
-            statement.setBoolean(11, user.isAdmin());
-            statement.setLong(12, user.getUserId());
+            statement.setObject(7, user.getRegistrationDate()); // Nuevo campo
+            statement.setString(8, user.getGender().toString());
+            statement.setString(9, user.getDni());
+            statement.setBytes(10, user.getProfilePicture());
+            statement.setString(11, user.getBio());
+            statement.setBoolean(12, user.isAdmin());
+            statement.setLong(13, user.getUserId());
 
             int rowsAffected = statement.executeUpdate();
             return rowsAffected > 0;
@@ -125,7 +127,7 @@ public class UserDAO {
      * @return Objeto User mapeado
      * @throws SQLException Si hay un error al acceder a los datos en el ResultSet
      */
-    static User mapUser(ResultSet resultSet) throws SQLException {
+    public static User mapUser(ResultSet resultSet) throws SQLException {
         User user = new User();
         user.setUserId(resultSet.getLong("UserId"));
         user.setName(resultSet.getString("Name"));
@@ -133,7 +135,8 @@ public class UserDAO {
         user.setEmail(resultSet.getString("Email"));
         user.setPassword(resultSet.getString("Password"));
         user.setPhone(resultSet.getString("Phone"));
-        user.setBirthDate(resultSet.getDate("BirthDate").toLocalDate().atStartOfDay());
+        user.setBirthDate(resultSet.getTimestamp("BirthDate").toLocalDateTime());
+        user.setRegistrationDate(resultSet.getTimestamp("RegistrationDate").toLocalDateTime()); // Nuevo campo
         user.setGender(User.Gender.valueOf(resultSet.getString("Gender")));
         user.setDni(resultSet.getString("DNI"));
         user.setProfilePicture(resultSet.getBytes("ProfilePicture"));
