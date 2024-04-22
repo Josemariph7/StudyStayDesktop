@@ -125,7 +125,7 @@ public class UserDAO {
      * @return Objeto User mapeado
      * @throws SQLException Si hay un error al acceder a los datos en el ResultSet
      */
-    private User mapUser(ResultSet resultSet) throws SQLException {
+    static User mapUser(ResultSet resultSet) throws SQLException {
         User user = new User();
         user.setUserId(resultSet.getLong("UserId"));
         user.setName(resultSet.getString("Name"));
@@ -141,4 +141,55 @@ public class UserDAO {
         user.setAdmin(resultSet.getBoolean("isAdmin"));
         return user;
     }
+
+    public static User getById(Long userId) {
+        String sql = "SELECT * FROM Users WHERE UserId=?";
+        try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setLong(1, userId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return mapUser(resultSet);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public User findByEmail(String email) {
+        String sql = "SELECT * FROM Users WHERE Email=?";
+        try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, email);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return mapUser(resultSet);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public boolean authenticate(String email, String password) {
+        String sql = "SELECT * FROM Users WHERE Email=? AND Password=?";
+        try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, email);
+            statement.setString(2, password);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next(); // Si hay algún resultado, las credenciales son válidas
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 }

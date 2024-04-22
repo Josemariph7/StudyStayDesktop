@@ -6,58 +6,48 @@ import com.example.ejemplo.model.Booking;
 import java.util.List;
 
 /**
- * Controlador para gestionar las operaciones CRUD de reservas.
+ * Clase controladora para gestionar las operaciones de reservas.
  */
-public class BookingController implements CRUD<Booking> {
+public class BookingController {
 
-    private final BookingDAO bookingDAO = new BookingDAO();
+    private final BookingDAO bookingDAO;
+
+    public BookingController() {
+        this.bookingDAO = new BookingDAO();
+    }
 
     /**
      * Obtiene todas las reservas.
-     * @return Una lista de todas las reservas.
+     * @return Lista de reservas
      */
-    @Override
-    public List<Booking> getAll() {
+    public List<Booking> getAllBookings() {
         return bookingDAO.getAll();
     }
 
     /**
-     * Obtiene una reserva por su ID.
-     * @param id El ID de la reserva.
-     * @return La reserva correspondiente al ID.
-     */
-    @Override
-    public Booking getById(Long id) {
-        return bookingDAO.getById(id);
-    }
-
-    /**
      * Crea una nueva reserva.
-     * @param booking La reserva a crear.
-     * @return true si se creó correctamente, false de lo contrario.
+     * @param booking Reserva a crear
+     * @return true si se creó correctamente, false de lo contrario
      */
-    @Override
-    public boolean create(Booking booking) {
+    public boolean createBooking(Booking booking) {
         return bookingDAO.create(booking);
     }
 
     /**
      * Actualiza una reserva existente.
-     * @param booking La reserva a actualizar.
-     * @return true si se actualizó correctamente, false de lo contrario.
+     * @param booking Reserva a actualizar
+     * @return true si se actualizó correctamente, false de lo contrario
      */
-    @Override
-    public boolean update(Booking booking) {
+    public boolean updateBooking(Booking booking) {
         return bookingDAO.update(booking);
     }
 
     /**
      * Elimina una reserva por su ID.
-     * @param id El ID de la reserva a eliminar.
-     * @return true si se eliminó correctamente, false de lo contrario.
+     * @param bookingId ID de la reserva a eliminar
+     * @return true si se eliminó correctamente, false de lo contrario
      */
-    @Override
-    public boolean delete(Long id) {
-        return bookingDAO.delete(id);
+    public boolean deleteBooking(Long bookingId) {
+        return bookingDAO.delete(bookingId);
     }
 }

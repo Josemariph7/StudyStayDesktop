@@ -29,8 +29,7 @@ public class UserController implements CRUD<User> {
      */
     @Override
     public User getById(Long id) {
-        // En este caso, no se implementa la búsqueda por ID
-        return null;
+        return userDAO.getById(id);
     }
 
     /**
@@ -61,5 +60,24 @@ public class UserController implements CRUD<User> {
     @Override
     public boolean delete(Long id) {
         return userDAO.delete(id);
+    }
+
+    /**
+     * Encuentra un usuario por su dirección de correo electrónico.
+     * @param email Dirección de correo electrónico del usuario
+     * @return Usuario encontrado
+     */
+    public User findByEmail(String email) {
+        return userDAO.findByEmail(email);
+    }
+
+    /**
+     * Autentica un usuario utilizando su dirección de correo electrónico y contraseña.
+     * @param email Dirección de correo electrónico del usuario
+     * @param password Contraseña del usuario
+     * @return true si las credenciales son válidas, false de lo contrario
+     */
+    public boolean authenticate(String email, String password) {
+        return userDAO.authenticate(email, password);
     }
 }

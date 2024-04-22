@@ -1,39 +1,29 @@
 package com.example.ejemplo.model;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * Clase que representa un alojamiento en el sistema.
- */
 public class Accommodation {
-    private Long accommodationId; // Identificador único del alojamiento
-    private User owner; // Propietario del alojamiento
-    private String address; // Dirección del alojamiento
-    private String city; // Ciudad del alojamiento
-    private BigDecimal price; // Precio del alojamiento por noche
-    private String description; // Descripción del alojamiento
-    private int capacity; // Capacidad máxima de huéspedes del alojamiento
-    private String services; // Servicios ofrecidos por el alojamiento
-    private boolean availability; // Disponibilidad actual del alojamiento
-    private double rating; // Calificación promedio del alojamiento
-    private List<Booking> bookings; // Lista de reservas realizadas para este alojamiento
-    private List<AccommodationReview> reviews; // Lista de reseñas realizadas para este alojamiento
+    private Long accommodationId;
+    private User owner;
+    private String address;
+    private String city;
+    private BigDecimal price;
+    private String description;
+    private int capacity;
+    private String services;
+    private boolean availability;
+    private double rating;
+    private List<Booking> bookings;
+    private List<AccommodationReview> reviews;
+    private List<User> tenants; // Lista de inquilinos
 
-    // Constructor
+    public Accommodation() {
+        tenants = new ArrayList<>();
+    }
 
-    /**
-     * Constructor de la clase Accommodation.
-     *
-     * @param owner       Propietario del alojamiento.
-     * @param address     Dirección del alojamiento.
-     * @param city        Ciudad del alojamiento.
-     * @param price       Precio del alojamiento por noche.
-     * @param description Descripción del alojamiento.
-     * @param capacity    Capacidad máxima de huéspedes del alojamiento.
-     * @param services    Servicios ofrecidos por el alojamiento.
-     */
     public Accommodation(User owner, String address, String city, BigDecimal price, String description, int capacity, String services) {
         this.owner = owner;
         this.address = address;
@@ -42,11 +32,10 @@ public class Accommodation {
         this.description = description;
         this.capacity = capacity;
         this.services = services;
-        this.availability = true; // Por defecto, el alojamiento está disponible
-        this.rating = 0; // Por defecto, el alojamiento no tiene calificación
+        this.availability = true;
+        this.rating = 0;
+        tenants = new ArrayList<>();
     }
-
-    // Getters y setters
 
     public Long getAccommodationId() {
         return accommodationId;
@@ -144,7 +133,23 @@ public class Accommodation {
         this.reviews = reviews;
     }
 
-    // equals, hashCode y toString
+    public List<User> getTenants() {
+        return tenants;
+    }
+
+    public void setTenants(List<User> tenants) {
+        this.tenants = tenants;
+    }
+
+    // Método para agregar inquilino
+    public boolean addTenant(User tenant) {
+        if (tenants.size() < capacity) {
+            tenants.add(tenant);
+            return true; // Inquilino agregado exitosamente
+        } else {
+            return false; // No hay espacio disponible para agregar más inquilinos
+        }
+    }
 
     @Override
     public boolean equals(Object o) {
