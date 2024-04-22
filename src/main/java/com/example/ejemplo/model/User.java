@@ -41,6 +41,18 @@ public class User {
     public User() {
     }
 
+    public User(String name, String lastName, String email, String password, String phone, LocalDateTime birthDate, Gender gender, String dni, boolean admin) {
+        this.name = name;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+        this.birthDate = birthDate;
+        this.gender = gender;
+        this.dni = dni;
+        this.isAdmin = admin;
+    }
+
     public User(String name, String lastName, String email, String password, String phone, LocalDateTime birthDate, LocalDateTime registrationDate, Gender gender, String dni, byte[] profilePicture, String bio, boolean isAdmin) {
         this.name = name;
         this.lastName = lastName;
@@ -57,7 +69,6 @@ public class User {
     }
 
     // Getters y setters
-
 
     public LocalDateTime getRegistrationDate() {
         return registrationDate;

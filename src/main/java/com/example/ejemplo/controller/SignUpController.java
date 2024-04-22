@@ -50,20 +50,23 @@ public class SignUpController implements Initializable {
      */
     @FXML
     public void signUp() {
+        //EN LA INTERFAZ SON 5 CAMPOS DE TEXTO, UNO DE CONTRASEÑA, UNO DE FECHA,
+        // UN COMBOBOX PAL GENERO Y UN CHECKBOX PARA EL ADMIN
+
         String email = signupEmailField.getText();
         String name = fullNameField.getText();
-        String lastname =
-                LocalDateTime birthDate =
-                User.Gender gender =
-            String dni
-            boolean isAdmin=
+        String lastname =  "";
+        LocalDateTime birthDate =  LocalDateTime.now();
+        User.Gender gender = null ;
+        String dni= "" ;
+        boolean isAdmin= true ;
         String password = passwordField.getText();
         String phone = passwordField2.getText();
 
         // Validación de campos
         StringBuilder errors = new StringBuilder();
         if (!validateEmail(email)) errors.append("Formato de email inválido.\n");
-        if (!validateName(fullName)) errors.append("El nombre debe contener al menos un apellido y solo caracteres válidos.\n");
+        if (!validateName(name)) errors.append("El nombre debe contener al menos un apellido y solo caracteres válidos.\n");
         if (!validatePassword(password)) errors.append("La contraseña debe tener más de 8 caracteres y contener al menos una letra mayúscula y un número.\n");
         if (!validatePhone(phone)) errors.append("El teléfono debe comenzar con +34 seguido de 9 dígitos.\n");
 /*
@@ -76,7 +79,7 @@ public class SignUpController implements Initializable {
         }
 
         // Verifica que todos los campos estén completos
-        if (email.isEmpty() || fullName.isEmpty() || password.isEmpty() || phone.isEmpty()) {
+        if (email.isEmpty() || name.isEmpty() || password.isEmpty() || phone.isEmpty()) {
             showError("Por favor, rellena todos los campos.");
             return;
         }
@@ -88,7 +91,7 @@ public class SignUpController implements Initializable {
                 return;
             }
             // Crea un nuevo objeto de usuario y lo guarda en la base de datos
-            User user = new User(fullName, email, password, phone); //MODIFICAR METODO PARA QUE RECOJA TODOS LOS DATOS NUEVOS (HAY QUE
+            User user = new User(name,lastname,email,password,phone,birthDate,gender,dni,isAdmin); //MODIFICAR METODO PARA QUE RECOJA TODOS LOS DATOS NUEVOS (HAY QUE
             // MODIFICAR LOS FXML PARA AÑADIR ANTES LOS NUEVOS COMPONENTES)
             userController.create(user);
             showSuccess("Registro exitoso.");
