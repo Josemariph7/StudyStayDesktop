@@ -6,8 +6,8 @@ Lista de cosas por hacer para la versión de escritorio de StudyStay
 
 And this text neither.
 
-- [X] This task is open @owner
-- [ ] 
+- [x] This task is open @owner
+- [ ] Mejorar la interfaz de registro y su logica 
 - [ ]       
 - [ ] 
 - [ ] 
