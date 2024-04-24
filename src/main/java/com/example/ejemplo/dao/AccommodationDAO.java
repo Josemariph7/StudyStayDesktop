@@ -1,10 +1,9 @@
 package com.example.ejemplo.dao;
 
 import com.example.ejemplo.model.Accommodation;
+import com.example.ejemplo.model.AccommodationPhoto;
 import com.example.ejemplo.model.AccommodationReview;
 import com.example.ejemplo.model.User;
-import com.example.ejemplo.dao.AccommodationReviewDAO;
-
 
 import java.math.BigDecimal;
 import java.sql.*;
@@ -23,6 +22,7 @@ public class AccommodationDAO {
 
     /**
      * Obtiene todos los alojamientos de la base de datos.
+     *
      * @return Lista de alojamientos
      */
     public List<Accommodation> getAll() {
@@ -43,6 +43,7 @@ public class AccommodationDAO {
 
     /**
      * Crea un nuevo alojamiento en la base de datos.
+     *
      * @param accommodation Alojamiento a crear
      * @return true si se creó correctamente, false de lo contrario
      */
@@ -75,6 +76,19 @@ public class AccommodationDAO {
                 }
             }
 
+            // Ahora, insertamos las fotos asociadas al alojamiento
+            List<AccommodationPhoto> photoList = accommodation.getPhotos();
+            if (photoList != null && !photoList.isEmpty()) {
+                for (AccommodationPhoto photo : photoList) {
+                    String insertPhotoSql = "INSERT INTO AccommodationPhotos (AccommodationId, Photo) VALUES (?, ?)";
+                    try (PreparedStatement photoStatement = connection.prepareStatement(insertPhotoSql)) {
+                        photoStatement.setLong(1, accommodation.getAccommodationId());
+                        photoStatement.setBytes(2, photo.getPhotoData());
+                        photoStatement.executeUpdate();
+                    }
+                }
+            }
+
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -84,6 +98,7 @@ public class AccommodationDAO {
 
     /**
      * Actualiza un alojamiento existente en la base de datos.
+     *
      * @param accommodation Alojamiento a actualizar
      * @return true si se actualizó correctamente, false de lo contrario
      */
@@ -105,7 +120,31 @@ public class AccommodationDAO {
             statement.setLong(10, accommodation.getAccommodationId());
 
             int rowsAffected = statement.executeUpdate();
-            return rowsAffected > 0;
+            if (rowsAffected == 0) {
+                return false;
+            }
+
+            // Eliminamos las fotos antiguas asociadas al alojamiento
+            String deletePhotosSql = "DELETE FROM AccommodationPhotos WHERE AccommodationId=?";
+            try (PreparedStatement deleteStatement = connection.prepareStatement(deletePhotosSql)) {
+                deleteStatement.setLong(1, accommodation.getAccommodationId());
+                deleteStatement.executeUpdate();
+            }
+
+            // Ahora, insertamos las fotos asociadas al alojamiento
+            List<AccommodationPhoto> photoList = accommodation.getPhotos();
+            if (photoList != null && !photoList.isEmpty()) {
+                for (AccommodationPhoto photo : photoList) {
+                    String insertPhotoSql = "INSERT INTO AccommodationPhotos (AccommodationId, Photo) VALUES (?, ?)";
+                    try (PreparedStatement photoStatement = connection.prepareStatement(insertPhotoSql)) {
+                        photoStatement.setLong(1, accommodation.getAccommodationId());
+                        photoStatement.setBytes(2, photo.getPhotoData());
+                        photoStatement.executeUpdate();
+                    }
+                }
+            }
+
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -114,16 +153,24 @@ public class AccommodationDAO {
 
     /**
      * Elimina un alojamiento de la base de datos por su ID.
+     *
      * @param accommodationId ID del alojamiento a eliminar
      * @return true si se eliminó correctamente, false de lo contrario
      */
     public boolean delete(Long accommodationId) {
-        String sql = "DELETE FROM Accommodations WHERE AccommodationId=?";
+        String deleteAccommodationSql = "DELETE FROM Accommodations WHERE AccommodationId=?";
+        String deletePhotosSql = "DELETE FROM AccommodationPhotos WHERE AccommodationId=?";
         try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement deleteAccommodationStatement = connection.prepareStatement(deleteAccommodationSql);
+             PreparedStatement deletePhotosStatement = connection.prepareStatement(deletePhotosSql)) {
 
-            statement.setLong(1, accommodationId);
-            int rowsAffected = statement.executeUpdate();
+            // Eliminamos las fotos asociadas al alojamiento
+            deletePhotosStatement.setLong(1, accommodationId);
+            deletePhotosStatement.executeUpdate();
+
+            // Eliminamos el alojamiento
+            deleteAccommodationStatement.setLong(1, accommodationId);
+            int rowsAffected = deleteAccommodationStatement.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -163,13 +210,44 @@ public class AccommodationDAO {
         List<AccommodationReview> reviews = getReviewsByAccommodation(accommodation.getAccommodationId()); // Llamamos al método estático getReviewsForAccommodation de AccommodationReviewDAO
         accommodation.setReviews(reviews);
 
+        // Mapeo de las fotos del alojamiento
+        List<AccommodationPhoto> photoList = getPhotosForAccommodation(accommodation.getAccommodationId()); // Llamamos al método estático getPhotosForAccommodation
+        accommodation.setPhotos(photoList);
+
         return accommodation;
     }
+
+    /**
+     * Obtiene las fotos asociadas a un alojamiento específico.
+     *
+     * @param accommodationId ID del alojamiento
+     * @return Lista de fotos asociadas al alojamiento
+     */
+    public static List<AccommodationPhoto> getPhotosForAccommodation(Long accommodationId) {
+        List<AccommodationPhoto> photoList = new ArrayList<>();
+        String sql = "SELECT Photo FROM AccommodationPhotos WHERE AccommodationId=?";
+        try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setLong(1, accommodationId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    byte[] photoData = resultSet.getBytes("Photo");
+                    AccommodationPhoto photo = new AccommodationPhoto(AccommodationDAO.getById(accommodationId), photoData); // Como el ID de la foto no está disponible aquí, pasamos null
+                    photoList.add(photo);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return photoList;
+    }
+
 
 
     /**
      * Obtiene un alojamiento de la base de datos por su ID.
-     * @param accommodationId ID del alojamiento a recuperar
+     * @param accommodationId Id del alojamiento a recuperar
      * @return El alojamiento si se encuentra, o null si no se encuentra
      */
     public static Accommodation getById(Long accommodationId) {
@@ -236,7 +314,6 @@ public class AccommodationDAO {
         }
         return reviews;
     }
-
 
     /**
      * Obtiene todos los inquilinos de un alojamiento específico.

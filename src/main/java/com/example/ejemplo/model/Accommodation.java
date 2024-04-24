@@ -18,10 +18,12 @@ public class Accommodation {
     private double rating;
     private List<Booking> bookings;
     private List<AccommodationReview> reviews;
-    private List<User> tenants; // Lista de inquilinos
+    private List<User> tenants;
+    private List<AccommodationPhoto> photos;
 
     public Accommodation() {
         tenants = new ArrayList<>();
+        photos = new ArrayList<>();
     }
 
     public Accommodation(User owner, String address, String city, BigDecimal price, String description, int capacity, String services) {
@@ -35,7 +37,12 @@ public class Accommodation {
         this.availability = true;
         this.rating = 0;
         tenants = new ArrayList<>();
+        photos = new ArrayList<>();
     }
+
+    // Getters and setters
+
+
 
     public Long getAccommodationId() {
         return accommodationId;
@@ -139,6 +146,14 @@ public class Accommodation {
 
     public void setTenants(List<User> tenants) {
         this.tenants = tenants;
+    }
+
+    public List<AccommodationPhoto> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(List<AccommodationPhoto> photos) {
+        this.photos = photos;
     }
 
     // Método para agregar inquilino
