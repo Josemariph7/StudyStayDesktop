@@ -34,6 +34,8 @@ public class SignUpController implements Initializable {
     public TextField passwordField2;
     @FXML
     private Button signUpButton;
+    @FXML
+    private ChoiceBox<String> GenderChoiceBox;
 
     public UserController userController = new UserController();
 
@@ -43,6 +45,9 @@ public class SignUpController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        String[] genders={"Male", "Female", "Other"};
+        GenderChoiceBox.getItems().addAll(genders);
+        GenderChoiceBox.setValue("Gender");
     }
 
     /**
@@ -73,7 +78,7 @@ public class SignUpController implements Initializable {
         VALIDAR LOS CAMPOS AÑADIDOS DESDE LAS MODIFICACIONES EN LA BASE DE DATOS
 
        */
-        if (errors.length() > 0) {
+        if (!errors.isEmpty()) {
             showError(errors.toString());
             return;
         }

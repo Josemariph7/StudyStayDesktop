@@ -42,11 +42,28 @@
     -fx-background-radius: 5px;
     -fx-text-fill: whitesmoke;
 }
-
+/*
 .choice-box .context-menu {
     -fx-background-color: whitesmoke;
 }
+*/
 
+.check-box .box {
+    -fx-background-color: white;
+    -fx-border-color:grey;
+    -fx-border-radius:3px;
+}
+
+.check-box:selected .mark {
+
+    -fx-background-color: white;
+
+}
+
+.check-box:selected .box {
+
+    -fx-background-color: #28a3f4;
+}
 
 .trans-btn-white-border:hover {
     -fx-background-color: #505770;
