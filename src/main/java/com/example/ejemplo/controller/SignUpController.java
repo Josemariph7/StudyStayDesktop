@@ -3,16 +3,14 @@ package com.example.ejemplo.controller;
 import com.example.ejemplo.model.User;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import com.example.ejemplo.utils.Constants;
 
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -24,14 +22,32 @@ public class SignUpController implements Initializable {
     private final Pattern phonePattern = Pattern.compile(Constants.PHONE_REGEX);
     private final Pattern namePattern = Pattern.compile(Constants.NAME_REGEX);
 
+    /*
+    *
+    *
+    * REVISAR EL TEMA DE PATTERNS PARA EL RESTO DE CAMPOS DEL REGISTRO
+    * MIRAR TAMBIEN Y CAMBIAR EL PATTER DE APELLIDOS QUE ANTES ERA SOLO 1
+    * TAMBIEN EL TEMA DE LOS MENSAJES DE ERROR
+    *
+    *
+    * */
+
     @FXML
-    public TextField fullNameField;
+    public TextField nameField;
     @FXML
     public TextField signupEmailField;
     @FXML
     public TextField passwordField;
     @FXML
-    public TextField passwordField2;
+    public TextField dniField;
+    @FXML
+    public TextField phoneField;
+    @FXML
+    public TextField surnamesField;
+    @FXML
+    public DatePicker birthDatePicker;
+    @FXML
+    public CheckBox adminCheckbox;
     @FXML
     private Button signUpButton;
     @FXML
@@ -55,18 +71,30 @@ public class SignUpController implements Initializable {
      */
     @FXML
     public void signUp() {
-        //EN LA INTERFAZ SON 5 CAMPOS DE TEXTO, UNO DE CONTRASEÑA, UNO DE FECHA,
-        // UN COMBOBOX PAL GENERO Y UN CHECKBOX PARA EL ADMIN
-
         String email = signupEmailField.getText();
-        String name = fullNameField.getText();
-        String lastname =  "";
-        LocalDateTime birthDate =  LocalDateTime.now();
-        User.Gender gender = null ;
-        String dni= "" ;
-        boolean isAdmin= true ;
+        String name = nameField.getText();
+        String surnames = surnamesField.getText();
+
+        //ESTO PUEDE SER NULL, ESTABLECER UNA FECHA PREDETERMINADA O ALGO
+        LocalDateTime birthDate =  birthDatePicker.getValue().atStartOfDay();
+        User.Gender gender=null;
+        if(GenderChoiceBox.getValue()!=null){
+            if(Objects.equals(GenderChoiceBox.getValue(), "Male")){
+                gender=User.Gender.MALE;
+            }else {
+                if (Objects.equals(GenderChoiceBox.getValue(), "Female")) {
+                    gender = User.Gender.FEMALE;
+                } else {
+                    if (Objects.equals(GenderChoiceBox.getValue(), "Other")) {
+                        gender = User.Gender.OTHER;
+                    }
+                }
+            }
+        }
+        String dni= dniField.getText();
+        boolean isAdmin= adminCheckbox.isSelected() ;
         String password = passwordField.getText();
-        String phone = passwordField2.getText();
+        String phone = phoneField.getText();
 
         // Validación de campos
         StringBuilder errors = new StringBuilder();
@@ -95,16 +123,21 @@ public class SignUpController implements Initializable {
                 showError(Constants.USER_EXISTS_ERROR);
                 return;
             }
+            System.out.println();
             // Crea un nuevo objeto de usuario y lo guarda en la base de datos
-            User user = new User(name,lastname,email,password,phone,birthDate,gender,dni,isAdmin); //MODIFICAR METODO PARA QUE RECOJA TODOS LOS DATOS NUEVOS (HAY QUE
-            // MODIFICAR LOS FXML PARA AÑADIR ANTES LOS NUEVOS COMPONENTES)
+            User user = new User(name,surnames,email,password,phone,birthDate, LocalDateTime.now(),gender,dni,null,null,isAdmin);
             userController.create(user);
+            System.out.println(user.toString());
             showSuccess("Registro exitoso.");
             // Limpia los campos después del registro exitoso
-            fullNameField.setText("");
+            nameField.setText("");
             signupEmailField.setText("");
             passwordField.setText("");
-            passwordField2.setText("");
+            surnamesField.setText("");
+            phoneField.setText("");
+            dniField.setText("");
+            birthDatePicker.setValue(null);
+            GenderChoiceBox.setValue("");
         } catch (SQLException e) {
             showError(Constants.DATABASE_ERROR + e.getMessage());
         }

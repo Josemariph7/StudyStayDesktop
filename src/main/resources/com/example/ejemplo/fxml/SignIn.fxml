@@ -17,19 +17,19 @@
     <children>
         <Pane prefHeight="113.0" prefWidth="28.0">
             <children>
-                <ImageView fitHeight="28.0" fitWidth="28.0" layoutX="444.0" layoutY="14.0" onMouseClicked="#closeApp">
+                <ImageView fitHeight="28.0" fitWidth="28.0" layoutX="444.0" layoutY="14.0" onMouseClicked="#closeApp" translateX="2.0" translateY="-4.0">
                     <image>
                         <Image url="@../multimedia/icons8-cancelar-64.png" />
                     </image>
                 </ImageView>
             </children>
         </Pane>
-        <ImageView fitHeight="192.0" fitWidth="436.0" translateX="29.0" translateY="-110.0">
+        <ImageView fitHeight="192.0" fitWidth="436.0" translateX="30.0" translateY="-109.0">
             <image>
                 <Image url="@../multimedia/logoTransparente.png" />
             </image>
         </ImageView>
-        <Label text="Login" textFill="#2196f3" translateY="-120.0">
+        <Label text="Login" textFill="#2196f3" translateX="2.0" translateY="-153.0">
             <font>
                 <Font size="20.0" />
             </font>
@@ -39,11 +39,13 @@
         </Label>
         <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
             <children>
-                <TextField fx:id="emailField" promptText="Email" styleClass="tf_box" translateY="-95.0" HBox.hgrow="ALWAYS">
+            <Pane prefHeight="31.0" prefWidth="27.0" />
+                <TextField fx:id="emailField" promptText="Email" styleClass="tf_box" translateY="-110.0" HBox.hgrow="ALWAYS">
                     <cursor>
                         <Cursor fx:constant="TEXT" />
                     </cursor>
                 </TextField>
+            <Pane minWidth="28.0" prefHeight="31.0" prefWidth="27.0" />
 
             </children>
             <VBox.margin>
@@ -52,18 +54,20 @@
         </HBox>
         <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
             <children>
-                <PasswordField fx:id="passwordField" promptText="Password" styleClass="tf_box" translateY="-70.0" HBox.hgrow="ALWAYS">
+            <Pane prefHeight="31.0" prefWidth="27.0" />
+                <PasswordField fx:id="passwordField" promptText="Password" styleClass="tf_box" translateY="-85.0" HBox.hgrow="ALWAYS">
                     <cursor>
                         <Cursor fx:constant="TEXT" />
                     </cursor>
                 </PasswordField>
+            <Pane minWidth="28.0" prefHeight="31.0" prefWidth="28.0" />
             </children>
             <VBox.margin>
                 <Insets left="15.0" right="15.0" top="20.0" />
             </VBox.margin>
         </HBox>
 
-        <Button alignment="CENTER" mnemonicParsing="false" onAction="#login" prefHeight="38.0" prefWidth="456.0" styleClass="blue-btn" text="Sign In" textFill="WHITE" translateY="-30.0">
+        <Button alignment="CENTER" mnemonicParsing="false" onAction="#login" prefHeight="38.0" prefWidth="456.0" styleClass="blue-btn" text="Sign In" textFill="WHITE" translateY="-24.0">
             <font>
                 <Font size="17.0" />
             </font>

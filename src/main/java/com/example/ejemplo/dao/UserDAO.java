@@ -136,8 +136,19 @@ public class UserDAO {
         user.setPassword(resultSet.getString("Password"));
         user.setPhone(resultSet.getString("Phone"));
         user.setBirthDate(resultSet.getTimestamp("BirthDate").toLocalDateTime());
-        user.setRegistrationDate(resultSet.getTimestamp("RegistrationDate").toLocalDateTime()); // Nuevo campo
-        user.setGender(User.Gender.valueOf(resultSet.getString("Gender")));
+        System.out.println(resultSet.getTimestamp("BirthDate").toString());
+        user.setRegistrationDate(resultSet.getTimestamp("RegistrationDate").toLocalDateTime());
+        String gender=resultSet.getString("Gender");
+        System.out.println(gender);
+        if(gender.equalsIgnoreCase("male")){
+            user.setGender(User.Gender.MALE);
+        } else if (gender.equalsIgnoreCase("female")) {
+            user.setGender(User.Gender.FEMALE);
+        } else if (gender.equalsIgnoreCase("other")) {
+            user.setGender(User.Gender.OTHER);
+        }else{
+            user.setGender(null);
+    }
         user.setDni(resultSet.getString("DNI"));
         user.setProfilePicture(resultSet.getBytes("ProfilePicture"));
         user.setBio(resultSet.getString("Bio"));
