@@ -82,11 +82,11 @@ public class SignInController {
 
             // Obtener el controlador cargado
             Object controller = loader.getController();
-            System.out.println(controller);
             if (!(controller instanceof AdminDashboardController)) {
                 showError(Constants.DASHBOARD_LOAD_ERROR);
                 return;
             }
+            ((AdminDashboardController) controller).initData(user);
             Scene scene = new Scene(dashboard);
             Stage stage = (Stage) emailField.getScene().getWindow();
             stage.setScene(scene);

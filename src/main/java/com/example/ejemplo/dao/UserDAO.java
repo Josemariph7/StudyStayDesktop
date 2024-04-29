@@ -6,6 +6,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -92,6 +93,7 @@ public class UserDAO {
             statement.setString(8, user.getGender().toString());
             statement.setString(9, user.getDni());
             statement.setBytes(10, user.getProfilePicture());
+            System.out.println(Arrays.toString(user.getProfilePicture()));
             statement.setString(11, user.getBio());
             statement.setBoolean(12, user.isAdmin());
             statement.setLong(13, user.getUserId());

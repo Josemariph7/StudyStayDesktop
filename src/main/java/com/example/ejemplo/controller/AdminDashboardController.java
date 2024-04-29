@@ -23,6 +23,7 @@ import javafx.stage.StageStyle;
 import com.example.ejemplo.model.User;
 import com.example.ejemplo.utils.Constants;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -30,6 +31,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicReference;
@@ -212,45 +214,33 @@ public class AdminDashboardController implements Initializable {
         username.setText(currentUser.getName());
         namelabel.setText(currentUser.getName());
         idlabel.setText(String.valueOf(currentUser.getUserId()));
-        rolelabel.setText("");
-        if(currentUser.isAdmin()){
-            rolelabel.setText("Administrator");
-        }else{
-            rolelabel.setText("Client");
-        }
+        rolelabel.setText(currentUser.isAdmin() ? "Administrator" : "Client");
         passwordlabel.setText(currentUser.getPassword());
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedDate = currentUser.getRegistrationDate().format(formatter);
         datelabel.setText(formattedDate);
         emaillabel.setText(currentUser.getEmail());
         phonelabel.setText(currentUser.getPhone());
-        if (currentUser != null) {
-            this.username.setText(currentUser.getName());
-            String imageUrl = "/com/example/ejemplo/profilepictures/"+currentUser.getProfilePicture();
-            if (imageUrl != null && !imageUrl.isEmpty()) {
-                try {
-                    URL resource = getClass().getResource(imageUrl);
-                    if (resource != null) {
-                        Image profilePicture = new Image(resource.toExternalForm());
 
-                        circle.setFill(new ImagePattern(profilePicture));
-                        circleProfile.setFill(new ImagePattern(profilePicture));
-                        circleProfile.setStroke(Color.web("#151928"));
-                        circleProfile.setStrokeWidth(5);
-                    } else {
-                        cargarImagenPredeterminada();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    cargarImagenPredeterminada();
-                }
-            } else {
-                cargarImagenPredeterminada();
+        // Cargar la imagen de perfil del usuario desde la base de datos
+        byte[] profilePictureBytes = currentUser.getProfilePicture();
+        if (profilePictureBytes != null && profilePictureBytes.length > 0) {
+            try {
+                Image profilePicture = new Image(new ByteArrayInputStream(profilePictureBytes));
+
+                circle.setFill(new ImagePattern(profilePicture));
+                circleProfile.setFill(new ImagePattern(profilePicture));
+                circleProfile.setStroke(Color.web("#151928"));
+                circleProfile.setStrokeWidth(5);
+            } catch (Exception e) {
+                e.printStackTrace();
+                cargarImagenPredeterminada(); // Cargar imagen predeterminada en caso de error
             }
         } else {
-            System.out.println("El usuario actual es nulo.");
+            cargarImagenPredeterminada(); // Cargar imagen predeterminada si los bytes son nulos o vacíos
         }
     }
+
 
     /**
      * Carga la imagen predeterminada del usuario.
@@ -365,26 +355,28 @@ public class AdminDashboardController implements Initializable {
 
         if (file != null) {
             try {
-                // Ruta relativa desde la raíz del proyecto en un entorno de desarrollo
-                String relativePath = "src/main/resources/com/example/ejemplo/profilepictures";
-                String filename = file.getName();
-                File directory = new File(relativePath);
-                if (!directory.exists()) {
-                    directory.mkdirs();
-                }
-                File destFile = new File(directory, filename);
-                Files.copy(file.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                Image image = new Image(destFile.toURI().toString());
+                // Leer la imagen como un array de bytes
+                byte[] imageBytes = Files.readAllBytes(file.toPath());
+
+                // Actualizar la imagen en la interfaz gráfica
+                Image image = new Image(new ByteArrayInputStream(imageBytes));
                 circle.setFill(new ImagePattern(image));
                 circleProfile.setFill(new ImagePattern(image));
-                currentUser.setProfilePicture(filename.getBytes());
+
+                // Actualizar la imagen en el objeto de usuario (currentUser)
+                currentUser.setProfilePicture(imageBytes);
+
+                // Actualizar el usuario en la base de datos a través del controlador de usuario
                 userController.update(currentUser);
+                System.out.println(Arrays.toString(currentUser.getProfilePicture()));
+
             } catch (IOException e) {
                 e.printStackTrace();
                 showError(Constants.IMAGE_SAVE_ERROR);
             }
         }
     }
+
 
     /**
      * Cierra la aplicación.
