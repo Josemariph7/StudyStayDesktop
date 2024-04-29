@@ -36,8 +36,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicReference;
 
-
-
 /**
  * Controlador para el panel de administrador.
  */
@@ -231,7 +229,7 @@ public class AdminDashboardController implements Initializable {
                 circle.setFill(new ImagePattern(profilePicture));
                 circleProfile.setFill(new ImagePattern(profilePicture));
                 circleProfile.setStroke(Color.web("#151928"));
-                circleProfile.setStrokeWidth(5);
+                circleProfile.setStrokeWidth(3);
             } catch (Exception e) {
                 e.printStackTrace();
                 cargarImagenPredeterminada(); // Cargar imagen predeterminada en caso de error
@@ -240,7 +238,6 @@ public class AdminDashboardController implements Initializable {
             cargarImagenPredeterminada(); // Cargar imagen predeterminada si los bytes son nulos o vacíos
         }
     }
-
 
     /**
      * Carga la imagen predeterminada del usuario.

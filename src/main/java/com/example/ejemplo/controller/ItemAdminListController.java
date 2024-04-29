@@ -69,11 +69,11 @@ public class ItemAdminListController {
         this.node = node;
         this.userController = userController;
         lblUserId.setText(String.valueOf(user.getUserId()));
-        lblName.setText(user.getName());
+        lblName.setText(user.getName()+" "+user.getLastName());
         lblEmail.setText(user.getEmail());
         lblPhone.setText(user.getPhone());
         if(user.isAdmin()) {
-            lblRole.setText("Administrator");
+            lblRole.setText("Admin");
         }else{
             lblRole.setText("User");
         }

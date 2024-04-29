@@ -16,7 +16,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1440.0" style="-fx-background-color: #02030A;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ejemplo.controller.AdminDashboardController">
+<AnchorPane maxHeight="900.0" maxWidth="1440.0" minHeight="900.0" minWidth="1440.0" prefHeight="900.0" prefWidth="1440.0" style="-fx-background-color: #02030A;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ejemplo.controller.AdminDashboardController">
     <children>
         <Pane id="dragArea" fx:id="dragArea" prefHeight="53.0" prefWidth="1440.0" style="-fx-background-color: transparent;" />
         <VBox alignment="TOP_CENTER" prefHeight="576.0" prefWidth="256.0" style="-fx-background-color: #151928;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -154,7 +154,7 @@
         </VBox>
         <StackPane layoutX="258.0" prefHeight="900.0" prefWidth="1182.0" style="-fx-background-color: #edf1ff;">
             <children>
-                <Pane fx:id="pnlProfile" prefHeight="200.0" prefWidth="200.0" visible="false">
+                <Pane fx:id="pnlProfile" prefHeight="200.0" prefWidth="200.0">
                     <children>
                         <StackPane layoutX="70.0" layoutY="-32.0" prefHeight="250.0" prefWidth="250.0" translateX="800.0" translateY="60.0">
                             <padding>
@@ -313,7 +313,7 @@
                         </Label>
                     </children>
                 </Pane>
-                <Pane fx:id="pnlUsers" style="-fx-background-color: #edf1ff;">
+                <Pane fx:id="pnlUsers" style="-fx-background-color: #edf1ff;" visible="false">
                     <children>
                         <Label layoutX="57.0" layoutY="25.0" prefHeight="66.0" prefWidth="388.0" style="-fx-text-fill: #0c0e17;" text="Users Management" textFill="#e7e5e5" translateY="-3.0">
                             <font>
