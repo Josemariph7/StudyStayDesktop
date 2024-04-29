@@ -48,6 +48,8 @@ public class SignInController {
     public void login() {
         String email = emailField.getText();
         String password = passwordField.getText();
+        System.out.println(email);
+        System.out.println(password);
         if (email.isEmpty() || password.isEmpty()) {
             showError("Por favor, introduce el correo electrónico y la contraseña.");
             return;
@@ -58,8 +60,9 @@ public class SignInController {
                 // Muestra la pantalla de carga (splash screen) mientras se carga el panel de control
                 if(user.isAdmin()) {
                     showSplashScreen(() -> Platform.runLater(() -> loadDashboard(user)));
+                }else{
+                    showError("Solo los usuarios con poderes de administrador pueden acceder al programa");
                 }
-                showError("Solo los usuarios con poderes de administrador pueden acceder al programa");
                 return;
             }
         }

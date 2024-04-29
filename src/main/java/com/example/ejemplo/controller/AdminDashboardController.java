@@ -298,11 +298,7 @@ public class AdminDashboardController implements Initializable {
                 System.out.println(currentUser);
                 currentUser.setName(modifyController.txtName.getText());
                 currentUser.setPhone(modifyController.txtPhone.getText());
-                if(modifyController.getUser().isAdmin()){
-                    currentUser.setAdmin(true);
-                }else{
-                    currentUser.setAdmin(false);
-                }
+                currentUser.setAdmin(modifyController.getUser().isAdmin());
                 currentUser.setPassword(modifyController.txtPassword.getText());
                 currentUser.setEmail(modifyController.txtEmail.getText());
                 System.out.println(currentUser);

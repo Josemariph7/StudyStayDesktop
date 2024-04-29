@@ -8,6 +8,7 @@ import com.example.ejemplo.utils.Constants;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -64,6 +65,8 @@ public class SignUpController implements Initializable {
         String[] genders={"Male", "Female", "Other"};
         GenderChoiceBox.getItems().addAll(genders);
         GenderChoiceBox.setValue("Gender");
+        birthDatePicker.setValue(LocalDate.now());
+        System.out.println(birthDatePicker.getValue());
     }
 
     /**
@@ -74,9 +77,20 @@ public class SignUpController implements Initializable {
         String email = signupEmailField.getText();
         String name = nameField.getText();
         String surnames = surnamesField.getText();
+        StringBuilder errors = new StringBuilder();
 
         //ESTO PUEDE SER NULL, ESTABLECER UNA FECHA PREDETERMINADA O ALGO
-        LocalDateTime birthDate =  birthDatePicker.getValue().atStartOfDay();
+        System.out.println(birthDatePicker.getValue());
+        LocalDate birthDate = null;
+        if (birthDatePicker.getValue() != null) {
+            birthDate = birthDatePicker.getValue().atStartOfDay().toLocalDate();
+        } else {
+            errors.append("Debe establacer una fecha de nacimiento válida.\n");
+        }
+        if (birthDate.isAfter(LocalDate.now())){
+            errors.append("Debe establacer una fecha de nacimiento válida.\n");
+        }
+
         User.Gender gender=null;
         if(GenderChoiceBox.getValue()!=null){
             if(Objects.equals(GenderChoiceBox.getValue(), "Male")){
@@ -97,7 +111,6 @@ public class SignUpController implements Initializable {
         String phone = phoneField.getText();
 
         // Validación de campos
-        StringBuilder errors = new StringBuilder();
         if (!validateEmail(email)) errors.append("Formato de email inválido.\n");
         if (!validateName(name)) errors.append("El nombre debe contener al menos un apellido y solo caracteres válidos.\n");
         if (!validatePassword(password)) errors.append("La contraseña debe tener más de 8 caracteres y contener al menos una letra mayúscula y un número.\n");
@@ -127,7 +140,7 @@ public class SignUpController implements Initializable {
             // Crea un nuevo objeto de usuario y lo guarda en la base de datos
             User user = new User(name,surnames,email,password,phone,birthDate, LocalDateTime.now(),gender,dni,null,null,isAdmin);
             userController.create(user);
-            System.out.println(user.toString());
+            System.out.println(user);
             showSuccess("Registro exitoso.");
             // Limpia los campos después del registro exitoso
             nameField.setText("");

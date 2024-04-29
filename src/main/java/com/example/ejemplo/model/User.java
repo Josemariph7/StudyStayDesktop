@@ -1,5 +1,6 @@
 package com.example.ejemplo.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -15,7 +16,7 @@ public class User {
     private String email; // Correo electrónico del usuario
     private String password; // Contraseña del usuario
     private String phone; // Número de teléfono del usuario
-    private LocalDateTime birthDate; // Fecha de nacimiento del usuario
+    private LocalDate birthDate; // Fecha de nacimiento del usuario
     private LocalDateTime registrationDate; // Fecha de nacimiento del usuario
     private Gender gender; // Género del usuario
     private String dni; // Documento nacional de identidad del usuario
@@ -41,7 +42,7 @@ public class User {
     public User() {
     }
 
-    public User(String name, String lastName, String email, String password, String phone, LocalDateTime birthDate, Gender gender, String dni, boolean admin) {
+    public User(String name, String lastName, String email, String password, String phone, LocalDate birthDate, Gender gender, String dni, boolean admin) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;
@@ -53,7 +54,7 @@ public class User {
         this.isAdmin = admin;
     }
 
-    public User(String name, String lastName, String email, String password, String phone, LocalDateTime birthDate, LocalDateTime registrationDate, Gender gender, String dni, byte[] profilePicture, String bio, boolean isAdmin) {
+    public User(String name, String lastName, String email, String password, String phone, LocalDate birthDate, LocalDateTime registrationDate, Gender gender, String dni, byte[] profilePicture, String bio, boolean isAdmin) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;
@@ -126,11 +127,11 @@ public class User {
         this.phone = phone;
     }
 
-    public LocalDateTime getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(LocalDateTime birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 

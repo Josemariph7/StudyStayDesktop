@@ -137,7 +137,7 @@ public class BookingDAO {
 
         // Cargar el objeto Accommodation asociado al ID
         AccommodationDAO accommodationDAO = new AccommodationDAO();
-        Accommodation accommodation = accommodationDAO.getById(accommodationId);
+        Accommodation accommodation = AccommodationDAO.getById(accommodationId);
         booking.setAccommodation(accommodation);
 
         // Cargar el objeto User asociado al ID

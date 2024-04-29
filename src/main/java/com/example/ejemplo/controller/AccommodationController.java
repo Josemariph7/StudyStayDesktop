@@ -59,7 +59,7 @@ public class AccommodationController {
      * @return El alojamiento si se encuentra, o null si no se encuentra
      */
     public Accommodation getAccommodationById(Long accommodationId) {
-        return accommodationDAO.getById(accommodationId);
+        return AccommodationDAO.getById(accommodationId);
     }
 
     /**
@@ -77,7 +77,7 @@ public class AccommodationController {
      * @return Lista de reseñas del alojamiento
      */
     public List<AccommodationReview> getReviewsByAccommodation(Long accommodationId) {
-        return accommodationDAO.getReviewsByAccommodation(accommodationId);
+        return AccommodationDAO.getReviewsByAccommodation(accommodationId);
     }
 
     /**
@@ -86,7 +86,7 @@ public class AccommodationController {
      * @return Lista de inquilinos del alojamiento
      */
     public List<User> getTenantsForAccommodation(Long accommodationId) {
-        return accommodationDAO.getTenantsForAccommodation(accommodationId);
+        return AccommodationDAO.getTenantsForAccommodation(accommodationId);
     }
 
 

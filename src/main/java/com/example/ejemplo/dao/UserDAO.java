@@ -3,6 +3,8 @@ package com.example.ejemplo.dao;
 import com.example.ejemplo.model.User;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -135,20 +137,27 @@ public class UserDAO {
         user.setEmail(resultSet.getString("Email"));
         user.setPassword(resultSet.getString("Password"));
         user.setPhone(resultSet.getString("Phone"));
-        user.setBirthDate(resultSet.getTimestamp("BirthDate").toLocalDateTime());
-        System.out.println(resultSet.getTimestamp("BirthDate").toString());
-        user.setRegistrationDate(resultSet.getTimestamp("RegistrationDate").toLocalDateTime());
-        String gender=resultSet.getString("Gender");
-        System.out.println(gender);
-        if(gender.equalsIgnoreCase("male")){
-            user.setGender(User.Gender.MALE);
-        } else if (gender.equalsIgnoreCase("female")) {
-            user.setGender(User.Gender.FEMALE);
-        } else if (gender.equalsIgnoreCase("other")) {
+        Timestamp birthDateTimestamp = resultSet.getTimestamp("BirthDate");
+        if (birthDateTimestamp != null) {
+            user.setBirthDate(birthDateTimestamp.toLocalDateTime().toLocalDate());
+        } else {
+            user.setBirthDate(LocalDate.now());
+        }
+        user.setRegistrationDate(LocalDateTime.now());
+        String gender = resultSet.getString("Gender");
+        if (gender != null) {
+            if (gender.equalsIgnoreCase("male")) {
+                user.setGender(User.Gender.MALE);
+            } else if (gender.equalsIgnoreCase("female")) {
+                user.setGender(User.Gender.FEMALE);
+            } else if (gender.equalsIgnoreCase("other")) {
+                user.setGender(User.Gender.OTHER);
+            } else {
+                user.setGender(User.Gender.OTHER);
+            }
+        } else {
             user.setGender(User.Gender.OTHER);
-        }else{
-            user.setGender(null);
-    }
+        }
         user.setDni(resultSet.getString("DNI"));
         user.setProfilePicture(resultSet.getBytes("ProfilePicture"));
         user.setBio(resultSet.getString("Bio"));
