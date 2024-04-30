@@ -1,5 +1,6 @@
 package com.example.ejemplo.dao;
 
+import com.example.ejemplo.controller.UserController;
 import com.example.ejemplo.model.ForumComment;
 import com.example.ejemplo.model.ForumTopic;
 import com.example.ejemplo.model.User;
@@ -131,6 +132,8 @@ public class ForumTopicDAO {
         // Mapeo del autor del tema
         User author = new User();
         author.setUserId(resultSet.getLong("AuthorId"));
+        UserController controller= new UserController();
+        author= controller.getById(author.getUserId());
         // Aquí puedes cargar el resto de los detalles del autor si es necesario
         topic.setAuthor(author);
 

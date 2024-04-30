@@ -3,7 +3,6 @@ package com.example.ejemplo.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import com.example.ejemplo.model.User;
@@ -84,7 +83,7 @@ public class ModifyController {
      */
     private void updateItemAdminList() {
         // Obtiene el controlador de la lista de usuarios de la ventana de administrador
-        ItemAdminListController itemAdminListController = (ItemAdminListController) btnAccept.getScene().getWindow().getUserData();
+        ItemUserListController itemAdminListController = (ItemUserListController) btnAccept.getScene().getWindow().getUserData();
 
         // Actualiza los datos del usuario en la lista
         itemAdminListController.updateUserData(user);

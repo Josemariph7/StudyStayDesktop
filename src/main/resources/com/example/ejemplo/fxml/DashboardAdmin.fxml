@@ -622,7 +622,7 @@
                      <children>
                         <VBox alignment="CENTER" prefHeight="92.0" prefWidth="145.0">
                            <children>
-                              <Label fx:id="totalAccommodations1" alignment="CENTER" text="0" textFill="#2a73ff">
+                              <Label fx:id="TotalForumTopics" alignment="CENTER" text="0" textFill="#2a73ff">
                                  <font>
                                     <Font name="System Bold" size="26.0" />
                                  </font>
@@ -641,7 +641,7 @@
                         </VBox>
                         <VBox alignment="CENTER" prefHeight="92.0" prefWidth="184.0" translateX="-10.0">
                            <children>
-                              <Label fx:id="availableAccommodations1" alignment="CENTER" text="0" textFill="#26bfbc">
+                              <Label fx:id="TotalForumComments" alignment="CENTER" text="0" textFill="#26bfbc">
                                  <font>
                                     <Font name="System Bold" size="26.0" />
                                  </font>
@@ -660,7 +660,7 @@
                         </VBox>
                         <VBox alignment="CENTER" prefHeight="92.0" prefWidth="127.0" translateX="-15.0">
                            <children>
-                              <Label fx:id="averagePrice1" alignment="CENTER" text="0" textFill="#fa5f7e">
+                              <Label fx:id="NewTopics" alignment="CENTER" text="0" textFill="#fa5f7e">
                                  <font>
                                     <Font name="System Bold" size="26.0" />
                                  </font>
@@ -679,7 +679,7 @@
                         </VBox>
                         <VBox alignment="CENTER" prefHeight="92.0" prefWidth="177.0" translateX="-26.0">
                            <children>
-                              <Label fx:id="accommodationsLastWeek1" alignment="CENTER" text="0" textFill="#de0000">
+                              <Label fx:id="NewComments" alignment="CENTER" text="0" textFill="#de0000">
                                  <font>
                                     <Font name="System Bold" size="26.0" />
                                  </font>
@@ -746,7 +746,7 @@
                   </HBox>
                   <ScrollPane layoutX="-1.0" layoutY="232.0" prefHeight="667.0" prefWidth="1180.0" style="-fx-background-color: #e0e7ff; -fx-border-color: #edf1ff;" stylesheets="@../css/stylesdashboard.css" translateX="2.0">
                      <content>
-                        <VBox fx:id="pnItems11" prefHeight="662.0" prefWidth="1151.0" spacing="5.0" style="-fx-background-color: #edf1ff;" translateX="1.0">
+                        <VBox fx:id="pnItemsForum" prefHeight="662.0" prefWidth="1151.0" spacing="5.0" style="-fx-background-color: #edf1ff;" translateX="1.0">
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </padding>

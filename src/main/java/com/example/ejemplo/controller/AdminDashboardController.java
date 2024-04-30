@@ -1,5 +1,6 @@
 package com.example.ejemplo.controller;
 
+import com.example.ejemplo.model.ForumTopic;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,7 +29,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -41,6 +41,7 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public class AdminDashboardController implements Initializable {
 
+    @FXML public VBox pnItemsForum;
     // Atributos de la interfaz gráfica
     @FXML private Button btnExit;
     @FXML private Label namelabel;
@@ -69,12 +70,14 @@ public class AdminDashboardController implements Initializable {
     @FXML private Label lastweek;
     @FXML private Circle circle;
     @FXML private Circle circleProfile;
+    @FXML private VBox pnItemsForumTopics;
 
     // Otros atributos
     private User currentUser;
     private double xOffset = 0;
     private double yOffset = 0;
     private final UserController userController = new UserController();
+    private final ForumTopicController topicController = new ForumTopicController();
     private final LocalDate oneWeekAgo = LocalDate.now().minusWeeks(1);
 
     /**
@@ -100,10 +103,10 @@ public class AdminDashboardController implements Initializable {
         for (User user : users) {
             updateStatistics();
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.ITEM_ADMIN_LIST_FXML));
-                Node node = loader.load();
+                FXMLLoader loaderUsers = new FXMLLoader(getClass().getResource(Constants.ITEM_USER_LIST_FXML));
+                Node node = loaderUsers.load();
 
-                ItemAdminListController controller = loader.getController();
+                ItemUserListController controller = loaderUsers.getController();
                 controller.initData(user, userController, node, pnItems, this);
 
                 pnItems.getChildren().add(node);
@@ -111,6 +114,28 @@ public class AdminDashboardController implements Initializable {
                 e.printStackTrace();
             }
         }
+
+        // Obtener todos los temas del foro y actualizar estadísticas
+        List<ForumTopic> topics = topicController.getAllTopics();
+        for (ForumTopic topic : topics) {
+            updateStatistics();
+            try {
+                FXMLLoader loaderForumTopics = new FXMLLoader(getClass().getResource(Constants.ITEM_FORUMTOPIC_LIST_FXML));
+                Node node = loaderForumTopics.load();
+
+                ItemForumListController controller = loaderForumTopics.getController();
+                controller.initData(topic, topicController, node, pnItemsForum, this);
+
+                pnItemsForum.getChildren().add(node);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+
+    private void updateForumStatistics() {
     }
 
     /**
@@ -316,10 +341,10 @@ public class AdminDashboardController implements Initializable {
                 for (User user : users) {
                     updateStatistics();
                     try {
-                        loader.set(new FXMLLoader(getClass().getResource(Constants.ITEM_ADMIN_LIST_FXML)));
+                        loader.set(new FXMLLoader(getClass().getResource(Constants.ITEM_USER_LIST_FXML)));
                         Node node = loader.get().load();
                         // Configurar el controlador del nodo
-                        ItemAdminListController controller = loader.get().getController();
+                        ItemUserListController controller = loader.get().getController();
                         controller.initData(user, userController, node, pnItems, this); // Pasa el usuario al controlador del nodo
 
                         pnItems.getChildren().add(node);

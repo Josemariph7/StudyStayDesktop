@@ -19,7 +19,7 @@ import java.time.format.DateTimeFormatter;
 /**
  * Controlador para los elementos de la lista de usuarios en el panel de administrador.
  */
-public class ItemAdminListController {
+public class ItemUserListController {
 
     @FXML
     public Label lblUserId;
@@ -77,7 +77,6 @@ public class ItemAdminListController {
         }else{
             lblRole.setText("User");
         }
-
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedDate = user.getRegistrationDate().format(formatter);
         lblRegDate.setText(formattedDate);
@@ -119,7 +118,6 @@ public class ItemAdminListController {
             modifyController.btnCancel.setOnAction(event -> {
                 stage.close();
             });
-
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

@@ -3,7 +3,8 @@ package com.example.ejemplo.utils;
 public class Constants {
     // Rutas FXML
 
-    public static final String ITEM_ADMIN_LIST_FXML = "/com/example/ejemplo/fxml/ItemAdminList.fxml";
+    public static final String ITEM_USER_LIST_FXML = "/com/example/ejemplo/fxml/ItemUserList.fxml";
+    public static final String ITEM_FORUMTOPIC_LIST_FXML = "/com/example/ejemplo/fxml/ItemForumList.fxml";
     public static final String LOGIN_FXML = "/com/example/ejemplo/fxml/LogIn.fxml";
     public static final String MODIFY_FXML = "/com/example/ejemplo/fxml/Modify.fxml";
     public static final String SIGNIN_FXML = "/com/example/ejemplo/fxml/SignIn.fxml";
