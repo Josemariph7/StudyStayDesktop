@@ -1,5 +1,6 @@
 package com.example.ejemplo.controller;
 
+import com.example.ejemplo.model.Accommodation;
 import com.example.ejemplo.model.ForumTopic;
 import com.example.ejemplo.model.User;
 import javafx.fxml.FXML;
@@ -40,11 +41,9 @@ public class ItemForumListController {
         this.forumTopic = topic;
         this.node = node;
         this.forumTopicController = forumTopicController;
-        System.out.println(topic.getAuthor());
         lblTopicId.setText(String.valueOf(topic.getTopicId()));
         lblTopicAuthor.setText(topic.getAuthor().getName()+" "+topic.getAuthor().getLastName());
         lblTopicTitle.setText(topic.getTitle());
-
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedDate = topic.getDateTime().format(formatter);
         lblTopicCreationDate.setText(formattedDate);

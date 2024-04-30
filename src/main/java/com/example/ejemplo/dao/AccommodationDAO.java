@@ -225,14 +225,14 @@ public class AccommodationDAO {
      */
     public static List<AccommodationPhoto> getPhotosForAccommodation(Long accommodationId) {
         List<AccommodationPhoto> photoList = new ArrayList<>();
-        String sql = "SELECT Photo FROM AccommodationPhotos WHERE AccommodationId=?";
+        String sql = "SELECT PhotoData FROM AccommodationPhotos WHERE AccommodationId=?";
         try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setLong(1, accommodationId);
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
-                    byte[] photoData = resultSet.getBytes("Photo");
+                    byte[] photoData = resultSet.getBytes("PhotoData");
                     AccommodationPhoto photo = new AccommodationPhoto(AccommodationDAO.getById(accommodationId), photoData); // Como el ID de la foto no está disponible aquí, pasamos null
                     photoList.add(photo);
                 }
@@ -321,7 +321,7 @@ public class AccommodationDAO {
      * @return Lista de inquilinos del alojamiento
      */
     public static List<User> getTenantsForAccommodation(Long accommodationId) {
-        List<User> tenants = new ArrayList<>();
+       List<User> tenants = new ArrayList<>();
         String sql = "SELECT * FROM Tenants WHERE AccommodationId = ?";
         try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
              PreparedStatement statement = connection.prepareStatement(sql)) {

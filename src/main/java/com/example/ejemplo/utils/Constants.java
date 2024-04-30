@@ -5,13 +5,15 @@ public class Constants {
 
     public static final String ITEM_USER_LIST_FXML = "/com/example/ejemplo/fxml/ItemUserList.fxml";
     public static final String ITEM_FORUMTOPIC_LIST_FXML = "/com/example/ejemplo/fxml/ItemForumList.fxml";
+    public static final String ITEM_ACCOMMODATION_LIST_FXML = "/com/example/ejemplo/fxml/ItemAccommodationList.fxml";
     public static final String LOGIN_FXML = "/com/example/ejemplo/fxml/LogIn.fxml";
     public static final String MODIFY_FXML = "/com/example/ejemplo/fxml/Modify.fxml";
     public static final String SIGNIN_FXML = "/com/example/ejemplo/fxml/SignIn.fxml";
     public static final String SIGNUP_FXML = "/com/example/ejemplo/fxml/SignUp.fxml";
     public static final String DASHBOARD_ADMIN_FXML = "/com/example/ejemplo/fxml/DashboardAdmin.fxml";
     public static final String SPLASH_SCREEN_FXML = "/com/example/ejemplo/fxml/SplashScreen.fxml";
-    public static final String DEFAULT_PROFILE_PICTURE = "/com/example/ejemplo/profilepictures/default.png";
+    public static final String DEFAULT_PROFILE_PICTURE = "/com/example/ejemplo/multimedia/default.png";
+    public static final String DEFAULT_ACCOMMODATION_PICTURE = "/com/example/ejemplo/multimedia/defaultaccommodation.png";
 
     // Mensajes de error
     public static final String FILE_NOT_FOUND_ERROR = "No se pudo encontrar el archivo fxml";

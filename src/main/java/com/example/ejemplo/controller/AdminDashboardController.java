@@ -1,5 +1,6 @@
 package com.example.ejemplo.controller;
 
+import com.example.ejemplo.model.Accommodation;
 import com.example.ejemplo.model.ForumTopic;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -42,7 +43,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class AdminDashboardController implements Initializable {
 
     @FXML public VBox pnItemsForum;
-    // Atributos de la interfaz gráfica
+    @FXML public VBox pnAccommodationItems;
     @FXML private Button btnExit;
     @FXML private Label namelabel;
     @FXML private Label idlabel;
@@ -78,6 +79,7 @@ public class AdminDashboardController implements Initializable {
     private double yOffset = 0;
     private final UserController userController = new UserController();
     private final ForumTopicController topicController = new ForumTopicController();
+    private final AccommodationController accommodationController = new AccommodationController();
     private final LocalDate oneWeekAgo = LocalDate.now().minusWeeks(1);
 
     /**
@@ -130,6 +132,22 @@ public class AdminDashboardController implements Initializable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+
+        // Obtener todos los alojamientos y actualizar estadísticas
+        List<Accommodation> accommodations = accommodationController.getAllAccommodations();
+        for (Accommodation acco : accommodations) {
+            updateStatistics();
+            try {
+                FXMLLoader loaderAccommodation = new FXMLLoader(getClass().getResource(Constants.ITEM_ACCOMMODATION_LIST_FXML));
+                Node node = loaderAccommodation.load();
+                ItemAccommodationListController controller = loaderAccommodation.getController();
+                controller.initData(acco, accommodationController, node, pnAccommodationItems, this);
+                pnAccommodationItems.getChildren().add(node);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            System.out.println(acco);
         }
     }
 

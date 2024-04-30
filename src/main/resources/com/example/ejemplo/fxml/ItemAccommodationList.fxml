@@ -1,36 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="itemC" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="184.0" prefWidth="1145.0" spacing="80.0" style="-fx-background-color: #edf1ff; -fx-background-radius: 5; -fx-background-insets: 0;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ejemplo.controller.ItemUserListController">
+<HBox fx:id="itemC" alignment="CENTER_LEFT" centerShape="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="184.0" prefWidth="1145.0" style="-fx-background-color: #edf1ff; -fx-background-radius: 5;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ejemplo.controller.ItemAccommodationListController">
     <children>
-      <Pane prefHeight="182.0" prefWidth="185.0">
+      <Pane prefHeight="184.0" prefWidth="324.0">
          <children>
-            <Pane layoutX="9.0" layoutY="9.0" prefHeight="167.0" prefWidth="167.0" />
+            <Pane fx:id="accommodationPhoto" layoutX="10.0" layoutY="9.0" prefHeight="167.0" prefWidth="167.0" />
          </children>
       </Pane>
-      <Pane prefHeight="32.0" prefWidth="66.0">
+      <VBox alignment="CENTER_RIGHT" prefHeight="184.0" prefWidth="1087.0">
          <children>
-              <Button fx:id="btnDelete" mnemonicParsing="false" prefHeight="32.0" prefWidth="66.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Delete" translateY="10.0">
-                  <font>
-                      <Font size="14.0" />
-                  </font>
-              </Button>
+            <HBox prefHeight="46.0" prefWidth="91.0">
+               <children>
+                  <Pane prefHeight="32.0" prefWidth="33.0" />
+                  <Label fx:id="lblAccommodationId" prefHeight="27.0" prefWidth="75.0" text="ID" textFill="#151928" translateY="8.0">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font></Label>
+                  <Label fx:id="lblAdress" prefHeight="27.0" prefWidth="524.0" text="Adress" textFill="#151928" translateY="8.0">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font></Label>
+                  <Button fx:id="btnDetailedAccommodation" mnemonicParsing="false" prefHeight="32.0" prefWidth="109.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Show Details" translateX="200.0" translateY="10.0">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox prefHeight="33.0" prefWidth="954.0">
+               <children>
+                  <Pane prefHeight="32.0" prefWidth="28.0" />
+                  <Label fx:id="lblCity" prefHeight="20.0" prefWidth="150.0" text="City" translateX="20.0" translateY="8.0">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Label>
+                  <Pane prefHeight="32.0" prefWidth="120.0" />
+                  <Label fx:id="lblPrice" prefHeight="20.0" prefWidth="164.0" text="Price" translateY="8.0">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Label>
+                  <Pane prefHeight="32.0" prefWidth="68.0" />
+                  <Label fx:id="lblCapacity" prefHeight="20.0" prefWidth="143.0" text="Capacity" translateY="8.0">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Label>
+                  <Pane prefHeight="32.0" prefWidth="61.0" />
+                  <Button fx:id="btnAddAccommodation" mnemonicParsing="false" prefHeight="32.0" prefWidth="66.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Add" translateX="122.0" translateY="20.0">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox prefHeight="47.0" prefWidth="954.0">
+               <children>
+                  <Pane prefHeight="33.0" prefWidth="29.0" />
+                  <Label fx:id="lblAvailability" prefHeight="20.0" prefWidth="158.0" text="Availability" translateX="20.0" translateY="8.0">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Label>
+                  <Pane prefHeight="33.0" prefWidth="111.0" />
+                  <Label fx:id="lblRating" prefHeight="20.0" prefWidth="174.0" text="Rating" translateY="8.0">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Label>
+                  <Pane prefHeight="33.0" prefWidth="64.0" />
+                    <Button fx:id="btnModifyAccommodation" mnemonicParsing="false" prefHeight="32.0" prefWidth="66.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Modify" translateX="321.0" translateY="32.0">
+                        <font>
+                            <Font size="14.0" />
+                        </font>
+                    </Button>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Pane prefHeight="87.0" prefWidth="20.0" />
+                  <TextArea fx:id="areaDescription" maxHeight="70.0" maxWidth="400.0" prefHeight="70.0" prefWidth="400.0" promptText="Description" style="-fx-background-color: #edf1ff;" translateX="30.0" translateY="5.0" />
+                    <Button fx:id="btnDeleteAccommodation" mnemonicParsing="false" prefHeight="32.0" prefWidth="66.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Delete" translateX="438.0" translateY="42.0">
+                        <font>
+                            <Font size="14.0" />
+                        </font>
+                    </Button>
+               </children>
+            </HBox>
          </children>
-      </Pane>
-      <Pane prefHeight="20.0" prefWidth="154.0">
-         <children>
-              <Button fx:id="btnModify" mnemonicParsing="false" prefHeight="32.0" prefWidth="66.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Modify" translateY="10.0">
-                  <font>
-                      <Font size="14.0" />
-                  </font>
-              </Button>
-         </children>
-      </Pane>
+      </VBox>
     </children>
     <effect>
         <DropShadow blurType="GAUSSIAN" height="5.0" radius="2.0" width="5.0" />
