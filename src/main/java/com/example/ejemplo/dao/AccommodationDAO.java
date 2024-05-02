@@ -1,14 +1,14 @@
 package com.example.ejemplo.dao;
 
-import com.example.ejemplo.model.Accommodation;
-import com.example.ejemplo.model.AccommodationPhoto;
-import com.example.ejemplo.model.AccommodationReview;
-import com.example.ejemplo.model.User;
+import com.example.ejemplo.controller.AccommodationReviewController;
+import com.example.ejemplo.controller.UserController;
+import com.example.ejemplo.model.*;
 
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Clase DAO para gestionar las operaciones CRUD de alojamientos en la base de datos.
@@ -20,6 +20,16 @@ public class AccommodationDAO {
     private static final String USERNAME = "root"; // Nombre de usuario de la base de datos
     private static final String PASSWORD = ""; // Contraseña de la base de datos
 
+    private static Connection connection;
+
+    public AccommodationDAO() {
+        try {
+            this.connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Obtiene todos los alojamientos de la base de datos.
      *
@@ -27,8 +37,7 @@ public class AccommodationDAO {
      */
     public List<Accommodation> getAll() {
         List<Accommodation> accommodationList = new ArrayList<>();
-        try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
-             Statement statement = connection.createStatement();
+        try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery("SELECT * FROM Accommodations")) {
 
             while (resultSet.next()) {
@@ -41,6 +50,9 @@ public class AccommodationDAO {
         return accommodationList;
     }
 
+
+
+
     /**
      * Crea un nuevo alojamiento en la base de datos.
      *
@@ -50,8 +62,7 @@ public class AccommodationDAO {
     public boolean create(Accommodation accommodation) {
         String sql = "INSERT INTO Accommodations (OwnerId, Address, City, Price, Description, Capacity, Services, Availability, Rating) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
-             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setLong(1, accommodation.getOwner().getUserId());
             statement.setString(2, accommodation.getAddress());
@@ -105,7 +116,7 @@ public class AccommodationDAO {
     public boolean update(Accommodation accommodation) {
         String sql = "UPDATE Accommodations SET OwnerId=?, Address=?, City=?, Price=?, Description=?, " +
                 "Capacity=?, Services=?, Availability=?, Rating=? WHERE AccommodationId=?";
-        try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+        try (
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setLong(1, accommodation.getOwner().getUserId());
@@ -160,7 +171,7 @@ public class AccommodationDAO {
     public boolean delete(Long accommodationId) {
         String deleteAccommodationSql = "DELETE FROM Accommodations WHERE AccommodationId=?";
         String deletePhotosSql = "DELETE FROM AccommodationPhotos WHERE AccommodationId=?";
-        try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+        try (
              PreparedStatement deleteAccommodationStatement = connection.prepareStatement(deleteAccommodationSql);
              PreparedStatement deletePhotosStatement = connection.prepareStatement(deletePhotosSql)) {
 
@@ -194,9 +205,21 @@ public class AccommodationDAO {
         accommodation.setOwner(owner);
 
         // Mapeo de los inquilinos
-        List<User> tenants = getTenantsForAccommodation(accommodation.getAccommodationId()); // Llamamos al método estático getTenantsForAccommodation de TenantDAO
-        accommodation.setTenants(tenants);
-
+        UserController userController = new UserController();
+        List<User> tenants = userController.getAll();
+        List<Booking>bookings;
+        if (tenants != null && !tenants.isEmpty()) {
+            for (User user : tenants) {
+                bookings = user.getBookings();
+                if(bookings != null && !bookings.isEmpty()){
+                    for (Booking booking : bookings) {
+                        if (Objects.equals(booking.getAccommodation().getAccommodationId(), accommodation.getAccommodationId())) {
+                            accommodation.addTenant(user);
+                        }
+                    }
+                }
+            }
+        }
         accommodation.setAddress(resultSet.getString("Address"));
         accommodation.setCity(resultSet.getString("City"));
         accommodation.setPrice(resultSet.getBigDecimal("Price"));
@@ -206,13 +229,27 @@ public class AccommodationDAO {
         accommodation.setAvailability(resultSet.getBoolean("Availability"));
         accommodation.setRating(resultSet.getDouble("Rating"));
 
-        // Mapeo de las reseñas
-        List<AccommodationReview> reviews = getReviewsByAccommodation(accommodation.getAccommodationId()); // Llamamos al método estático getReviewsForAccommodation de AccommodationReviewDAO
-        accommodation.setReviews(reviews);
-
         // Mapeo de las fotos del alojamiento
         List<AccommodationPhoto> photoList = getPhotosForAccommodation(accommodation.getAccommodationId()); // Llamamos al método estático getPhotosForAccommodation
         accommodation.setPhotos(photoList);
+
+
+        /*
+        *
+        * ERROR AQUI
+        *
+        * */
+        AccommodationReviewController accommodationReviewController = new AccommodationReviewController();
+        List<AccommodationReview> reviews=accommodationReviewController.getAllReviews();
+        if(reviews != null && !reviews.isEmpty()){
+            for (AccommodationReview review : reviews) {
+                if(Objects.equals(review.getAccommodation().getAccommodationId(), accommodation.getAccommodationId())){
+                    accommodation.getReviews().add(review);
+                }
+            }
+        }
+
+        accommodation.setReviews(reviews);
 
         return accommodation;
     }
@@ -226,8 +263,7 @@ public class AccommodationDAO {
     public static List<AccommodationPhoto> getPhotosForAccommodation(Long accommodationId) {
         List<AccommodationPhoto> photoList = new ArrayList<>();
         String sql = "SELECT PhotoData FROM AccommodationPhotos WHERE AccommodationId=?";
-        try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setLong(1, accommodationId);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -242,8 +278,6 @@ public class AccommodationDAO {
         }
         return photoList;
     }
-
-
 
     /**
      * Obtiene un alojamiento de la base de datos por su ID.
@@ -267,6 +301,7 @@ public class AccommodationDAO {
         return null;
     }
 
+
     /**
      * Obtiene una lista de alojamientos que pertenecen a un propietario específico.
      * @param ownerId ID del propietario
@@ -275,8 +310,7 @@ public class AccommodationDAO {
     public List<Accommodation> getByOwner(Long ownerId) {
         List<Accommodation> accommodationList = new ArrayList<>();
         String sql = "SELECT * FROM Accommodations WHERE OwnerId=?";
-        try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setLong(1, ownerId);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -299,8 +333,7 @@ public class AccommodationDAO {
     public static List<AccommodationReview> getReviewsByAccommodation(Long accommodationId) {
         List<AccommodationReview> reviews = new ArrayList<>();
         String sql = "SELECT * FROM AccommodationReviews WHERE AccommodationId=?";
-        try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setLong(1, accommodationId);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -322,19 +355,9 @@ public class AccommodationDAO {
      */
     public static List<User> getTenantsForAccommodation(Long accommodationId) {
        List<User> tenants = new ArrayList<>();
-        String sql = "SELECT * FROM Tenants WHERE AccommodationId = ?";
-        try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setLong(1, accommodationId);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    User tenant = UserDAO.mapUser(resultSet); // Llamamos al método mapUser para mapear cada inquilino
-                    tenants.add(tenant);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+       Accommodation accommodation=getById(accommodationId);
+        assert accommodation != null;
+        tenants=accommodation.getTenants();
         return tenants;
     }
 

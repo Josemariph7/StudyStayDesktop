@@ -154,7 +154,7 @@
         </VBox>
         <StackPane layoutX="258.0" prefHeight="900.0" prefWidth="1182.0" style="-fx-background-color: #edf1ff;">
             <children>
-                <Pane fx:id="pnlProfile" prefHeight="200.0" prefWidth="200.0">
+                <Pane fx:id="pnlProfile" prefHeight="200.0" prefWidth="200.0" visible="false">
                     <children>
                         <StackPane layoutX="70.0" layoutY="-32.0" prefHeight="250.0" prefWidth="250.0" translateX="800.0" translateY="60.0">
                             <padding>
@@ -462,7 +462,7 @@
                         </ImageView>
                     </children>
                 </Pane>
-            <Pane fx:id="pnlAccommodations" style="-fx-background-color: #edf1ff;" visible="false">
+            <Pane fx:id="pnlAccommodations" style="-fx-background-color: #edf1ff;">
                <children>
                   <Label layoutX="57.0" layoutY="25.0" prefHeight="66.0" prefWidth="580.0" style="-fx-text-fill: #0c0e17;" text="Accommodation Management" textFill="#e7e5e5">
                      <font>
@@ -549,53 +549,7 @@
                         </VBox>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT" layoutX="7.0" layoutY="190.0" prefHeight="42.0" prefWidth="1046.0" spacing="80.0" style="-fx-background-color: #edf1ff;">
-                     <children>
-                        <Label style="-fx-text-fill: #0c0e17;" text="ID" textFill="#e7e5e5" translateX="-25.0">
-                           <HBox.margin>
-                              <Insets left="50.0" />
-                           </HBox.margin>
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Label>
-                        <Label prefHeight="21.0" prefWidth="74.0" style="-fx-text-fill: #0c0e17;" text="Name" textFill="#e7e5e5" translateX="-72.0">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Label>
-                        <Label prefHeight="21.0" prefWidth="64.0" style="-fx-text-fill: #0c0e17;" text="E-mail" textFill="#e7e5e5" translateX="2.0">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Label>
-                        <Label prefHeight="21.0" prefWidth="102.0" style="-fx-text-fill: #0c0e17;" text="Phone" textFill="#e7e5e5" translateX="75.0">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Label>
-                        <Label prefHeight="21.0" prefWidth="44.0" style="-fx-text-fill: #0c0e17;" text="Role" textFill="#e7e5e5" translateX="19.0">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Label>
-                        <Label prefHeight="21.0" prefWidth="152.0" style="-fx-text-fill: #0c0e17;" text="Registration Date" textFill="#e7e5e5" translateX="55.0">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </HBox>
-                  <ScrollPane layoutX="-1.0" layoutY="232.0" prefHeight="667.0" prefWidth="1180.0" style="-fx-background-color: #e0e7ff; -fx-border-color: #edf1ff;" stylesheets="@../css/stylesdashboard.css" translateX="2.0">
+                  <ScrollPane layoutX="-1.0" layoutY="189.0" prefHeight="710.0" prefWidth="1180.0" style="-fx-background-color: #e0e7ff; -fx-border-color: #edf1ff;" stylesheets="@../css/stylesdashboard.css" translateX="2.0">
                      <content>
                         <VBox fx:id="pnAccommodationItems" prefHeight="662.0" prefWidth="1151.0" spacing="5.0" style="-fx-background-color: #edf1ff;" translateX="1.0">
                            <padding>
@@ -698,7 +652,7 @@
                         </VBox>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT" layoutX="7.0" layoutY="190.0" prefHeight="42.0" prefWidth="1046.0" spacing="80.0" style="-fx-background-color: #edf1ff;">
+                  <HBox alignment="CENTER_LEFT" layoutX="4.0" layoutY="189.0" prefHeight="42.0" prefWidth="1046.0" spacing="80.0" style="-fx-background-color: #edf1ff;" translateX="10.0">
                      <children>
                         <Label style="-fx-text-fill: #0c0e17;" text="ID" textFill="#e7e5e5" translateX="-25.0">
                            <HBox.margin>
@@ -746,7 +700,7 @@
                   </HBox>
                   <ScrollPane layoutX="-1.0" layoutY="232.0" prefHeight="667.0" prefWidth="1180.0" style="-fx-background-color: #e0e7ff; -fx-border-color: #edf1ff;" stylesheets="@../css/stylesdashboard.css" translateX="2.0">
                      <content>
-                        <VBox fx:id="pnItemsForum" prefHeight="662.0" prefWidth="1151.0" spacing="5.0" style="-fx-background-color: #edf1ff;" translateX="1.0">
+                        <VBox fx:id="pnItemsForum" prefHeight="707.0" prefWidth="1151.0" spacing="5.0" style="-fx-background-color: #edf1ff;" translateX="1.0">
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </padding>

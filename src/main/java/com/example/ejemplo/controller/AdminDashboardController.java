@@ -124,10 +124,8 @@ public class AdminDashboardController implements Initializable {
             try {
                 FXMLLoader loaderForumTopics = new FXMLLoader(getClass().getResource(Constants.ITEM_FORUMTOPIC_LIST_FXML));
                 Node node = loaderForumTopics.load();
-
                 ItemForumListController controller = loaderForumTopics.getController();
                 controller.initData(topic, topicController, node, pnItemsForum, this);
-
                 pnItemsForum.getChildren().add(node);
             } catch (IOException e) {
                 e.printStackTrace();

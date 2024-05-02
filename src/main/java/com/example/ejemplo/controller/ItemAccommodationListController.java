@@ -55,34 +55,12 @@ public class ItemAccommodationListController {
         lblAvailability.
 HACER EL TEMA DE LA IMAGEN VERDE O ROJA
 */
-        if (accommodation.getPhotos() != null && accommodation.getPhotos().size() > 0) {
-            // Si hay fotos en la lista de alojamientos
-            AccommodationPhoto firstPhoto = accommodation.getPhotos().get(0); // Obtener la primera foto
-            byte[] photoData = firstPhoto.getPhotoData(); // Obtener los datos de la foto
-            // Convierte los datos de la foto en una imagen
-            Image image = new Image(new ByteArrayInputStream(photoData));
+        if (accommodation.getPhotos() != null && !accommodation.getPhotos().isEmpty()) {
 
-            // Establece la imagen en accommodationPhoto
-            accommodationPhoto.setBackground(new Background(new BackgroundImage(
-                    image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
-                    BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
         } else {
-            // Si la lista de fotos está vacía, establece la imagen por defecto
-            String defaultImageUrl = Constants.DEFAULT_ACCOMMODATION_PICTURE;
-            URL defaultResource = getClass().getResource(defaultImageUrl);
-            javafx.scene.image.Image defaultProfilePicture = new javafx.scene.image.Image(defaultResource.toExternalForm());
-            ImageView defaultImageView = null;
-            defaultImageView.setImage(defaultProfilePicture);
-            // Ajusta el tamaño de la imagen al tamaño del Pane accommodationPhoto
-            defaultImageView.fitWidthProperty().bind(accommodationPhoto.widthProperty());
-            defaultImageView.fitHeightProperty().bind(accommodationPhoto.heightProperty());
 
-            // Limpia el contenido anterior del Pane
-            accommodationPhoto.getChildren().clear();
-            // Agrega el ImageView de la imagen por defecto al Pane
-            accommodationPhoto.getChildren().add(defaultImageView);
         }
-
+/*
         List<AccommodationReview> reviews = accommodation.getReviews();
         double average=0, cont=0, nReviews=0;
         for (AccommodationReview review: reviews){
@@ -91,7 +69,7 @@ HACER EL TEMA DE LA IMAGEN VERDE O ROJA
         }
 
         average=cont/nReviews;
-        lblRating.setText("Rating: "+String.valueOf(average));
+        lblRating.setText("Rating: "+String.valueOf(average));*/
         areaDescription.setText(accommodation.getDescription());
     }
 }

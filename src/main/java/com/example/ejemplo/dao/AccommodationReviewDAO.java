@@ -19,14 +19,23 @@ public class AccommodationReviewDAO {
     private static final String USERNAME = "root"; // Nombre de usuario de la base de datos
     private static final String PASSWORD = ""; // Contraseña de la base de datos
 
+    private Connection connection;
+
+    public AccommodationReviewDAO() {
+        try {
+            this.connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Obtiene todas las reseñas de alojamientos de la base de datos.
      * @return Lista de reseñas de alojamientos
      */
     public List<AccommodationReview> getAll() {
         List<AccommodationReview> reviewList = new ArrayList<>();
-        try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
-             Statement statement = connection.createStatement();
+        try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery("SELECT * FROM AccommodationReviews")) {
 
             while (resultSet.next()) {
@@ -47,8 +56,7 @@ public class AccommodationReviewDAO {
     public boolean create(AccommodationReview review) {
         String sql = "INSERT INTO AccommodationReviews (AccommodationId, AuthorId, Rating, Comment, DateTime) " +
                 "VALUES (?, ?, ?, ?, ?)";
-        try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
-             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setLong(1, review.getAccommodation().getAccommodationId());
             statement.setLong(2, review.getAuthor().getUserId());
@@ -84,8 +92,7 @@ public class AccommodationReviewDAO {
     public boolean update(AccommodationReview review) {
         String sql = "UPDATE AccommodationReviews SET AccommodationId=?, AuthorId=?, Rating=?, Comment=?, DateTime=? " +
                 "WHERE ReviewId=?";
-        try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setLong(1, review.getAccommodation().getAccommodationId());
             statement.setLong(2, review.getAuthor().getUserId());
@@ -109,8 +116,7 @@ public class AccommodationReviewDAO {
      */
     public boolean delete(Long reviewId) {
         String sql = "DELETE FROM AccommodationReviews WHERE ReviewId=?";
-        try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setLong(1, reviewId);
             int rowsAffected = statement.executeUpdate();
