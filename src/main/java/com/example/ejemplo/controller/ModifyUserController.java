@@ -3,14 +3,17 @@ package com.example.ejemplo.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import com.example.ejemplo.model.User;
 
+import java.util.Objects;
+
 /**
  * Controlador para la ventana de modificación de usuarios.
  */
-public class ModifyController {
+public class ModifyUserController {
 
     @FXML
     public TextField txtName;
@@ -24,6 +27,12 @@ public class ModifyController {
     public Button btnAccept;
     @FXML
     public Button btnCancel;
+    @FXML
+    public TextField txtApellidos;
+    @FXML
+    public ChoiceBox genderChoiceBox;
+    @FXML
+    public TextField txtDNI;
 
     private User user;
     public UserController userController;
@@ -39,6 +48,22 @@ public class ModifyController {
         user.setName(txtName.getText());
         user.setPassword(txtPassword.getText());
         user.setPhone(txtPhone.getText());
+        User.Gender gender;
+        if(genderChoiceBox.getValue()!=null){
+            if(Objects.equals(genderChoiceBox.getValue(), "Male")){
+                gender=User.Gender.MALE;
+            }else {
+                if (Objects.equals(genderChoiceBox.getValue(), "Female")) {
+                    gender = User.Gender.FEMALE;
+                } else {
+                    if (Objects.equals(genderChoiceBox.getValue(), "Other")) {
+                        gender = User.Gender.OTHER;
+                    }
+                }
+            }
+        }
+        user.setLastName(txtApellidos.getText());
+        user.setDni(txtDNI.getText());
         System.out.println(user);
 
         // Actualiza el usuario en la base de datos
@@ -71,10 +96,14 @@ public class ModifyController {
         if (user != null) {
             //roleChoiceBox.getItems().addAll(User.UserRole.values());
             //roleChoiceBox.getSelectionModel().select(user.getRole());
+            genderChoiceBox.getItems().clear();
+            genderChoiceBox.setValue(user.getGender());
             txtName.setText(user.getName());
             txtEmail.setText(user.getEmail());
             txtPhone.setText(user.getPhone());
             txtPassword.setText(user.getPassword());
+            txtApellidos.setText(user.getLastName());
+            txtDNI.setText(user.getDni());
         }
     }
 

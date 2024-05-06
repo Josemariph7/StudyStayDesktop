@@ -42,10 +42,19 @@ public class ItemForumListController {
         this.node = node;
         this.forumTopicController = forumTopicController;
         lblTopicId.setText(String.valueOf(topic.getTopicId()));
-        lblTopicAuthor.setText(topic.getAuthor().getName()+" "+topic.getAuthor().getLastName());
+        if(topic.getAuthor()!=null) {
+            lblTopicAuthor.setText(topic.getAuthor().getName() + " " + topic.getAuthor().getLastName());
+        }else{
+            forumTopicController.deleteTopic(topic.getTopicId());
+        }
         lblTopicTitle.setText(topic.getTitle());
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedDate = topic.getDateTime().format(formatter);
         lblTopicCreationDate.setText(formattedDate);
+        /*
+        *
+        * Deletear si el autor ya no existe
+        *
+        * */
     }
 }

@@ -50,9 +50,6 @@ public class AccommodationDAO {
         return accommodationList;
     }
 
-
-
-
     /**
      * Crea un nuevo alojamiento en la base de datos.
      *
@@ -134,7 +131,7 @@ public class AccommodationDAO {
             if (rowsAffected == 0) {
                 return false;
             }
-
+/*
             // Eliminamos las fotos antiguas asociadas al alojamiento
             String deletePhotosSql = "DELETE FROM AccommodationPhotos WHERE AccommodationId=?";
             try (PreparedStatement deleteStatement = connection.prepareStatement(deletePhotosSql)) {
@@ -154,7 +151,7 @@ public class AccommodationDAO {
                     }
                 }
             }
-
+*/
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -239,6 +236,7 @@ public class AccommodationDAO {
         * ERROR AQUI
         *
         * */
+        /*
         AccommodationReviewController accommodationReviewController = new AccommodationReviewController();
         List<AccommodationReview> reviews=accommodationReviewController.getAllReviews();
         if(reviews != null && !reviews.isEmpty()){
@@ -249,7 +247,7 @@ public class AccommodationDAO {
             }
         }
 
-        accommodation.setReviews(reviews);
+        accommodation.setReviews(reviews);*/
 
         return accommodation;
     }

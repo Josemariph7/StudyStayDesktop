@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #151928;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ejemplo.controller.ModifyUserController">
+
+    <VBox alignment="CENTER" layoutY="99.0" prefHeight="298.0" prefWidth="598.0" spacing="10.0" style="-fx-background-color: #edf1ff;" translateX="1.0" translateY="2.0">
+
+        <HBox alignment="CENTER" spacing="10" translateX="10.0" translateY="-20.0">
+            <Label prefHeight="25.0" prefWidth="50.0" text="Name:">
+            <font>
+               <Font size="16.0" />
+            </font></Label>
+            <TextField fx:id="txtName" prefHeight="35.0" prefWidth="194.0" style="-fx-background-color: transparent;" translateX="-11.0">
+            <font>
+               <Font size="16.0" />
+            </font></TextField>
+         <Label prefHeight="27.0" prefWidth="78.0" text="Surnames:">
+            <font>
+               <Font size="16.0" />
+            </font>
+         </Label>
+         <TextField fx:id="txtApellidos" prefHeight="35.0" prefWidth="213.0" style="-fx-background-color: transparent;" translateX="-11.0">
+            <font>
+               <Font size="16.0" />
+            </font>
+         </TextField>
+        </HBox>
+        <HBox alignment="CENTER" spacing="10" translateX="10.0" translateY="-5.0">
+            <Label prefHeight="25.0" prefWidth="50.0" text="Email:">
+            <font>
+               <Font size="16.0" />
+            </font></Label>
+            <TextField fx:id="txtEmail" prefHeight="35.0" prefWidth="199.0" style="-fx-background-color: transparent;" translateX="-17.0">
+            <font>
+               <Font size="14.0" />
+            </font></TextField>
+         <Label prefHeight="27.0" prefWidth="71.0" text="Password:" translateX="-7.0">
+            <font>
+               <Font size="16.0" />
+            </font>
+         </Label>
+         <TextField fx:id="txtPassword" prefHeight="35.0" prefWidth="208.0" style="-fx-background-color: transparent;" translateX="-16.0">
+            <font>
+               <Font size="16.0" />
+            </font>
+         </TextField>
+        </HBox>
+      <HBox alignment="CENTER" spacing="10" translateX="10.0" translateY="10.0">
+         <children>
+               <Label prefHeight="27.0" prefWidth="50.0" text="Phone:">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+               <TextField fx:id="txtPhone" prefHeight="35.0" prefWidth="193.0" style="-fx-background-color: transparent;" translateX="-10.0">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </TextField>
+            <Label prefHeight="27.0" prefWidth="39.0" text="DNI:">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtDNI" prefHeight="35.0" prefWidth="249.0" style="-fx-background-color: transparent;" translateX="-16.0">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </TextField>
+         </children>
+      </HBox>
+      <ChoiceBox fx:id="genderChoiceBox" prefHeight="25.0" prefWidth="106.0" style="-fx-background-color: transparent;" translateY="15.0" />
+        <HBox alignment="CENTER" prefHeight="37.0" prefWidth="544.0" spacing="10" translateY="40.0">
+         <Button fx:id="btnAccept" mnemonicParsing="false" onAction="#handleAccept" prefHeight="37.0" prefWidth="112.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Accept" translateY="-13.0">
+            <font>
+               <Font size="16.0" />
+            </font>
+         </Button>
+         <Button fx:id="btnCancel" mnemonicParsing="false" prefHeight="37.0" prefWidth="112.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Cancel" translateY="-13.0">
+            <font>
+               <Font size="16.0" />
+            </font>
+         </Button>
+        </HBox>
+      <padding>
+         <Insets left="20.0" right="20.0" />
+      </padding>
+    </VBox>
+   <Pane prefHeight="104.0" prefWidth="600.0" style="-fx-background-color: #151928;">
+      <children>
+           <Label alignment="CENTER" layoutX="14.0" layoutY="18.0" prefHeight="69.0" prefWidth="229.0" text="Modify User" textFill="#e8e8e8">
+               <font>
+                   <javafx.scene.text.Font size="30.0" />
+               </font>
+           </Label>
+      </children>
+   </Pane>
+
+</AnchorPane>

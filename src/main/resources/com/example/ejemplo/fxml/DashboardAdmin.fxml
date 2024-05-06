@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -168,7 +169,7 @@
                             <children>
                                 <HBox prefHeight="89.0" prefWidth="938.0">
                                     <children>
-                                        <Label alignment="TOP_LEFT" prefHeight="78.0" prefWidth="298.0" style="-fx-text-fill: #226a9e;" text="  Profile Details">
+                                        <Label alignment="TOP_LEFT" prefHeight="78.0" prefWidth="298.0" style="-fx-text-fill: #226a9e;" text="  Profile Details" translateY="10.0">
                                             <font>
                                                 <Font size="32.0" />
                                             </font>
@@ -178,42 +179,52 @@
                                 <HBox prefHeight="99.0" prefWidth="970.0">
                                     <children>
                                         <Label prefHeight="17.0" prefWidth="41.0" />
-                                        <Label prefHeight="30.0" prefWidth="64.0" text="Name:">
+                                        <Label prefHeight="30.0" prefWidth="84.0" text="User ID:" translateY="25.0">
+                                            <font>
+                                                <Font name="System Bold" size="20.0" />
+                                            </font>
+                                        </Label>
+                                        <Label fx:id="idlabel" prefHeight="30.0" prefWidth="235.0" translateX="-3.0" translateY="25.0">
                                             <font>
                                                 <Font size="20.0" />
                                             </font>
                                         </Label>
-                                        <Label fx:id="namelabel" prefHeight="31.0" prefWidth="392.0">
+                                        <Label prefHeight="30.0" prefWidth="64.0" text="Name:" translateY="25.0">
+                                            <font>
+                                                <Font name="System Bold" size="20.0" />
+                                            </font>
+                                        </Label>
+                                        <Label fx:id="namelabel" prefHeight="31.0" prefWidth="392.0" translateX="5.0" translateY="25.0">
                                             <font>
                                                 <Font size="20.0" />
                                             </font>
                                         </Label>
                                     </children>
                                 </HBox>
-                                <HBox prefHeight="100.0" prefWidth="200.0">
+                                <HBox prefHeight="100.0" prefWidth="970.0">
                                     <children>
                                         <Label prefHeight="17.0" prefWidth="72.0" />
-                                        <Label prefHeight="30.0" prefWidth="124.0" text="Password: ">
+                                        <Label prefHeight="30.0" prefWidth="132.0" text="Password: " translateY="-5.0">
+                                            <font>
+                                                <Font name="System Bold" size="20.0" />
+                                            </font>
+                                        </Label>
+                                        <Label fx:id="passwordlabel" prefHeight="30.0" prefWidth="249.0" translateX="1.0" translateY="-5.0">
                                             <font>
                                                 <Font size="20.0" />
                                             </font>
                                         </Label>
-                                        <Label fx:id="passwordlabel" prefHeight="30.0" prefWidth="279.0">
+                                        <Label prefHeight="30.0" prefWidth="207.0" text="Registration Date: " translateY="-5.0">
+                                            <font>
+                                                <Font name="System Bold" size="20.0" />
+                                            </font>
+                                        </Label>
+                                        <Label fx:id="datelabel" prefHeight="30.0" prefWidth="351.0" translateY="-5.0">
                                             <font>
                                                 <Font size="20.0" />
                                             </font>
                                         </Label>
-                                        <Label prefHeight="30.0" prefWidth="198.0" text="Registration Date: ">
-                                            <font>
-                                                <Font size="20.0" />
-                                            </font>
-                                        </Label>
-                                        <Label fx:id="datelabel" prefHeight="30.0" prefWidth="332.0">
-                                            <font>
-                                                <Font size="20.0" />
-                                            </font>
-                                        </Label>
-                                        <Button fx:id="btnChangePhoto" mnemonicParsing="false" onAction="#handleChangePhoto" prefHeight="32.0" prefWidth="142.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" stylesheets="@../css/stylesdashboard.css" text="Change Photo" translateX="60.0" translateY="17.0">
+                                        <Button fx:id="btnChangePhoto" mnemonicParsing="false" onAction="#handleChangePhoto" prefHeight="32.0" prefWidth="142.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" stylesheets="@../css/stylesdashboard.css" text="Change Photo" translateX="60.0" translateY="40.0">
                                             <font>
                                                 <Font size="14.0" />
                                             </font>
@@ -223,31 +234,46 @@
                                 <HBox prefHeight="94.0" prefWidth="970.0">
                                     <children>
                                         <Label prefHeight="17.0" prefWidth="44.0" />
-                                        <Label prefHeight="30.0" prefWidth="56.0" text="Role:">
+                                        <Label prefHeight="30.0" prefWidth="82.0" text="Gender:" translateX="-2.0" translateY="-35.0">
+                                            <font>
+                                                <Font name="System Bold" size="20.0" />
+                                            </font>
+                                        </Label>
+                                        <Label fx:id="genrelabel" prefHeight="30.0" prefWidth="235.0" translateY="-35.0">
                                             <font>
                                                 <Font size="20.0" />
                                             </font>
                                         </Label>
-                                        <Label fx:id="rolelabel" prefHeight="30.0" prefWidth="288.0">
-                                            <font>
-                                                <Font size="20.0" />
-                                            </font>
-                                        </Label>
-                                        <Label prefHeight="30.0" prefWidth="84.0" text="User ID:">
-                                            <font>
-                                                <Font size="20.0" />
-                                            </font>
-                                        </Label>
-                                        <Label fx:id="idlabel" prefHeight="30.0" prefWidth="201.0">
-                                            <font>
-                                                <Font size="20.0" />
-                                            </font>
-                                        </Label>
+                              <Label prefHeight="30.0" prefWidth="111.0" text="Birth Date: " translateX="1.0" translateY="-36.0" visible="false">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="txtBirthDate" prefHeight="30.0" prefWidth="324.0" translateY="-35.0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
                                     </children>
                                 </HBox>
+                        <HBox prefHeight="99.0" prefWidth="970.0">
+                           <children>
+                              <Label prefHeight="17.0" prefWidth="41.0" />
+                              <Label prefHeight="30.0" prefWidth="41.0" text="Bio:" translateX="3.0" translateY="-60.0">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                              <TextArea fx:id="bioTextArea" editable="false" prefHeight="85.0" prefWidth="457.0" promptText="Description" style="-fx-background-color: #edf1ff; -fx-border-color: #1C00ff00;" translateX="25.0" translateY="-60.0">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </TextArea>
+                           </children>
+                        </HBox>
                                 <HBox prefHeight="100.0" prefWidth="200.0">
                                     <children>
-                                        <Label prefHeight="73.0" prefWidth="341.0" style="-fx-text-fill: #226a9e;" text="  Contact Information">
+                                        <Label prefHeight="73.0" prefWidth="341.0" style="-fx-text-fill: #226a9e;" text="  Contact Information" translateY="-40.0">
                                             <font>
                                                 <Font size="32.0" />
                                             </font>
@@ -257,12 +283,12 @@
                                 <HBox prefHeight="89.0" prefWidth="938.0">
                                     <children>
                                         <Label prefHeight="17.0" prefWidth="42.0" />
-                                        <Label prefHeight="30.0" prefWidth="107.0" text="E-mail: ">
+                                        <Label prefHeight="30.0" prefWidth="74.0" text="E-mail: " translateY="-25.0">
                                             <font>
-                                                <Font size="20.0" />
+                                                <Font name="System Bold" size="20.0" />
                                             </font>
                                         </Label>
-                                        <Label fx:id="emaillabel" prefHeight="30.0" prefWidth="232.0">
+                                        <Label fx:id="emaillabel" prefHeight="30.0" prefWidth="375.0" translateX="2.0" translateY="-25.0">
                                             <font>
                                                 <Font size="20.0" />
                                             </font>
@@ -272,12 +298,12 @@
                                 <HBox prefHeight="42.0" prefWidth="938.0">
                                     <children>
                                         <Label prefHeight="17.0" prefWidth="43.0" />
-                                        <Label prefHeight="30.0" prefWidth="107.0" text="Phone:">
+                                        <Label prefHeight="30.0" prefWidth="73.0" text="Phone:" translateY="-45.0">
                                             <font>
-                                                <Font size="20.0" />
+                                                <Font name="System Bold" size="20.0" />
                                             </font>
                                         </Label>
-                                        <Label fx:id="phonelabel" prefHeight="30.0" prefWidth="192.0">
+                                        <Label fx:id="phonelabel" prefHeight="30.0" prefWidth="192.0" translateY="-45.0">
                                             <font>
                                                 <Font size="20.0" />
                                             </font>
@@ -286,7 +312,7 @@
                                 </HBox>
                                 <HBox alignment="CENTER" prefHeight="141.0" prefWidth="938.0">
                                     <children>
-                                        <Button mnemonicParsing="false" onAction="#handleModify" prefHeight="32.0" prefWidth="182.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" stylesheets="@../css/stylesdashboard.css" text="Edit Profile" translateX="50.0">
+                                        <Button mnemonicParsing="false" onAction="#handleModify" prefHeight="32.0" prefWidth="182.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" stylesheets="@../css/stylesdashboard.css" text="Edit Profile" translateX="60.0" translateY="60.0">
                                             <font>
                                                 <Font size="14.0" />
                                             </font>
@@ -400,9 +426,9 @@
                                 </VBox>
                             </children>
                         </HBox>
-                        <HBox alignment="CENTER_LEFT" layoutX="7.0" layoutY="190.0" prefHeight="42.0" prefWidth="1046.0" spacing="80.0" style="-fx-background-color: #edf1ff;">
+                        <HBox alignment="CENTER_LEFT" layoutX="7.0" layoutY="190.0" prefHeight="42.0" prefWidth="1046.0" spacing="80.0" style="-fx-background-color: #edf1ff;" translateY="3.0">
                             <children>
-                                <Label style="-fx-text-fill: #0c0e17;" text="ID" textFill="#e7e5e5" translateX="-25.0">
+                                <Label prefHeight="22.0" prefWidth="92.0" style="-fx-text-fill: #0c0e17;" text="ID" textFill="#e7e5e5" translateX="-36.0">
                                     <HBox.margin>
                                         <Insets left="50.0" />
                                     </HBox.margin>
@@ -410,7 +436,7 @@
                                         <Font size="15.0" />
                                     </font>
                                 </Label>
-                                <Label prefHeight="21.0" prefWidth="74.0" style="-fx-text-fill: #0c0e17;" text="Name" textFill="#e7e5e5" translateX="-72.0">
+                                <Label prefHeight="22.0" prefWidth="134.0" style="-fx-text-fill: #0c0e17;" text="Name" textFill="#e7e5e5" translateX="-108.0">
                                     <HBox.margin>
                                         <Insets />
                                     </HBox.margin>
@@ -418,7 +444,7 @@
                                         <Font size="15.0" />
                                     </font>
                                 </Label>
-                                <Label prefHeight="21.0" prefWidth="64.0" style="-fx-text-fill: #0c0e17;" text="E-mail" textFill="#e7e5e5" translateX="2.0">
+                                <Label prefHeight="22.0" prefWidth="114.0" style="-fx-text-fill: #0c0e17;" text="E-mail" textFill="#e7e5e5" translateX="-71.0">
                                     <HBox.margin>
                                         <Insets />
                                     </HBox.margin>
@@ -426,7 +452,7 @@
                                         <Font size="15.0" />
                                     </font>
                                 </Label>
-                                <Label prefHeight="21.0" prefWidth="102.0" style="-fx-text-fill: #0c0e17;" text="Phone" textFill="#e7e5e5" translateX="75.0">
+                                <Label prefHeight="22.0" prefWidth="107.0" style="-fx-text-fill: #0c0e17;" text="Phone" textFill="#e7e5e5" translateX="25.0">
                                     <HBox.margin>
                                         <Insets />
                                     </HBox.margin>
@@ -434,16 +460,26 @@
                                         <Font size="15.0" />
                                     </font>
                                 </Label>
-                                <Label prefHeight="21.0" prefWidth="44.0" style="-fx-text-fill: #0c0e17;" text="Role" textFill="#e7e5e5" translateX="19.0">
+                                <Label prefHeight="22.0" prefWidth="94.0" style="-fx-text-fill: #0c0e17;" text="Role" textFill="#e7e5e5" translateX="19.0">
                                     <font>
                                         <Font size="15.0" />
                                     </font>
                                 </Label>
-                                <Label prefHeight="21.0" prefWidth="152.0" style="-fx-text-fill: #0c0e17;" text="Registration Date" textFill="#e7e5e5" translateX="55.0">
+                                <Label prefHeight="22.0" prefWidth="180.0" style="-fx-text-fill: #0c0e17;" text="Registration" textFill="#e7e5e5" translateX="-19.0">
                                     <font>
                                         <Font size="15.0" />
                                     </font>
                                 </Label>
+                        <Label prefHeight="22.0" prefWidth="131.0" style="-fx-text-fill: #0c0e17;" text="Birth Date" textFill="#e7e5e5" translateX="-102.0">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Label prefHeight="22.0" prefWidth="90.0" style="-fx-text-fill: #0c0e17;" text="Dni" textFill="#e7e5e5" translateX="-142.0">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
                             </children>
                         </HBox>
                         <ScrollPane layoutX="-1.0" layoutY="232.0" prefHeight="667.0" prefWidth="1180.0" style="-fx-background-color: #e0e7ff; -fx-border-color: #edf1ff;" stylesheets="@../css/stylesdashboard.css" translateX="2.0">
@@ -462,7 +498,7 @@
                         </ImageView>
                     </children>
                 </Pane>
-            <Pane fx:id="pnlAccommodations" style="-fx-background-color: #edf1ff;">
+            <Pane fx:id="pnlAccommodations" style="-fx-background-color: #edf1ff;" visible="false">
                <children>
                   <Label layoutX="57.0" layoutY="25.0" prefHeight="66.0" prefWidth="580.0" style="-fx-text-fill: #0c0e17;" text="Accommodation Management" textFill="#e7e5e5">
                      <font>
@@ -565,7 +601,7 @@
                   </ImageView>
                </children>
             </Pane>
-            <Pane fx:id="pnlForum" style="-fx-background-color: #edf1ff;" visible="false">
+            <Pane fx:id="pnlForum" style="-fx-background-color: #edf1ff;">
                <children>
                   <Label layoutX="57.0" layoutY="25.0" prefHeight="66.0" prefWidth="378.0" style="-fx-text-fill: #0c0e17;" text="Forum Management" textFill="#e7e5e5">
                      <font>

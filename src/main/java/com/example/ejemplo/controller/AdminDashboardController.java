@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -34,6 +35,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -44,6 +46,9 @@ public class AdminDashboardController implements Initializable {
 
     @FXML public VBox pnItemsForum;
     @FXML public VBox pnAccommodationItems;
+    @FXML public Label genrelabel;
+    @FXML public Label txtBirthDate;
+    @FXML public TextArea bioTextArea;
     @FXML private Button btnExit;
     @FXML private Label namelabel;
     @FXML private Label idlabel;
@@ -250,14 +255,33 @@ public class AdminDashboardController implements Initializable {
      */
     public void initData(User user) {
         this.currentUser = user;
-        username.setText(currentUser.getName());
-        namelabel.setText(currentUser.getName());
+        username.setText(currentUser.getName()+" "+currentUser.getLastName());
+        namelabel.setText(currentUser.getName()+" "+currentUser.getLastName());
         idlabel.setText(String.valueOf(currentUser.getUserId()));
-        rolelabel.setText(currentUser.isAdmin() ? "Administrator" : "Client");
+        genrelabel.setText(" ");
+        if(currentUser.getGender()!=null){
+            if(currentUser.getGender()== User.Gender.MALE){
+                genrelabel.setText("Male");
+            }else {
+                if (currentUser.getGender()== User.Gender.FEMALE) {
+                    genrelabel.setText("Female");
+                } else {
+                    if (currentUser.getGender()== User.Gender.OTHER) {
+                        genrelabel.setText("Other");
+                    }
+                }
+            }
+        }
+        bioTextArea.setText(currentUser.getBio());
         passwordlabel.setText(currentUser.getPassword());
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formattedDate = currentUser.getRegistrationDate().format(formatter);
         datelabel.setText(formattedDate);
+
+        DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedBirthDate = currentUser.getBirthDate().format(formatter2);
+        txtBirthDate.setText(formattedBirthDate);
+
         emaillabel.setText(currentUser.getEmail());
         phonelabel.setText(currentUser.getPhone());
 
@@ -291,7 +315,7 @@ public class AdminDashboardController implements Initializable {
             circle.setFill(new ImagePattern(defaultProfilePicture));
             circleProfile.setFill(new ImagePattern(defaultProfilePicture));
             circleProfile.setStroke(Color.web("#151928"));
-            circleProfile.setStrokeWidth(5);
+            circleProfile.setStrokeWidth(4);
         } else {
             System.out.println("No se pudo cargar la imagen predeterminada.");
         }
@@ -306,7 +330,7 @@ public class AdminDashboardController implements Initializable {
             AtomicReference<FXMLLoader> loader = new AtomicReference<>(new FXMLLoader(getClass().getResource(Constants.MODIFY_FXML)));
             Parent root = loader.get().load();
             System.out.println("Usuario que se intenta modificar: "+currentUser);
-            ModifyController modify = loader.get().getController();
+            ModifyUserController modify = loader.get().getController();
             modify.initData(currentUser, userController);
             Stage stage = new Stage();
             stage.initStyle(StageStyle.UNDECORATED);
@@ -316,7 +340,7 @@ public class AdminDashboardController implements Initializable {
             stage.setUserData(this);
 
             // Configurar el evento para el botón Cancelar
-            ModifyController modifyController = loader.get().getController();
+            ModifyUserController modifyController = loader.get().getController();
             modifyController.btnCancel.setOnAction(event -> {
                 stage.close();
             });
@@ -339,7 +363,7 @@ public class AdminDashboardController implements Initializable {
                     rolelabel.setText("Standard User");
                 }
                 passwordlabel.setText(currentUser.getPassword());
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 String formattedDate = currentUser.getRegistrationDate().format(formatter);
                 datelabel.setText(formattedDate);
                 emaillabel.setText(currentUser.getEmail());

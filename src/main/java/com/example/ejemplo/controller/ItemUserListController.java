@@ -37,6 +37,10 @@ public class ItemUserListController {
     public Button btnDelete;
     @FXML
     public Button btnModify;
+    @FXML
+    public Label lblBirthDate;
+    @FXML
+    public Label lblDni;
 
     private User user;
     private UserController userController;
@@ -77,9 +81,11 @@ public class ItemUserListController {
         }else{
             lblRole.setText("User");
         }
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formattedDate = user.getRegistrationDate().format(formatter);
         lblRegDate.setText(formattedDate);
+        lblBirthDate.setText(user.getBirthDate().format(formatter));
+        lblDni.setText(user.getDni());
     }
 
     /**
@@ -107,13 +113,13 @@ public class ItemUserListController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.MODIFY_FXML));
             Parent root = loader.load();
             System.out.println("Usuario que se intenta modificar: " + user);
-            ModifyController modify = loader.getController();
+            ModifyUserController modify = loader.getController();
             modify.initData(user, userController);
             Stage stage = new Stage();
             stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(new Scene(root));
             stage.setUserData(this);
-            ModifyController modifyController = loader.getController();
+            ModifyUserController modifyController = loader.getController();
             dashboard.updateStatistics();
             modifyController.btnCancel.setOnAction(event -> {
                 stage.close();
