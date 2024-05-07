@@ -37,9 +37,9 @@
                         <Font size="18.0" />
                     </font>
                 </Label>
-                <Button id="btnProfile" fx:id="btnProfile" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="42.0" prefWidth="259.0" style="-fx-background-color: #151928;" stylesheets="@../css/stylesdashboard.css" text="Profile" textFill="#e7e5e5">
+                <Button id="btnProfile" fx:id="btnProfile" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="42.0" prefWidth="259.0" style="-fx-background-color: #151928;" stylesheets="@../css/stylesdashboard.css" text="Profile" textFill="#e7e5e5" translateX="-2.0">
                     <graphic>
-                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" translateX="2.0">
                             <image>
                                 <Image url="@../multimedia/icons8-usuario-de-género-neutro-64.png" />
                             </image>
@@ -187,7 +187,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="btnAboutUs" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onMouseClicked="#signOut" prefHeight="42.0" prefWidth="259.0" style="-fx-background-color: #151928;" stylesheets="@../css/stylesdashboard.css" text="About Us" translateX="5.0" translateY="85.0">
+            <Button fx:id="btnAboutUs" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="42.0" prefWidth="259.0" style="-fx-background-color: #151928;" stylesheets="@../css/stylesdashboard.css" text="About Us" translateX="5.0" translateY="85.0">
                <graphic>
                   <ImageView fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -582,7 +582,7 @@
                   </ImageView>
                     </children>
                 </Pane>
-            <Pane fx:id="pnlAccommodations" style="-fx-background-color: #edf1ff;">
+            <Pane fx:id="pnlAccommodations" style="-fx-background-color: #edf1ff;" visible="false">
                <children>
                   <Label layoutX="57.0" layoutY="25.0" prefHeight="66.0" prefWidth="580.0" style="-fx-text-fill: #0c0e17;" text="Accommodation Management" textFill="#e7e5e5">
                      <font>
@@ -967,9 +967,9 @@
                   </ImageView>
                </children>
             </Pane>
-            <Pane fx:id="pnlConversations" style="-fx-background-color: #edf1ff;" visible="false">
+            <Pane fx:id="pnlConversations" style="-fx-background-color: #edf1ff;">
                <children>
-                  <Label layoutX="57.0" layoutY="25.0" prefHeight="66.0" prefWidth="378.0" style="-fx-text-fill: #0c0e17;" text="Conversations Management" textFill="#e7e5e5">
+                  <Label layoutX="57.0" layoutY="25.0" prefHeight="66.0" prefWidth="517.0" style="-fx-text-fill: #0c0e17;" text="Conversations Management" textFill="#e7e5e5">
                      <font>
                         <Font size="40.0" />
                      </font>
@@ -1056,7 +1056,7 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT" layoutX="4.0" layoutY="189.0" prefHeight="42.0" prefWidth="1046.0" spacing="80.0" style="-fx-background-color: #edf1ff;" translateX="10.0">
                      <children>
-                        <Label style="-fx-text-fill: #0c0e17;" text="ID" textFill="#e7e5e5" translateX="-25.0">
+                        <Label style="-fx-text-fill: #0c0e17;" text="ID" textFill="#e7e5e5" translateX="-38.0">
                            <HBox.margin>
                               <Insets left="50.0" />
                            </HBox.margin>
@@ -1064,7 +1064,7 @@
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <Label prefHeight="21.0" prefWidth="74.0" style="-fx-text-fill: #0c0e17;" text="Name" textFill="#e7e5e5" translateX="-72.0">
+                        <Label prefHeight="21.0" prefWidth="74.0" style="-fx-text-fill: #0c0e17;" text="User 1" textFill="#e7e5e5" translateX="-68.0">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
@@ -1072,7 +1072,7 @@
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <Label prefHeight="21.0" prefWidth="64.0" style="-fx-text-fill: #0c0e17;" text="E-mail" textFill="#e7e5e5" translateX="2.0">
+                        <Label prefHeight="21.0" prefWidth="64.0" style="-fx-text-fill: #0c0e17;" text="User 2" textFill="#e7e5e5" translateX="40.0">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
@@ -1080,20 +1080,10 @@
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <Label prefHeight="21.0" prefWidth="102.0" style="-fx-text-fill: #0c0e17;" text="Phone" textFill="#e7e5e5" translateX="75.0">
+                        <Label prefHeight="21.0" prefWidth="102.0" style="-fx-text-fill: #0c0e17;" text="Nº Messages" textFill="#e7e5e5" translateX="130.0">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Label>
-                        <Label prefHeight="21.0" prefWidth="44.0" style="-fx-text-fill: #0c0e17;" text="Role" textFill="#e7e5e5" translateX="19.0">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Label>
-                        <Label prefHeight="21.0" prefWidth="152.0" style="-fx-text-fill: #0c0e17;" text="Registration Date" textFill="#e7e5e5" translateX="55.0">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -1109,6 +1099,35 @@
                         </VBox>
                      </content>
                   </ScrollPane>
+                  <ImageView fitHeight="184.0" fitWidth="419.0" layoutX="777.0" layoutY="-10.0">
+                     <image>
+                        <Image url="@../multimedia/logoTransparente.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="btnAddConversation" layoutX="1015.0" layoutY="180.0" mnemonicParsing="false" onAction="#handleAddUser" prefHeight="32.0" prefWidth="133.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Add Conversation">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <ImageView translateX="1158.0">
+                     <image>
+                        <Image url="@../multimedia/icons8-multiplicar-24.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="24.0" fitWidth="19.0" translateX="1138.0" translateY="5.0">
+                     <image>
+                        <Image url="@../multimedia/icons8-línea-horizontal-24.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane fx:id="pnlAboutUs" style="-fx-background-color: #edf1ff;" visible="false">
+               <children>
+                  <Label layoutX="57.0" layoutY="25.0" prefHeight="66.0" prefWidth="378.0" style="-fx-text-fill: #0c0e17;" text="ABOUT US" textFill="#e7e5e5">
+                     <font>
+                        <Font size="40.0" />
+                     </font>
+                  </Label>
                   <ImageView fitHeight="184.0" fitWidth="419.0" layoutX="777.0" layoutY="-10.0">
                      <image>
                         <Image url="@../multimedia/logoTransparente.png" />

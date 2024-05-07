@@ -1,6 +1,7 @@
 package com.example.ejemplo.controller;
 
 import com.example.ejemplo.model.Accommodation;
+import com.example.ejemplo.model.Conversation;
 import com.example.ejemplo.model.ForumTopic;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -72,6 +73,7 @@ public class AdminDashboardController implements Initializable {
     @FXML public Button btnConversations;
     @FXML public Button btnAboutUs;
     @FXML public Button btnBookings;
+    @FXML public Pane pnlAboutUs;
     @FXML private Button btnExit;
     @FXML private Label namelabel;
     @FXML private Label idlabel;
@@ -108,6 +110,7 @@ public class AdminDashboardController implements Initializable {
     private final UserController userController = new UserController();
     private final ForumTopicController topicController = new ForumTopicController();
     private final AccommodationController accommodationController = new AccommodationController();
+    private final ConversationController conversationController=new ConversationController();
     private final LocalDate oneWeekAgo = LocalDate.now().minusWeeks(1);
 
     /**
@@ -175,6 +178,22 @@ public class AdminDashboardController implements Initializable {
             }
             System.out.println(acco);
         }
+
+        List<Conversation> conversations = conversationController.getAllConversations();
+        for (Conversation conver : conversations) {
+            updateStatistics();
+            System.out.println(conver);
+            try {
+                FXMLLoader loaderConversations = new FXMLLoader(getClass().getResource(Constants.ITEM_CONVERSATION_LIST_FXML));
+                Node node = loaderConversations.load();
+                ItemConversationListController controller = loaderConversations.getController();
+                controller.initData(conver, conversationController, node, pnConversationsItems, this);
+                pnConversationsItems.getChildren().add(node);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            System.out.println(conver);
+        }
     }
 
     public void refresh(){
@@ -224,6 +243,22 @@ public class AdminDashboardController implements Initializable {
             }
             System.out.println(acco);
         }
+
+        // Obtener todos los alojamientos y actualizar estadísticas
+        List<Conversation> conversations = conversationController.getAllConversations();
+        for (Conversation conver : conversations) {
+            updateStatistics();
+            try {
+                FXMLLoader loaderConversations = new FXMLLoader(getClass().getResource(Constants.ITEM_CONVERSATION_LIST_FXML));
+                Node node = loaderConversations.load();
+                ItemConversationListController controller = loaderConversations.getController();
+                controller.initData(conver, conversationController, node, pnConversationsItems, this);
+                pnConversationsItems.getChildren().add(node);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            System.out.println(conver);
+        }
     }
 
     private void updateForumStatistics() {
@@ -269,6 +304,9 @@ public class AdminDashboardController implements Initializable {
             pnlUsers.setVisible(false);
             pnlAccommodations.setVisible(false);
             pnlForum.setVisible(false);
+            pnlBookings.setVisible(false);
+            pnlConversations.setVisible(false);
+            pnlAboutUs.setVisible(false);
         }
         if(actionEvent.getSource()== btnUsers)
         {
@@ -277,6 +315,9 @@ public class AdminDashboardController implements Initializable {
             pnlProfile.setVisible(false);
             pnlAccommodations.setVisible(false);
             pnlForum.setVisible(false);
+            pnlBookings.setVisible(false);
+            pnlConversations.setVisible(false);
+            pnlAboutUs.setVisible(false);
         }
         if (actionEvent.getSource() == btnAccommodations) {
             pnlAccommodations.setVisible(true);
@@ -284,6 +325,19 @@ public class AdminDashboardController implements Initializable {
             pnlProfile.setVisible(false);
             pnlUsers.setVisible(false);
             pnlForum.setVisible(false);
+            pnlBookings.setVisible(false);
+            pnlConversations.setVisible(false);
+            pnlAboutUs.setVisible(false);
+        }
+        if (actionEvent.getSource() == btnBookings) {
+            pnlBookings.setVisible(true);
+            pnlBookings.toFront();
+            pnlProfile.setVisible(false);
+            pnlUsers.setVisible(false);
+            pnlAccommodations.setVisible(false);
+            pnlForum.setVisible(false);
+            pnlConversations.setVisible(false);
+            pnlAboutUs.setVisible(false);
         }
         if (actionEvent.getSource() == btnForum) {
             pnlForum.setVisible(true);
@@ -291,6 +345,29 @@ public class AdminDashboardController implements Initializable {
             pnlProfile.setVisible(false);
             pnlUsers.setVisible(false);
             pnlAccommodations.setVisible(false);
+            pnlBookings.setVisible(false);
+            pnlConversations.setVisible(false);
+            pnlAboutUs.setVisible(false);
+        }
+        if (actionEvent.getSource() == btnConversations) {
+            pnlConversations.setVisible(true);
+            pnlConversations.toFront();
+            pnlProfile.setVisible(false);
+            pnlUsers.setVisible(false);
+            pnlAccommodations.setVisible(false);
+            pnlBookings.setVisible(false);
+            pnlAboutUs.setVisible(false);
+            pnlForum.setVisible(false);
+        }
+        if (actionEvent.getSource() == btnAboutUs) {
+            pnlAboutUs.setVisible(true);
+            pnlAboutUs.toFront();
+            pnlProfile.setVisible(false);
+            pnlUsers.setVisible(false);
+            pnlAccommodations.setVisible(false);
+            pnlBookings.setVisible(false);
+            pnlConversations.setVisible(false);
+            pnlForum.setVisible(false);
         }
     }
 
@@ -390,18 +467,14 @@ public class AdminDashboardController implements Initializable {
             Stage stage = new Stage();
             stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(new Scene(root));
-
             // Configurar el controlador actual como userData
             stage.setUserData(this);
-
             // Configurar el evento para el botón Cancelar
             ModifyUserController modifyController = loader.get().getController();
             modifyController.btnCancel.setOnAction(event -> {
                 stage.close();
             });
-
             modifyController.btnAccept.setOnAction(event -> {
-
                 System.out.println(currentUser);
                 currentUser.setName(modifyController.txtName.getText());
                 currentUser.setPhone(modifyController.txtPhone.getText());
@@ -432,7 +505,6 @@ public class AdminDashboardController implements Initializable {
                 System.out.println(currentUser);
                 initData(currentUser);
                 System.out.println(currentUser);
-
                 for (User user : users) {
                     updateStatistics();
                     try {
@@ -518,7 +590,6 @@ public class AdminDashboardController implements Initializable {
     private void showAlertExitConfirmation() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText(null);
-        alert.initStyle(StageStyle.UTILITY);
         alert.setTitle("Exit");
         alert.setContentText("Are you sure to exit?");
         Optional<ButtonType> result = alert.showAndWait();
@@ -531,7 +602,6 @@ public class AdminDashboardController implements Initializable {
     private void showAlertLogOutConfirmation() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText(null);
-        alert.initStyle(StageStyle.UTILITY);
         alert.setTitle("LogOut");
         alert.setContentText("Are you sure to logout?");
         Optional<ButtonType> result = alert.showAndWait();
@@ -575,5 +645,27 @@ public class AdminDashboardController implements Initializable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+    }
+
+    @FXML
+    public void handleAddConversation(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(ADDUSER_FXML));
+            Parent root = loader.load();
+            AddUserController add = loader.getController();
+            add.initData();
+            Stage stage = new Stage();
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setScene(new Scene(root));
+            stage.setUserData(this);
+            AddConversationController addController = loader.getController();
+            this.updateStatistics();
+            addController.btnCancel.setOnAction(event -> {
+                stage.close();
+            });
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

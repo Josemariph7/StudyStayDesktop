@@ -26,6 +26,7 @@ public class ConversationDAO {
 
             while (resultSet.next()) {
                 Conversation conversation = mapConversation(resultSet);
+                System.out.println(conversation);
                 conversations.add(conversation);
             }
         } catch (SQLException e) {
@@ -116,6 +117,9 @@ public class ConversationDAO {
     private Conversation mapConversation(ResultSet resultSet) throws SQLException {
         Conversation conversation = new Conversation();
         conversation.setConversationId(resultSet.getLong("ConversationId"));
+
+        conversation.setUser1Id(resultSet.getLong("User1Id"));
+        conversation.setUser2Id(resultSet.getLong("User2Id"));
 
         // Obtener los mensajes de la conversación
         List<Message> messages = getMessagesForConversation(conversation.getConversationId());
