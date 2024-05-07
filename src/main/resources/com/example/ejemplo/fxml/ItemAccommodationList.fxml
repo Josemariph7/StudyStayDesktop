@@ -84,7 +84,7 @@
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
                   <Pane prefHeight="87.0" prefWidth="20.0" />
-                  <TextArea fx:id="areaDescription" maxHeight="70.0" maxWidth="400.0" prefHeight="70.0" prefWidth="400.0" promptText="Description" style="-fx-background-color: #edf1ff;" translateX="30.0" translateY="5.0" />
+                  <TextArea fx:id="areaDescription" editable="false" maxHeight="70.0" maxWidth="400.0" prefHeight="70.0" prefWidth="400.0" promptText="Description" style="-fx-background-color: #edf1ff;" translateX="30.0" translateY="5.0" />
                     <Button fx:id="btnDeleteAccommodation" mnemonicParsing="false" prefHeight="32.0" prefWidth="66.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Delete" translateX="438.0" translateY="42.0">
                         <font>
                             <Font size="14.0" />

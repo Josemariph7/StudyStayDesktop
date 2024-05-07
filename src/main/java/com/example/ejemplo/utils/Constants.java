@@ -7,7 +7,8 @@ public class Constants {
     public static final String ITEM_FORUMTOPIC_LIST_FXML = "/com/example/ejemplo/fxml/ItemForumList.fxml";
     public static final String ITEM_ACCOMMODATION_LIST_FXML = "/com/example/ejemplo/fxml/ItemAccommodationList.fxml";
     public static final String LOGIN_FXML = "/com/example/ejemplo/fxml/LogIn.fxml";
-    public static final String MODIFY_FXML = "/com/example/ejemplo/fxml/ModifyUser.fxml";
+    public static final String MODIFYUSER_FXML = "/com/example/ejemplo/fxml/ModifyUser.fxml";
+    public static final String ADDUSER_FXML = "/com/example/ejemplo/fxml/AddUser.fxml";
     public static final String SIGNIN_FXML = "/com/example/ejemplo/fxml/SignIn.fxml";
     public static final String SIGNUP_FXML = "/com/example/ejemplo/fxml/SignUp.fxml";
     public static final String DASHBOARD_ADMIN_FXML = "/com/example/ejemplo/fxml/DashboardAdmin.fxml";

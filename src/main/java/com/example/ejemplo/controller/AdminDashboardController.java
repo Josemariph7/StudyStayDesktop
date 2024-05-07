@@ -9,10 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -35,9 +32,11 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicReference;
+
+import static com.example.ejemplo.utils.Constants.ADDUSER_FXML;
 
 /**
  * Controlador para el panel de administrador.
@@ -49,6 +48,30 @@ public class AdminDashboardController implements Initializable {
     @FXML public Label genrelabel;
     @FXML public Label txtBirthDate;
     @FXML public TextArea bioTextArea;
+    @FXML public VBox pnConversationsItems;
+    @FXML public Label NewMessages;
+    @FXML public Label NewConversations;
+    @FXML public Label TotalMessages;
+    @FXML public Label TotalConversations;
+    @FXML public Pane pnlConversations;
+    @FXML public Label NewComments;
+    @FXML public Label NewTopics;
+    @FXML public Label TotalForumComments;
+    @FXML public Label TotalForumTopics;
+    @FXML public VBox pnBookingsItems;
+    @FXML public Label bookingsLastWeek1;
+    @FXML public Label averagePrice1;
+    @FXML public Label currentBookings;
+    @FXML public Label totalBookings;
+    @FXML public Pane pnlBookings;
+    @FXML public Label accommodationsLastWeek;
+    @FXML public Label averagePrice;
+    @FXML public Label availableAccommodations;
+    @FXML public Label totalAccommodations;
+    @FXML public Button btnAddUser;
+    @FXML public Button btnConversations;
+    @FXML public Button btnAboutUs;
+    @FXML public Button btnBookings;
     @FXML private Button btnExit;
     @FXML private Label namelabel;
     @FXML private Label idlabel;
@@ -154,7 +177,54 @@ public class AdminDashboardController implements Initializable {
         }
     }
 
+    public void refresh(){
+        List<User> users = userController.getAll();
+        for (User user : users) {
+            updateStatistics();
+            try {
+                FXMLLoader loaderUsers = new FXMLLoader(getClass().getResource(Constants.ITEM_USER_LIST_FXML));
+                Node node = loaderUsers.load();
 
+                ItemUserListController controller = loaderUsers.getController();
+                controller.initData(user, userController, node, pnItems, this);
+
+                pnItems.getChildren().add(node);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        // Obtener todos los temas del foro y actualizar estadísticas
+        List<ForumTopic> topics = topicController.getAllTopics();
+        for (ForumTopic topic : topics) {
+            updateStatistics();
+            try {
+                FXMLLoader loaderForumTopics = new FXMLLoader(getClass().getResource(Constants.ITEM_FORUMTOPIC_LIST_FXML));
+                Node node = loaderForumTopics.load();
+                ItemForumListController controller = loaderForumTopics.getController();
+                controller.initData(topic, topicController, node, pnItemsForum, this);
+                pnItemsForum.getChildren().add(node);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        // Obtener todos los alojamientos y actualizar estadísticas
+        List<Accommodation> accommodations = accommodationController.getAllAccommodations();
+        for (Accommodation acco : accommodations) {
+            updateStatistics();
+            try {
+                FXMLLoader loaderAccommodation = new FXMLLoader(getClass().getResource(Constants.ITEM_ACCOMMODATION_LIST_FXML));
+                Node node = loaderAccommodation.load();
+                ItemAccommodationListController controller = loaderAccommodation.getController();
+                controller.initData(acco, accommodationController, node, pnAccommodationItems, this);
+                pnAccommodationItems.getChildren().add(node);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            System.out.println(acco);
+        }
+    }
 
     private void updateForumStatistics() {
     }
@@ -230,22 +300,7 @@ public class AdminDashboardController implements Initializable {
      */
     public void signOut(MouseEvent actionEvent) {
         if (actionEvent.getSource() == btnSignout) {
-            Stage stage = (Stage) btnSignout.getScene().getWindow();
-
-            try {
-                URL fxmlUrl = getClass().getResource(Constants.LOGIN_FXML);
-                if (fxmlUrl == null) {
-                    throw new IllegalArgumentException(Constants.FILE_NOT_FOUND_ERROR);
-                }
-                Parent root = FXMLLoader.load(fxmlUrl);
-                Scene scene = new Scene(root);
-                scene.setFill(Color.TRANSPARENT);
-                stage.setScene(scene);
-                stage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
-                showError(Constants.LOAD_VIEW_ERROR);
-            }
+            showAlertLogOutConfirmation();
         }
     }
 
@@ -327,7 +382,7 @@ public class AdminDashboardController implements Initializable {
     @FXML
     private void handleModify() {
         try {
-            AtomicReference<FXMLLoader> loader = new AtomicReference<>(new FXMLLoader(getClass().getResource(Constants.MODIFY_FXML)));
+            AtomicReference<FXMLLoader> loader = new AtomicReference<>(new FXMLLoader(getClass().getResource(Constants.MODIFYUSER_FXML)));
             Parent root = loader.get().load();
             System.out.println("Usuario que se intenta modificar: "+currentUser);
             ModifyUserController modify = loader.get().getController();
@@ -439,13 +494,12 @@ public class AdminDashboardController implements Initializable {
         }
     }
 
-
     /**
      * Cierra la aplicación.
      */
     @FXML
     private void closeApp() {
-        System.exit(0);
+        showAlertExitConfirmation();
     }
 
     /**
@@ -458,5 +512,68 @@ public class AdminDashboardController implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    @FXML
+    private void showAlertExitConfirmation() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText(null);
+        alert.initStyle(StageStyle.UTILITY);
+        alert.setTitle("Exit");
+        alert.setContentText("Are you sure to exit?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            System.exit(0);
+        }
+    }
+
+    @FXML
+    private void showAlertLogOutConfirmation() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText(null);
+        alert.initStyle(StageStyle.UTILITY);
+        alert.setTitle("LogOut");
+        alert.setContentText("Are you sure to logout?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            Stage stage = (Stage) btnSignout.getScene().getWindow();
+
+            try {
+                URL fxmlUrl = getClass().getResource(Constants.LOGIN_FXML);
+                if (fxmlUrl == null) {
+                    throw new IllegalArgumentException(Constants.FILE_NOT_FOUND_ERROR);
+                }
+                Parent root = FXMLLoader.load(fxmlUrl);
+                Scene scene = new Scene(root);
+                scene.setFill(Color.TRANSPARENT);
+                stage.setScene(scene);
+                stage.show();
+              } catch (IOException e) {
+                showError(Constants.LOAD_VIEW_ERROR);
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    @FXML
+    public void handleAddUser(ActionEvent actionEvent) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(ADDUSER_FXML));
+                Parent root = loader.load();
+                AddUserController add = loader.getController();
+                add.initData();
+                Stage stage = new Stage();
+                stage.initStyle(StageStyle.UNDECORATED);
+                stage.setScene(new Scene(root));
+                stage.setUserData(this);
+                AddUserController addController = loader.getController();
+                this.updateStatistics();
+                addController.btnCancel.setOnAction(event -> {
+                    stage.close();
+                });
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
     }
 }

@@ -2,13 +2,13 @@ package com.example.ejemplo.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import com.example.ejemplo.model.User;
+import javafx.stage.StageStyle;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Controlador para la ventana de modificación de usuarios.
@@ -65,12 +65,18 @@ public class ModifyUserController {
         user.setLastName(txtApellidos.getText());
         user.setDni(txtDNI.getText());
         System.out.println(user);
-
-        // Actualiza el usuario en la base de datos
-        userController.update(user);
-        // Actualiza la lista de usuarios en la interfaz de administrador
-        updateItemAdminList();
-
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText(null);
+        alert.initStyle(StageStyle.UTILITY);
+        alert.setTitle("Exit");
+        alert.setContentText("Are you sure to exit?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            // Actualiza el usuario en la base de datos
+            userController.update(user);
+            // Actualiza la lista de usuarios en la interfaz de administrador
+            updateItemAdminList();
+        }
         // Cierra la ventana de modificación
         ((Stage) btnAccept.getScene().getWindow()).close();
     }
@@ -94,10 +100,24 @@ public class ModifyUserController {
         this.user = user;
         // Configura los valores iniciales de los campos con los datos del usuario
         if (user != null) {
-            //roleChoiceBox.getItems().addAll(User.UserRole.values());
-            //roleChoiceBox.getSelectionModel().select(user.getRole());
-            genderChoiceBox.getItems().clear();
-            genderChoiceBox.setValue(user.getGender());
+            String[] genders={"Male", "Female", "Other"};
+            genderChoiceBox.getItems().addAll(genders);
+
+            genderChoiceBox.setValue("Gender");
+
+            if(user.getGender()!=null){
+                if(user.getGender().equals(User.Gender.MALE)){
+                    genderChoiceBox.setValue("Male");
+                }else {
+                    if (user.getGender().equals(User.Gender.FEMALE)) {
+                        genderChoiceBox.setValue("Female");
+                    } else {
+                        if (user.getGender().equals(User.Gender.OTHER)) {
+                            genderChoiceBox.setValue("Other");
+                        }
+                    }
+                }
+            }
             txtName.setText(user.getName());
             txtEmail.setText(user.getEmail());
             txtPhone.setText(user.getPhone());

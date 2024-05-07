@@ -110,7 +110,7 @@ public class ItemUserListController {
     @FXML
     private void handleModify() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.MODIFY_FXML));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.MODIFYUSER_FXML));
             Parent root = loader.load();
             System.out.println("Usuario que se intenta modificar: " + user);
             ModifyUserController modify = loader.getController();

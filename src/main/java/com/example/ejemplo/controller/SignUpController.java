@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import com.example.ejemplo.utils.Constants;
+import javafx.stage.StageStyle;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -12,6 +13,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -115,10 +117,7 @@ public class SignUpController implements Initializable {
         if (!validateName(name)) errors.append("El nombre debe contener al menos un apellido y solo caracteres válidos.\n");
         if (!validatePassword(password)) errors.append("La contraseña debe tener más de 8 caracteres y contener al menos una letra mayúscula y un número.\n");
         if (!validatePhone(phone)) errors.append("El teléfono debe comenzar con +34 seguido de 9 dígitos.\n");
-/*
-        VALIDAR LOS CAMPOS AÑADIDOS DESDE LAS MODIFICACIONES EN LA BASE DE DATOS
 
-       */
         if (!errors.isEmpty()) {
             showError(errors.toString());
             return;
@@ -219,6 +218,14 @@ public class SignUpController implements Initializable {
      */
     @FXML
     private void closeApp() {
-        System.exit(0);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText(null);
+        alert.initStyle(StageStyle.UTILITY);
+        alert.setTitle("Exit");
+        alert.setContentText("Are you sure to exit?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            System.exit(0);
+        }
     }
 }

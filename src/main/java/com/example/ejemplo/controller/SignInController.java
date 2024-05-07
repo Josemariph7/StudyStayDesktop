@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -17,6 +18,7 @@ import com.example.ejemplo.utils.Constants;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 public class SignInController {
 
@@ -151,6 +153,14 @@ public class SignInController {
      */
     @FXML
     private void closeApp() {
-        System.exit(0);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText(null);
+        alert.initStyle(StageStyle.UTILITY);
+        alert.setTitle("Exit");
+        alert.setContentText("Are you sure to exit?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            System.exit(0);
+        }
     }
 }
