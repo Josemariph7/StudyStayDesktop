@@ -1,8 +1,6 @@
 package com.example.ejemplo.controller;
 
-import com.example.ejemplo.model.Accommodation;
-import com.example.ejemplo.model.Conversation;
-import com.example.ejemplo.model.ForumTopic;
+import com.example.ejemplo.model.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,7 +19,6 @@ import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import com.example.ejemplo.model.User;
 import com.example.ejemplo.utils.Constants;
 
 import java.io.ByteArrayInputStream;
@@ -37,6 +34,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicReference;
 
+import static com.example.ejemplo.utils.Constants.ADDCONVERSATION_FXML;
 import static com.example.ejemplo.utils.Constants.ADDUSER_FXML;
 
 /**
@@ -74,6 +72,7 @@ public class AdminDashboardController implements Initializable {
     @FXML public Button btnAboutUs;
     @FXML public Button btnBookings;
     @FXML public Pane pnlAboutUs;
+    @FXML public Button btnAddConversation;
     @FXML private Button btnExit;
     @FXML private Label namelabel;
     @FXML private Label idlabel;
@@ -131,75 +130,18 @@ public class AdminDashboardController implements Initializable {
         });
         dragArea.toFront();
 
-        // Obtener todos los usuarios y actualizar estadísticas
-        List<User> users = userController.getAll();
-        for (User user : users) {
-            updateStatistics();
-            try {
-                FXMLLoader loaderUsers = new FXMLLoader(getClass().getResource(Constants.ITEM_USER_LIST_FXML));
-                Node node = loaderUsers.load();
-
-                ItemUserListController controller = loaderUsers.getController();
-                controller.initData(user, userController, node, pnItems, this);
-
-                pnItems.getChildren().add(node);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        // Obtener todos los temas del foro y actualizar estadísticas
-        List<ForumTopic> topics = topicController.getAllTopics();
-        for (ForumTopic topic : topics) {
-            updateStatistics();
-            try {
-                FXMLLoader loaderForumTopics = new FXMLLoader(getClass().getResource(Constants.ITEM_FORUMTOPIC_LIST_FXML));
-                Node node = loaderForumTopics.load();
-                ItemForumListController controller = loaderForumTopics.getController();
-                controller.initData(topic, topicController, node, pnItemsForum, this);
-                pnItemsForum.getChildren().add(node);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        // Obtener todos los alojamientos y actualizar estadísticas
-        List<Accommodation> accommodations = accommodationController.getAllAccommodations();
-        for (Accommodation acco : accommodations) {
-            updateStatistics();
-            try {
-                FXMLLoader loaderAccommodation = new FXMLLoader(getClass().getResource(Constants.ITEM_ACCOMMODATION_LIST_FXML));
-                Node node = loaderAccommodation.load();
-                ItemAccommodationListController controller = loaderAccommodation.getController();
-                controller.initData(acco, accommodationController, node, pnAccommodationItems, this);
-                pnAccommodationItems.getChildren().add(node);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            System.out.println(acco);
-        }
-
-        List<Conversation> conversations = conversationController.getAllConversations();
-        for (Conversation conver : conversations) {
-            updateStatistics();
-            System.out.println(conver);
-            try {
-                FXMLLoader loaderConversations = new FXMLLoader(getClass().getResource(Constants.ITEM_CONVERSATION_LIST_FXML));
-                Node node = loaderConversations.load();
-                ItemConversationListController controller = loaderConversations.getController();
-                controller.initData(conver, conversationController, node, pnConversationsItems, this);
-                pnConversationsItems.getChildren().add(node);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            System.out.println(conver);
-        }
+        refresh();
     }
 
     public void refresh(){
+        pnItems.getChildren().clear();
+        pnItemsForum.getChildren().clear();
+        pnAccommodationItems.getChildren().clear();
+        pnConversationsItems.getChildren().clear();
+
         List<User> users = userController.getAll();
         for (User user : users) {
-            updateStatistics();
+            updateUserStatistics();
             try {
                 FXMLLoader loaderUsers = new FXMLLoader(getClass().getResource(Constants.ITEM_USER_LIST_FXML));
                 Node node = loaderUsers.load();
@@ -216,7 +158,7 @@ public class AdminDashboardController implements Initializable {
         // Obtener todos los temas del foro y actualizar estadísticas
         List<ForumTopic> topics = topicController.getAllTopics();
         for (ForumTopic topic : topics) {
-            updateStatistics();
+            updateUserStatistics();
             try {
                 FXMLLoader loaderForumTopics = new FXMLLoader(getClass().getResource(Constants.ITEM_FORUMTOPIC_LIST_FXML));
                 Node node = loaderForumTopics.load();
@@ -231,7 +173,7 @@ public class AdminDashboardController implements Initializable {
         // Obtener todos los alojamientos y actualizar estadísticas
         List<Accommodation> accommodations = accommodationController.getAllAccommodations();
         for (Accommodation acco : accommodations) {
-            updateStatistics();
+            updateUserStatistics();
             try {
                 FXMLLoader loaderAccommodation = new FXMLLoader(getClass().getResource(Constants.ITEM_ACCOMMODATION_LIST_FXML));
                 Node node = loaderAccommodation.load();
@@ -247,7 +189,7 @@ public class AdminDashboardController implements Initializable {
         // Obtener todos los alojamientos y actualizar estadísticas
         List<Conversation> conversations = conversationController.getAllConversations();
         for (Conversation conver : conversations) {
-            updateStatistics();
+            updateUserStatistics();
             try {
                 FXMLLoader loaderConversations = new FXMLLoader(getClass().getResource(Constants.ITEM_CONVERSATION_LIST_FXML));
                 Node node = loaderConversations.load();
@@ -259,6 +201,42 @@ public class AdminDashboardController implements Initializable {
             }
             System.out.println(conver);
         }
+
+
+        updateUserStatistics();
+        updateForumStatistics();
+        updateConversationStatistics();
+    }
+
+    private void updateConversationStatistics() {
+        List<Conversation> convers = conversationController.getAllConversations();
+        MessageController messageController = new MessageController();
+        int totalConversations = 0;
+        int totalMessages=0;
+        int newConversations = 0;
+        int newMessages = 0;
+/*
+*
+* Completar estadisticas
+*
+* */
+        for (Conversation conver : convers) {
+            totalConversations++;
+
+            if (messageController.getAllMessages()!=null) {
+                List<Message> messages = messageController.getAllMessages();
+                for (Message message : messages) {
+                    totalMessages++;
+                    if(message.getDateTime().isAfter(oneWeekAgo.atStartOfDay()) || message.equals(oneWeekAgo)){
+                        newMessages++;
+                    }
+                }
+            }
+        }
+        TotalConversations.setText(String.valueOf(totalConversations));
+        TotalMessages.setText(String.valueOf(totalMessages));
+        NewConversations.setText(String.valueOf(newConversations));
+        NewMessages.setText(String.valueOf(newMessages));
     }
 
     private void updateForumStatistics() {
@@ -267,7 +245,7 @@ public class AdminDashboardController implements Initializable {
     /**
      * Actualiza las estadísticas de usuarios.
      */
-    public void updateStatistics() {
+    public void updateUserStatistics() {
         List<User> usersAux = userController.getAll();
         int totalUsers = 0;
         int totalClients=0;
@@ -409,14 +387,11 @@ public class AdminDashboardController implements Initializable {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formattedDate = currentUser.getRegistrationDate().format(formatter);
         datelabel.setText(formattedDate);
-
         DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formattedBirthDate = currentUser.getBirthDate().format(formatter2);
         txtBirthDate.setText(formattedBirthDate);
-
         emaillabel.setText(currentUser.getEmail());
         phonelabel.setText(currentUser.getPhone());
-
         // Cargar la imagen de perfil del usuario desde la base de datos
         byte[] profilePictureBytes = currentUser.getProfilePicture();
         if (profilePictureBytes != null && profilePictureBytes.length > 0) {
@@ -506,7 +481,7 @@ public class AdminDashboardController implements Initializable {
                 initData(currentUser);
                 System.out.println(currentUser);
                 for (User user : users) {
-                    updateStatistics();
+                    updateUserStatistics();
                     try {
                         loader.set(new FXMLLoader(getClass().getResource(Constants.ITEM_USER_LIST_FXML)));
                         Node node = loader.get().load();
@@ -541,7 +516,6 @@ public class AdminDashboardController implements Initializable {
         );
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         File file = fileChooser.showOpenDialog(stage);
-
         if (file != null) {
             try {
                 // Leer la imagen como un array de bytes
@@ -637,7 +611,7 @@ public class AdminDashboardController implements Initializable {
                 stage.setScene(new Scene(root));
                 stage.setUserData(this);
                 AddUserController addController = loader.getController();
-                this.updateStatistics();
+                this.updateUserStatistics();
                 addController.btnCancel.setOnAction(event -> {
                     stage.close();
                 });
@@ -650,16 +624,16 @@ public class AdminDashboardController implements Initializable {
     @FXML
     public void handleAddConversation(ActionEvent actionEvent) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(ADDUSER_FXML));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(ADDCONVERSATION_FXML));
             Parent root = loader.load();
-            AddUserController add = loader.getController();
+            AddConversationController add = loader.getController();
             add.initData();
             Stage stage = new Stage();
             stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(new Scene(root));
             stage.setUserData(this);
             AddConversationController addController = loader.getController();
-            this.updateStatistics();
+            this.updateUserStatistics();
             addController.btnCancel.setOnAction(event -> {
                 stage.close();
             });

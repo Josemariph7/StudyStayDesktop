@@ -42,8 +42,6 @@ public class ModifyUserController {
      * @param actionEvent Evento del botón de aceptar
      */
     public void handleAccept(ActionEvent actionEvent) {
-        // Actualiza los datos del usuario con los valores de los campos
-        //user.setRole(roleChoiceBox.getValue());
         user.setEmail(txtEmail.getText());
         user.setName(txtName.getText());
         user.setPassword(txtPassword.getText());
@@ -68,13 +66,11 @@ public class ModifyUserController {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText(null);
         alert.initStyle(StageStyle.UTILITY);
-        alert.setTitle("Exit");
-        alert.setContentText("Are you sure to exit?");
+        alert.setTitle("Modify User");
+        alert.setContentText("Are you sure to modify this User?");
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            // Actualiza el usuario en la base de datos
             userController.update(user);
-            // Actualiza la lista de usuarios en la interfaz de administrador
             updateItemAdminList();
         }
         // Cierra la ventana de modificación

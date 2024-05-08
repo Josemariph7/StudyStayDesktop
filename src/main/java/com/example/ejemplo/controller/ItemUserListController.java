@@ -1,5 +1,6 @@
 package com.example.ejemplo.controller;
 
+import com.example.ejemplo.model.Conversation;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -100,7 +101,7 @@ public class ItemUserListController {
         } else {
             System.out.println("El nodo no se encontró en el VBox.");
         }
-        dashboard.updateStatistics();
+        dashboard.updateUserStatistics();
         System.out.println("Eliminar usuario: " + user);
     }
 
@@ -120,7 +121,7 @@ public class ItemUserListController {
             stage.setScene(new Scene(root));
             stage.setUserData(this);
             ModifyUserController modifyController = loader.getController();
-            dashboard.updateStatistics();
+            dashboard.updateUserStatistics();
             modifyController.btnCancel.setOnAction(event -> {
                 stage.close();
             });
@@ -150,7 +151,10 @@ public class ItemUserListController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedDate = user.getRegistrationDate().format(formatter);
         lblRegDate.setText(formattedDate);
-        dashboard.updateStatistics();
+        dashboard.updateUserStatistics();
+    }
+
+    public void updateConversationData(Conversation conver) {
     }
 }
 

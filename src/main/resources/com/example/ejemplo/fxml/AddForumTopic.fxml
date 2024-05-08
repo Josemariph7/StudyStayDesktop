@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -15,11 +16,11 @@
     <VBox alignment="CENTER" layoutY="99.0" prefHeight="298.0" prefWidth="598.0" spacing="10.0" style="-fx-background-color: #edf1ff;" translateX="1.0" translateY="2.0">
 
         <HBox alignment="CENTER" spacing="10" translateX="10.0" translateY="-25.0">
-            <Label prefHeight="25.0" prefWidth="153.0" text="Conversation User 1: ">
+            <Label prefHeight="25.0" prefWidth="54.0" text="Title">
             <font>
                <Font size="16.0" />
             </font></Label>
-         <ChoiceBox fx:id="ChoiceBoxAddConverUser1" prefHeight="25.0" prefWidth="194.0" />
+         <TextField prefHeight="25.0" prefWidth="332.0" promptText="Title" style="-fx-background-color: transparent; -fx-border-color: #151928; -fx-border-width: 0px 0px 1px 0px;" />
         </HBox>
         <HBox alignment="CENTER" spacing="10" translateX="10.0" translateY="-5.0">
             <Label prefHeight="25.0" prefWidth="152.0" text="Conversation User 2: ">
@@ -47,7 +48,7 @@
     </VBox>
    <Pane prefHeight="104.0" prefWidth="600.0" style="-fx-background-color: #151928;">
       <children>
-           <Label alignment="CENTER" layoutX="14.0" layoutY="18.0" prefHeight="69.0" prefWidth="318.0" text="Add Conversation" textFill="#e8e8e8">
+           <Label alignment="CENTER" layoutX="14.0" layoutY="18.0" prefHeight="69.0" prefWidth="318.0" text="Create Forum Topic" textFill="#e8e8e8">
                <font>
                    <javafx.scene.text.Font size="30.0" />
                </font>

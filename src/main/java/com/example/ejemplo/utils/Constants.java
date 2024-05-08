@@ -20,12 +20,12 @@ public class Constants {
     public static final String DEFAULT_ACCOMMODATION_PICTURE = "/com/example/ejemplo/multimedia/defaultaccommodation.jpg";
 
     // Mensajes de error
-    public static final String FILE_NOT_FOUND_ERROR = "No se pudo encontrar el archivo fxml";
-    public static final String LOAD_VIEW_ERROR = "Error al cargar la vista de inicio de sesión.";
+    public static final String FILE_NOT_FOUND_ERROR = "Program cant load fxml";
+    public static final String LOAD_VIEW_ERROR = "Error loading login";
     public static final String IMAGE_SAVE_ERROR = "Error saving the image.";
-    public static final String DASHBOARD_LOAD_ERROR = "No se pudo cargar el panel de control. Inténtalo de nuevo más tarde.";
-    public static final String USER_EXISTS_ERROR = "El usuario ya existe.";
-    public static final String DATABASE_ERROR = "Error al registrar el usuario: ";
+    public static final String DASHBOARD_LOAD_ERROR = "Error loading Dashboard";
+    public static final String USER_EXISTS_ERROR = "This user already exists.";
+    public static final String DATABASE_ERROR = "Error loading Database: ";
 
     // Patrones de validación
     public static final String EMAIL_REGEX = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";

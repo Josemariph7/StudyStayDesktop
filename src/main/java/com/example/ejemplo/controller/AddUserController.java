@@ -71,7 +71,6 @@ public class AddUserController {
                 showError(Constants.USER_EXISTS_ERROR);
                 return;
             }
-            System.out.println();
             // Crea un nuevo objeto de usuario y lo guarda en la base de datos
             User user = new User(name,surnames,email,password,phone,birthDate, LocalDateTime.now(),gender,dni,null,null,isAdmin);
             UserController userController = new UserController();

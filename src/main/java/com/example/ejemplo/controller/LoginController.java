@@ -11,6 +11,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import com.example.ejemplo.utils.Constants;
@@ -88,4 +90,6 @@ public class LoginController implements Initializable {
             }
         });
     }
+
+
 }
