@@ -77,7 +77,6 @@ public class AdminDashboardController implements Initializable {
     @FXML private Label idlabel;
     @FXML private Label passwordlabel;
     @FXML private Label datelabel;
-    @FXML private Label rolelabel;
     @FXML private Label emaillabel;
     @FXML private Label phonelabel;
     @FXML private Button btnChangePhoto;
@@ -139,6 +138,10 @@ public class AdminDashboardController implements Initializable {
         pnAccommodationItems.getChildren().clear();
         pnConversationsItems.getChildren().clear();
         pnBookingsItems.getChildren().clear();
+
+        if(currentUser!=null) {
+            refreshProfile();
+        }
 
         List<User> users = userController.getAll();
         for (User user : users) {
@@ -373,12 +376,7 @@ public class AdminDashboardController implements Initializable {
         }
     }
 
-    /**
-     * Inicializa los datos del usuario.
-     * @param user El usuario actual.
-     */
-    public void initData(User user) {
-        this.currentUser = user;
+    public void refreshProfile(){
         username.setText(currentUser.getName()+" "+currentUser.getLastName());
         namelabel.setText(currentUser.getName()+" "+currentUser.getLastName());
         idlabel.setText(String.valueOf(currentUser.getUserId()));
@@ -386,7 +384,7 @@ public class AdminDashboardController implements Initializable {
         if(currentUser.getGender()!=null){
             if(currentUser.getGender()== User.Gender.MALE){
                 genrelabel.setText("Male");
-            }else {
+            } else {
                 if (currentUser.getGender()== User.Gender.FEMALE) {
                     genrelabel.setText("Female");
                 } else {
@@ -406,7 +404,16 @@ public class AdminDashboardController implements Initializable {
         txtBirthDate.setText(formattedBirthDate);
         emaillabel.setText(currentUser.getEmail());
         phonelabel.setText(currentUser.getPhone());
+    }
+
+    /**
+     * Inicializa los datos del usuario.
+     * @param user El usuario actual.
+     */
+    public void initData(User user) {
+
         // Cargar la imagen de perfil del usuario desde la base de datos
+        currentUser=user;
         byte[] profilePictureBytes = currentUser.getProfilePicture();
         if (profilePictureBytes != null && profilePictureBytes.length > 0) {
             try {
@@ -423,6 +430,7 @@ public class AdminDashboardController implements Initializable {
         } else {
             cargarImagenPredeterminada(); // Cargar imagen predeterminada si los bytes son nulos o vacíos
         }
+        refresh();
     }
 
     /**
@@ -452,7 +460,7 @@ public class AdminDashboardController implements Initializable {
             Parent root = loader.get().load();
             System.out.println("Usuario que se intenta modificar: "+currentUser);
             ModifyUserController modify = loader.get().getController();
-            modify.initData(currentUser, userController);
+            modify.initData(currentUser, userController,this);
             Stage stage = new Stage();
             stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(new Scene(root));
@@ -464,7 +472,7 @@ public class AdminDashboardController implements Initializable {
                 stage.close();
             });
             modifyController.btnAccept.setOnAction(event -> {
-                System.out.println(currentUser);
+
                 currentUser.setName(modifyController.txtName.getText());
                 currentUser.setPhone(modifyController.txtPhone.getText());
                 currentUser.setAdmin(modifyController.getUser().isAdmin());
@@ -474,11 +482,6 @@ public class AdminDashboardController implements Initializable {
                 username.setText(currentUser.getName());
                 namelabel.setText(currentUser.getName());
                 idlabel.setText(String.valueOf(currentUser.getUserId()));
-                if(currentUser.isAdmin()){
-                    rolelabel.setText("Administrator");
-                }else{
-                    rolelabel.setText("Standard User");
-                }
                 passwordlabel.setText(currentUser.getPassword());
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 String formattedDate = currentUser.getRegistrationDate().format(formatter);
@@ -486,6 +489,7 @@ public class AdminDashboardController implements Initializable {
                 emaillabel.setText(currentUser.getEmail());
                 phonelabel.setText(currentUser.getPhone());
                 userController.update(currentUser);
+                this.refresh();
                 System.out.println("SE HA MODIFICADO: "+currentUser);
                 List<User> users = userController.getAll();
                 while(!pnItems.getChildren().isEmpty()) {
@@ -502,7 +506,7 @@ public class AdminDashboardController implements Initializable {
                         // Configurar el controlador del nodo
                         ItemUserListController controller = loader.get().getController();
                         controller.initData(user, userController, node, pnItems, this); // Pasa el usuario al controlador del nodo
-
+                        this.refresh();
                         pnItems.getChildren().add(node);
                     } catch (IOException e) {
                         e.printStackTrace();

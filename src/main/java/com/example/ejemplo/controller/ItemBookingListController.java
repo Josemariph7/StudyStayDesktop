@@ -44,7 +44,7 @@ public class ItemBookingListController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.MODIFYBOOKING_FXML));
             Parent root = loader.load();
             ModifyBookingController modify = loader.getController();
-            modify.initData(booking, bookingController);
+            modify.initData(booking, bookingController, adminDashboardController);
             Stage stage = new Stage();
             stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(new Scene(root));
@@ -73,7 +73,12 @@ public class ItemBookingListController {
             //eliminar
         }
         AccommodationController accommodationController= new AccommodationController();
-        lblBookingCity.setText(accommodationController.getAccommodationById(booking.getBookingId()).getCity());
+
+        if(accommodationController.getAccommodationById(booking.getBookingId())!=null){
+            lblBookingCity.setText(accommodationController.getAccommodationById(booking.getBookingId()).getCity());
+        }else{
+            lblBookingCity.setText("Unknown");
+        }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formattedDate = booking.getStartDate().format(formatter);
         lblStartDate.setText(formattedDate);

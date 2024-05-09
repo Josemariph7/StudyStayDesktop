@@ -73,7 +73,7 @@ public class ItemForumListController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.MODIFYFORUMTOPIC_FXML));
             Parent root = loader.load();
             ModifyForumTopicController modify = loader.getController();
-            modify.initData(forumTopic, forumTopicController);
+            modify.initData(forumTopic, forumTopicController,  dashboard);
             Stage stage = new Stage();
             stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(new Scene(root));

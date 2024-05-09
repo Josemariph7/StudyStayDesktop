@@ -115,7 +115,7 @@ public class ItemUserListController {
             Parent root = loader.load();
             System.out.println("Usuario que se intenta modificar: " + user);
             ModifyUserController modify = loader.getController();
-            modify.initData(user, userController);
+            modify.initData(user, userController, dashboard);
             Stage stage = new Stage();
             stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(new Scene(root));
@@ -151,7 +151,7 @@ public class ItemUserListController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedDate = user.getRegistrationDate().format(formatter);
         lblRegDate.setText(formattedDate);
-        dashboard.updateUserStatistics();
+        dashboard.refresh();
     }
 
     public void updateConversationData(Conversation conver) {

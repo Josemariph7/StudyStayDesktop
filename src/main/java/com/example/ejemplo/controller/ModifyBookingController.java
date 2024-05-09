@@ -3,14 +3,12 @@ package com.example.ejemplo.controller;
 import com.example.ejemplo.model.Accommodation;
 import com.example.ejemplo.model.Booking;
 import com.example.ejemplo.model.User;
-import com.example.ejemplo.utils.Constants;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +27,7 @@ public class ModifyBookingController {
 
     public BookingController bookingController;
     private Booking booking;
+    private AdminDashboardController adminDashboardController;
 
     public void handleAccept(ActionEvent actionEvent) {
         UserController userController = new UserController();
@@ -67,16 +66,17 @@ public class ModifyBookingController {
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 bookingController.updateBooking(booking);
-                AdminDashboardController itemCtrl;
-                itemCtrl = (AdminDashboardController) btnAccept.getScene().getWindow().getUserData();
-                itemCtrl.refresh();
+                ItemBookingListController itemCtrl;
+                itemCtrl = (ItemBookingListController) btnAccept.getScene().getWindow().getUserData();
+                adminDashboardController.refresh();
             }
             ((Stage) btnAccept.getScene().getWindow()).close();
     }
 
-    public void initData(Booking booking, BookingController bookingController) {
+    public void initData(Booking booking, BookingController bookingController, AdminDashboardController adminDashboardController) {
         this.booking=booking;
         this.bookingController=bookingController;
+        this.adminDashboardController=adminDashboardController;
         List<User> userlist;
         UserController userCtrl = new UserController();
         userlist = userCtrl.getAll();
@@ -101,6 +101,8 @@ public class ModifyBookingController {
         ChoiceBoxAccommodation.getItems().addAll(accommodations);
         DatePickerEnd.setValue(booking.getEndDate().toLocalDate());
         DatePickerStart.setValue(booking.getStartDate().toLocalDate());
+        String[] status={"Pending", "Confirmed", "Canceled"};
+        ChoiceBoxStatus.getItems().addAll(status);
         ChoiceBoxStatus.setValue(booking.getStatus());
     }
 }

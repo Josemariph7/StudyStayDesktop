@@ -55,7 +55,7 @@ public class AddBookingController {
         if (DatePickerEnd.getValue() != null && DatePickerStart.getValue() !=null) {
             if(DatePickerEnd.getValue().isAfter(DatePickerStart.getValue())&&DatePickerStart.getValue().isBefore(LocalDate.now())){
                 booking.setStartDate(DatePickerStart.getValue().atStartOfDay());
-                booking.setStartDate(DatePickerEnd.getValue().atStartOfDay());
+                booking.setEndDate(DatePickerEnd.getValue().atStartOfDay());
             }
         }
         try {

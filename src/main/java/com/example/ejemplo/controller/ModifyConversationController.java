@@ -4,7 +4,6 @@ import com.example.ejemplo.model.Conversation;
 import com.example.ejemplo.model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -24,16 +23,19 @@ public class ModifyConversationController {
 
     private Conversation conver;
     public ConversationController converCtrl;
+    private AdminDashboardController adminDashboardController;
 
     /**
      * Inicializa los datos de la conversacion en la ventana de modificación.
      *
-     * @param conver                 Conversacion a modificar
-     * @param conversationController Controlador de Conversaciones
+     * @param conver                   Conversacion a modificar
+     * @param conversationController   Controlador de Conversaciones
+     * @param adminDashboardController
      */
-    public void initData(Conversation conver, ConversationController conversationController) {
+    public void initData(Conversation conver, ConversationController conversationController, AdminDashboardController adminDashboardController) {
         this.converCtrl = conversationController;
         this.conver = conver;
+        this.adminDashboardController=adminDashboardController;
         if (conver != null) {
             List<User> userlist;
             UserController userCtrl = new UserController();
@@ -66,9 +68,10 @@ public class ModifyConversationController {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             converCtrl.updateConversation(conver);
-            ItemConversationListController itemCtrl = new ItemConversationListController();
+            ItemConversationListController itemCtrl;
             itemCtrl= (ItemConversationListController) btnAccept.getScene().getWindow().getUserData();
             itemCtrl.updateConversationData(conver);
+            adminDashboardController.refresh();
         }
         ((Stage) btnAccept.getScene().getWindow()).close();
     }

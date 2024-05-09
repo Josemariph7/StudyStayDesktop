@@ -20,6 +20,7 @@ public class ModifyForumTopicController {
 
     public ForumTopicController forumTopicController;
     private ForumTopic forumTopic;
+    private AdminDashboardController adminDashboardController;
 
     public void handleAccept(ActionEvent actionEvent) {
         User user1=new User();
@@ -39,14 +40,16 @@ public class ModifyForumTopicController {
             ItemForumListController itemCtrl;
             itemCtrl= (ItemForumListController) btnAccept.getScene().getWindow().getUserData();
             itemCtrl.updateForumTopicData(forumTopic);
+            adminDashboardController.refresh();
         }
         ((Stage) btnAccept.getScene().getWindow()).close();
     }
 
 
-    public void initData(ForumTopic forumTopic, ForumTopicController forumTopicController) {
+    public void initData(ForumTopic forumTopic, ForumTopicController forumTopicController, AdminDashboardController dashboard) {
             this.forumTopic = forumTopic;
             this.forumTopicController = forumTopicController;
+            this.adminDashboardController=dashboard;
             List<User> userlist;
             UserController userCtrl = new UserController();
             userlist = userCtrl.getAll();

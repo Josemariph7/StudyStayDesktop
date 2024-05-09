@@ -61,7 +61,7 @@ public class ItemConversationListController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.MODIFYCONVERSATION_FXML));
             Parent root = loader.load();
             ModifyConversationController modify = loader.getController();
-            modify.initData(conversation, conversationController);
+            modify.initData(conversation, conversationController, adminDashboardController);
             Stage stage = new Stage();
             stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(new Scene(root));
@@ -111,7 +111,6 @@ public class ItemConversationListController {
             } else {
                 System.out.println("El nodo no se encontró en el VBox.");
             }
-            AdminDashboardController AdminDashboardController = new AdminDashboardController();
             adminDashboardController.refresh();
         }
 

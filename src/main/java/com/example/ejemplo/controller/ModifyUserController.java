@@ -36,6 +36,7 @@ public class ModifyUserController {
 
     private User user;
     public UserController userController;
+    private AdminDashboardController adminDashboardController;
 
     /**
      * Maneja la acción de aceptar la modificación de usuario.
@@ -72,6 +73,7 @@ public class ModifyUserController {
         if (result.isPresent() && result.get() == ButtonType.OK) {
             userController.update(user);
             updateItemAdminList();
+            adminDashboardController.refresh();
         }
         // Cierra la ventana de modificación
         ((Stage) btnAccept.getScene().getWindow()).close();
@@ -88,12 +90,15 @@ public class ModifyUserController {
 
     /**
      * Inicializa los datos del usuario en la ventana de modificación.
-     * @param user Usuario a modificar
+     *
+     * @param user           Usuario a modificar
      * @param userController Controlador de usuarios
+     * @param dashboard
      */
-    public void initData(User user, UserController userController) {
+    public void initData(User user, UserController userController, AdminDashboardController dashboard) {
         this.userController = userController;
         this.user = user;
+        this.adminDashboardController=dashboard;
         // Configura los valores iniciales de los campos con los datos del usuario
         if (user != null) {
             String[] genders={"Male", "Female", "Other"};
