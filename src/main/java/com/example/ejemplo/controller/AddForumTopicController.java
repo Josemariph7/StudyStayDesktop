@@ -1,13 +1,12 @@
 package com.example.ejemplo.controller;
 
 import com.example.ejemplo.model.Conversation;
+import com.example.ejemplo.model.ForumTopic;
 import com.example.ejemplo.model.User;
 import com.example.ejemplo.utils.Constants;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ChoiceBox;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -18,18 +17,19 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-public class AddConversationController {
-    public ChoiceBox ChoiceBoxAddConverUser1;
-    public ChoiceBox ChoiceBoxAddConverUser2;
-    public Button btnAccept;
-    public Button btnCancel;
+public class AddForumTopicController {
+    @FXML public Button btnCancel;
+    @FXML public Button btnAccept;
+    @FXML public ChoiceBox ChoiceBoxAuthor;
+    @FXML public TextArea txtAreaDescription;
+    @FXML public TextField lblTopicTitle;
 
-    private Conversation conver;
-    public ConversationController converCtrl;
+    public ForumTopicController forumTopicController;
+    private ForumTopic forumTopic;
 
     public void initData() {
-        conver=new Conversation();
-        converCtrl=new ConversationController();
+        forumTopic=new ForumTopic();
+        forumTopicController=new ForumTopicController();
         List<User> userlist;
         UserController userCtrl = new UserController();
         userlist = userCtrl.getAll();
@@ -37,35 +37,34 @@ public class AddConversationController {
         for (User user : userlist) {
             users.add(user.getUserId() + "  " + user.getName() + " " + user.getLastName());
         }
-        ChoiceBoxAddConverUser1.getItems().addAll(users);
-        ChoiceBoxAddConverUser2.getItems().addAll(users);
-        ChoiceBoxAddConverUser1.setValue("Select User 1");
-        ChoiceBoxAddConverUser2.setValue("Select User 2");
+        ChoiceBoxAuthor.getItems().addAll(users);
+        ChoiceBoxAuthor.setValue("Select an Author");
+        lblTopicTitle.setText(forumTopic.getTitle());
+        txtAreaDescription.setText(forumTopic.getDescription());
     }
 
     public void handleAccept(ActionEvent actionEvent) {
         UserController userController = new UserController();
-        String id=ChoiceBoxAddConverUser1.getValue().toString();
+        String id=ChoiceBoxAuthor.getValue().toString();
         String[] partes = id.split("\\s", 2);
-
-        conver.setUser1Id(Long.valueOf(partes[0]));
-        id=ChoiceBoxAddConverUser2.getValue().toString();
-        partes = id.split("\\s", 2);
-        conver.setUser2Id(Long.valueOf(partes[0]));
-        conver.setMessages(null);
+        forumTopic.setAuthor(userController.getById(Long.valueOf(partes[0])));
+        forumTopic.setComments(null);
+        forumTopic.setTitle(lblTopicTitle.getText());
+        forumTopic.setDescription(txtAreaDescription.getText());
+        forumTopic.setDateTime(LocalDateTime.now());
         try {
-            if (conversationExists(conver)) {
+            if (forumTopicExists(forumTopic)) {
                 showError("This conversation already exists");
                 return;
             }
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setHeaderText(null);
             alert.initStyle(StageStyle.UTILITY);
-            alert.setTitle("Create Conversation");
-            alert.setContentText("Are you sure to create this Conversation?");
+            alert.setTitle("Create Forum Topic");
+            alert.setContentText("Are you sure to create this Forum Topic?");
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
-                converCtrl.createConversation(conver);
+                forumTopicController.createTopic(forumTopic);
                 AdminDashboardController itemCtrl;
                 itemCtrl = (AdminDashboardController) btnAccept.getScene().getWindow().getUserData();
                 itemCtrl.refresh();
@@ -76,15 +75,10 @@ public class AddConversationController {
         }
     }
 
-    public void handleCancel(ActionEvent actionEvent) {
-        ((Stage) btnCancel.getScene().getWindow()).close();
-    }
-
-    private boolean conversationExists(Conversation conver) throws SQLException {
-        List<Conversation> convers = converCtrl.getAllConversations();
-        for (Conversation conversation : convers) {
-            if (Objects.equals(conversation.getUser1Id(), conver.getUser1Id()) && Objects.equals(conversation.getUser2Id(), conver.getUser2Id())
-            || Objects.equals(conversation.getUser2Id(), conver.getUser1Id()) && Objects.equals(conversation.getUser1Id(), conver.getUser2Id()) || Objects.equals(conver.getUser1Id(), conver.getUser2Id())) {
+    private boolean forumTopicExists(ForumTopic forumTopic) throws SQLException {
+        List<ForumTopic> topics = forumTopicController.getAllTopics();
+        for (ForumTopic topic : topics) {
+            if (topic.getTitle().equals(forumTopic.getTitle()) && topic.getDescription().equals(forumTopic.getDescription())) {
                 return true;
             }
         }
@@ -101,5 +95,4 @@ public class AddConversationController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
 }

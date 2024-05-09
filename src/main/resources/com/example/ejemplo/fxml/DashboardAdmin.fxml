@@ -209,7 +209,7 @@
         </VBox>
         <StackPane layoutX="258.0" prefHeight="900.0" prefWidth="1182.0" style="-fx-background-color: #edf1ff;">
             <children>
-                <Pane fx:id="pnlProfile" prefHeight="200.0" prefWidth="200.0">
+                <Pane fx:id="pnlProfile" prefHeight="200.0" prefWidth="200.0" visible="false">
                     <children>
                         <StackPane layoutX="70.0" layoutY="-32.0" prefHeight="250.0" prefWidth="250.0" translateX="800.0" translateY="60.0">
                             <padding>
@@ -695,7 +695,7 @@
                         </ImageView>
                     </children>
                 </Pane>
-                <Pane fx:id="pnlBookings" style="-fx-background-color: #edf1ff;" visible="false">
+                <Pane fx:id="pnlBookings" style="-fx-background-color: #edf1ff;">
                     <children>
                         <Label layoutX="57.0" layoutY="25.0" prefHeight="66.0" prefWidth="580.0" style="-fx-text-fill: #0c0e17;" text="Bookings Management" textFill="#e7e5e5">
                             <font>
@@ -782,9 +782,9 @@
                                 </VBox>
                             </children>
                         </HBox>
-                        <ScrollPane layoutX="-1.0" layoutY="189.0" prefHeight="710.0" prefWidth="1180.0" style="-fx-background-color: #e0e7ff; -fx-border-color: #edf1ff;" stylesheets="@../css/stylesdashboard.css" translateX="2.0">
+                        <ScrollPane layoutX="-1.0" layoutY="232.0" prefHeight="667.0" prefWidth="1180.0" style="-fx-background-color: #e0e7ff; -fx-border-color: #edf1ff;" stylesheets="@../css/stylesdashboard.css" translateX="2.0">
                             <content>
-                                <VBox fx:id="pnBookingsItems" prefHeight="662.0" prefWidth="1151.0" spacing="5.0" style="-fx-background-color: #edf1ff;" translateX="1.0">
+                                <VBox fx:id="pnBookingsItems" prefHeight="653.0" prefWidth="1151.0" spacing="5.0" style="-fx-background-color: #edf1ff;" translateX="1.0">
                                     <padding>
                                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                     </padding>
@@ -806,9 +806,50 @@
                                 <Image url="@../multimedia/icons8-línea-horizontal-24.png" />
                             </image>
                         </ImageView>
+                  <HBox alignment="CENTER_LEFT" layoutX="1.0" layoutY="188.0" prefHeight="42.0" prefWidth="1046.0" spacing="80.0" style="-fx-background-color: #edf1ff;">
+                     <children>
+                        <Label style="-fx-text-fill: #0c0e17;" text="ID" textFill="#e7e5e5" translateX="-35.0">
+                           <HBox.margin>
+                              <Insets left="50.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Label prefHeight="21.0" prefWidth="74.0" style="-fx-text-fill: #0c0e17;" text="User" textFill="#e7e5e5" translateX="-80.0">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Label prefHeight="21.0" prefWidth="64.0" style="-fx-text-fill: #0c0e17;" text="City" textFill="#e7e5e5" translateX="100.0">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Label prefHeight="21.0" prefWidth="102.0" style="-fx-text-fill: #0c0e17;" text="End Date" textFill="#e7e5e5" translateX="248.0">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Label prefHeight="21.0" prefWidth="102.0" style="-fx-text-fill: #0c0e17;" text="Start Date" textFill="#e7e5e5" translateX="-105.0">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
                     </children>
                 </Pane>
-                <Pane fx:id="pnlForum" style="-fx-background-color: #edf1ff;">
+                <Pane fx:id="pnlForum" style="-fx-background-color: #edf1ff;" visible="false">
                     <children>
                         <Label layoutX="57.0" layoutY="25.0" prefHeight="66.0" prefWidth="378.0" style="-fx-text-fill: #0c0e17;" text="Forum Management" textFill="#e7e5e5">
                             <font>
@@ -955,7 +996,7 @@
                                 <Image url="@../multimedia/icons8-línea-horizontal-24.png" />
                             </image>
                         </ImageView>
-                  <Button fx:id="btnAddTopic" layoutX="1005.0" layoutY="191.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="165.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Create Forum Topic">
+                  <Button fx:id="btnAddTopic" layoutX="1005.0" layoutY="191.0" mnemonicParsing="false" onAction="#handleAddForumTopic" prefHeight="32.0" prefWidth="165.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Create Forum Topic">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -1099,7 +1140,7 @@
                                 <Image url="@../multimedia/logoTransparente.png" />
                             </image>
                         </ImageView>
-                        <Button fx:id="btnAddConversation" layoutX="1015.0" layoutY="180.0" mnemonicParsing="false" onAction="#handleAddUser" prefHeight="32.0" prefWidth="133.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Add Conversation">
+                        <Button fx:id="btnAddConversation" layoutX="1015.0" layoutY="180.0" mnemonicParsing="false" onAction="#handleAddConversation" prefHeight="32.0" prefWidth="133.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Add Conversation">
                             <font>
                                 <Font size="14.0" />
                             </font>

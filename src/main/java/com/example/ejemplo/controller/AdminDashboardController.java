@@ -34,8 +34,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static com.example.ejemplo.utils.Constants.ADDCONVERSATION_FXML;
-import static com.example.ejemplo.utils.Constants.ADDUSER_FXML;
+import static com.example.ejemplo.utils.Constants.*;
 
 /**
  * Controlador para el panel de administrador.
@@ -633,7 +632,29 @@ public class AdminDashboardController implements Initializable {
             stage.setScene(new Scene(root));
             stage.setUserData(this);
             AddConversationController addController = loader.getController();
-            this.updateUserStatistics();
+            refresh();
+            addController.btnCancel.setOnAction(event -> {
+                stage.close();
+            });
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void handleAddForumTopic(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(ADDFORUMTOPIC_FXML));
+            Parent root = loader.load();
+            AddForumTopicController add = loader.getController();
+            add.initData();
+            Stage stage = new Stage();
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setScene(new Scene(root));
+            stage.setUserData(this);
+            AddForumTopicController addController = loader.getController();
+            refresh();
             addController.btnCancel.setOnAction(event -> {
                 stage.close();
             });

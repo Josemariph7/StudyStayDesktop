@@ -75,14 +75,4 @@ public class ModifyConversationController {
         }
         ((Stage) btnAccept.getScene().getWindow()).close();
     }
-
-    /**
-     * Maneja la acción de cancelar la modificación de usuario.
-     * @param actionEvent Evento del botón de cancelar
-     */
-    public void handleCancel(ActionEvent actionEvent) {
-        // Cierra la ventana de modificació
-        ((Stage) btnCancel.getScene().getWindow()).close();
-    }
-
 }

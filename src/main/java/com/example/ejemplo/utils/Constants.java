@@ -11,7 +11,9 @@ public class Constants {
     public static final String MODIFYUSER_FXML = "/com/example/ejemplo/fxml/ModifyUser.fxml";
     public static final String ADDUSER_FXML = "/com/example/ejemplo/fxml/AddUser.fxml";
     public static final String ADDCONVERSATION_FXML = "/com/example/ejemplo/fxml/AddConversation.fxml";
+    public static final String ADDFORUMTOPIC_FXML = "/com/example/ejemplo/fxml/AddForumTopic.fxml";
     public static final String MODIFYCONVERSATION_FXML = "/com/example/ejemplo/fxml/ModifyConversation.fxml";
+    public static final String MODIFYFORUMTOPIC_FXML = "/com/example/ejemplo/fxml/ModifyForumTopic.fxml";
     public static final String SIGNIN_FXML = "/com/example/ejemplo/fxml/SignIn.fxml";
     public static final String SIGNUP_FXML = "/com/example/ejemplo/fxml/SignUp.fxml";
     public static final String DASHBOARD_ADMIN_FXML = "/com/example/ejemplo/fxml/DashboardAdmin.fxml";

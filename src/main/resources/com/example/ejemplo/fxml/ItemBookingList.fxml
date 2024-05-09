@@ -7,11 +7,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="itemC" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="53.0" prefWidth="1145.0" style="-fx-background-color: #edf1ff; -fx-background-radius: 5;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ejemplo.controller.ItemForumListController">
+<HBox fx:id="itemC" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="53.0" prefWidth="1145.0" style="-fx-background-color: #edf1ff; -fx-background-radius: 5;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ejemplo.controller.ItemBookingListController">
     <children>
       <Pane prefHeight="53.0" prefWidth="69.0">
          <children>
-              <Label fx:id="lblTopicId" layoutX="1.0" prefHeight="20.0" prefWidth="52.0" style="-fx-text-fill: #0c0e17;" text="TopicId" textAlignment="CENTER" textFill="#b7c3d7" translateX="16.0" translateY="16.0">
+              <Label fx:id="lblBookingid" layoutX="1.0" prefHeight="20.0" prefWidth="52.0" style="-fx-text-fill: #0c0e17;" text="ID" textAlignment="CENTER" textFill="#b7c3d7" translateX="16.0" translateY="16.0">
                   <font>
                       <Font size="14.0" />
                   </font>
@@ -20,7 +20,7 @@
       </Pane>
       <Pane prefHeight="53.0" prefWidth="270.0">
          <children>
-              <Label fx:id="lblTopicTitle" layoutY="1.0" prefHeight="20.0" prefWidth="354.0" style="-fx-text-fill: #0c0e17;" text="TopicTitle" textFill="#b7c3d7" translateX="4.0" translateY="16.0">
+              <Label fx:id="lblBookingUser" layoutY="1.0" prefHeight="20.0" prefWidth="303.0" style="-fx-text-fill: #0c0e17;" text="User" textFill="#b7c3d7" translateX="4.0" translateY="16.0">
                   <font>
                       <Font size="14.0" />
                   </font>
@@ -29,16 +29,21 @@
       </Pane>
       <Pane prefHeight="53.0" prefWidth="268.0" translateX="20.0">
          <children>
-              <Label fx:id="lblTopicAuthor" layoutX="100.0" prefHeight="20.0" prefWidth="232.0" style="-fx-text-fill: #0c0e17;" text="TopicAuthor" textFill="#b7c3d7" translateY="16.0">
+              <Label fx:id="lblStartDate" layoutX="192.0" prefHeight="20.0" prefWidth="133.0" style="-fx-text-fill: #0c0e17;" text="Start Date" textFill="#b7c3d7" translateY="16.0">
                   <font>
                       <Font size="14.0" />
                   </font>
               </Label>
+            <Label fx:id="lblBookingCity" layoutX="48.0" layoutY="16.0" prefHeight="20.0" prefWidth="112.0" style="-fx-text-fill: #0c0e17;" text="City" textFill="#b7c3d7">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
       <Pane prefHeight="53.0" prefWidth="214.0">
          <children>
-              <Label fx:id="lblTopicCreationDate" layoutX="55.0" prefHeight="20.0" prefWidth="150.0" style="-fx-text-fill: #0c0e17;" text="CreationDate" textFill="#b7c3d7" translateX="40.0" translateY="16.0">
+              <Label fx:id="lblEndDate" layoutX="55.0" prefHeight="20.0" prefWidth="150.0" style="-fx-text-fill: #0c0e17;" text="End Date" textFill="#b7c3d7" translateX="40.0" translateY="16.0">
                   <font>
                       <Font size="14.0" />
                   </font>

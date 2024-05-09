@@ -67,7 +67,7 @@ public class ItemConversationListController {
             stage.setScene(new Scene(root));
             stage.setUserData(this);
             ModifyConversationController modifyController = loader.getController();
-            adminDashboardController.updateUserStatistics();
+            adminDashboardController.refresh();
             modifyController.btnCancel.setOnAction(event -> {
                 stage.close();
             });
