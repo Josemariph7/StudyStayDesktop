@@ -29,12 +29,12 @@
       </Pane>
       <Pane prefHeight="53.0" prefWidth="268.0" translateX="20.0">
          <children>
-              <Label fx:id="lblStartDate" layoutX="192.0" prefHeight="20.0" prefWidth="133.0" style="-fx-text-fill: #0c0e17;" text="Start Date" textFill="#b7c3d7" translateY="16.0">
+              <Label fx:id="lblStartDate" layoutX="192.0" prefHeight="20.0" prefWidth="133.0" style="-fx-text-fill: #0c0e17;" text="Start Date" textFill="#b7c3d7" translateX="-75.0" translateY="16.0">
                   <font>
                       <Font size="14.0" />
                   </font>
               </Label>
-            <Label fx:id="lblBookingCity" layoutX="48.0" layoutY="16.0" prefHeight="20.0" prefWidth="112.0" style="-fx-text-fill: #0c0e17;" text="City" textFill="#b7c3d7">
+            <Label fx:id="lblBookingCity" layoutX="48.0" layoutY="16.0" prefHeight="20.0" prefWidth="112.0" style="-fx-text-fill: #0c0e17;" text="City" textFill="#b7c3d7" translateX="-55.0">
                <font>
                   <Font size="14.0" />
                </font>
@@ -43,23 +43,30 @@
       </Pane>
       <Pane prefHeight="53.0" prefWidth="214.0">
          <children>
-              <Label fx:id="lblEndDate" layoutX="55.0" prefHeight="20.0" prefWidth="150.0" style="-fx-text-fill: #0c0e17;" text="End Date" textFill="#b7c3d7" translateX="40.0" translateY="16.0">
+              <Label fx:id="lblEndDate" layoutX="55.0" prefHeight="20.0" prefWidth="123.0" style="-fx-text-fill: #0c0e17;" text="End Date" textFill="#b7c3d7" translateX="-55.0" translateY="16.0">
                   <font>
                       <Font size="14.0" />
                   </font>
               </Label>
          </children>
       </Pane>
+      <Pane prefHeight="53.0" prefWidth="61.0">
+         <children>
+            <Label fx:id="lblStatus" prefHeight="20.0" prefWidth="104.0" style="-fx-text-fill: #0c0e17;" text="Status" textFill="#b7c3d7" translateX="-65.0" translateY="16.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children></Pane>
       <Pane prefHeight="53.0" prefWidth="125.0">
          <children>
-            <Button fx:id="btnTopicDetails" layoutX="59.0" layoutY="1.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="112.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="View Details" translateY="10.0">
+            <Button fx:id="btnTopicDetails" layoutX="59.0" layoutY="1.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="112.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="View Details" translateX="-60.0" translateY="10.0">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
          </children>
       </Pane>
-      <Pane prefHeight="53.0" prefWidth="61.0" />
       <Pane prefHeight="53.0" prefWidth="79.0">
          <children>
               <Button fx:id="btnModifyTopic" mnemonicParsing="false" onAction="#handleModify" prefHeight="32.0" prefWidth="66.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Modify" translateY="10.0">

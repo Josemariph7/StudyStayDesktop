@@ -52,9 +52,6 @@ public class ModifyConversationController {
     }
 
     public void handleAccept(ActionEvent actionEvent) {
-        User user1=new User();
-        User user2=new User();
-        UserController userController=new UserController();
 
         String[] partes = ChoiceBoxModifyConverUser1.getValue().toString().split("\\s", 2);
         conver.setUser1Id(Long.valueOf(partes[0]));

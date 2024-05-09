@@ -109,6 +109,7 @@ public class AdminDashboardController implements Initializable {
     private final ForumTopicController topicController = new ForumTopicController();
     private final AccommodationController accommodationController = new AccommodationController();
     private final ConversationController conversationController=new ConversationController();
+    private final BookingController bookingController=new BookingController();
     private final LocalDate oneWeekAgo = LocalDate.now().minusWeeks(1);
 
     /**
@@ -137,17 +138,15 @@ public class AdminDashboardController implements Initializable {
         pnItemsForum.getChildren().clear();
         pnAccommodationItems.getChildren().clear();
         pnConversationsItems.getChildren().clear();
+        pnBookingsItems.getChildren().clear();
 
         List<User> users = userController.getAll();
         for (User user : users) {
-            updateUserStatistics();
             try {
                 FXMLLoader loaderUsers = new FXMLLoader(getClass().getResource(Constants.ITEM_USER_LIST_FXML));
                 Node node = loaderUsers.load();
-
                 ItemUserListController controller = loaderUsers.getController();
                 controller.initData(user, userController, node, pnItems, this);
-
                 pnItems.getChildren().add(node);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -157,7 +156,6 @@ public class AdminDashboardController implements Initializable {
         // Obtener todos los temas del foro y actualizar estadísticas
         List<ForumTopic> topics = topicController.getAllTopics();
         for (ForumTopic topic : topics) {
-            updateUserStatistics();
             try {
                 FXMLLoader loaderForumTopics = new FXMLLoader(getClass().getResource(Constants.ITEM_FORUMTOPIC_LIST_FXML));
                 Node node = loaderForumTopics.load();
@@ -169,10 +167,23 @@ public class AdminDashboardController implements Initializable {
             }
         }
 
+        List<Booking> bookings = bookingController.getAllBookings();
+        for (Booking booking : bookings) {
+            try {
+                System.out.println(booking);
+                FXMLLoader loaderBookings = new FXMLLoader(getClass().getResource(Constants.ITEM_BOOKING_LIST_FXML));
+                Node node = loaderBookings.load();
+                ItemBookingListController controller = loaderBookings.getController();
+                controller.initData(booking, bookingController, node, pnBookingsItems, this);
+                pnBookingsItems.getChildren().add(node);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         // Obtener todos los alojamientos y actualizar estadísticas
         List<Accommodation> accommodations = accommodationController.getAllAccommodations();
         for (Accommodation acco : accommodations) {
-            updateUserStatistics();
             try {
                 FXMLLoader loaderAccommodation = new FXMLLoader(getClass().getResource(Constants.ITEM_ACCOMMODATION_LIST_FXML));
                 Node node = loaderAccommodation.load();
@@ -188,7 +199,6 @@ public class AdminDashboardController implements Initializable {
         // Obtener todos los alojamientos y actualizar estadísticas
         List<Conversation> conversations = conversationController.getAllConversations();
         for (Conversation conver : conversations) {
-            updateUserStatistics();
             try {
                 FXMLLoader loaderConversations = new FXMLLoader(getClass().getResource(Constants.ITEM_CONVERSATION_LIST_FXML));
                 Node node = loaderConversations.load();
@@ -202,9 +212,12 @@ public class AdminDashboardController implements Initializable {
         }
 
 
+
         updateUserStatistics();
         updateForumStatistics();
         updateConversationStatistics();
+        updateBookingStatistics();
+        updateAccommodationStatistics();
     }
 
     private void updateConversationStatistics() {
@@ -214,14 +227,8 @@ public class AdminDashboardController implements Initializable {
         int totalMessages=0;
         int newConversations = 0;
         int newMessages = 0;
-/*
-*
-* Completar estadisticas
-*
-* */
         for (Conversation conver : convers) {
             totalConversations++;
-
             if (messageController.getAllMessages()!=null) {
                 List<Message> messages = messageController.getAllMessages();
                 for (Message message : messages) {
@@ -239,6 +246,14 @@ public class AdminDashboardController implements Initializable {
     }
 
     private void updateForumStatistics() {
+    }
+
+    private void updateBookingStatistics(){
+
+    }
+
+    private void updateAccommodationStatistics(){
+
     }
 
     /**
@@ -654,6 +669,28 @@ public class AdminDashboardController implements Initializable {
             stage.setScene(new Scene(root));
             stage.setUserData(this);
             AddForumTopicController addController = loader.getController();
+            refresh();
+            addController.btnCancel.setOnAction(event -> {
+                stage.close();
+            });
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void handleAddBooking(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(ADDBOOKING_FXML));
+            Parent root = loader.load();
+            AddBookingController add = loader.getController();
+            add.initData();
+            Stage stage = new Stage();
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setScene(new Scene(root));
+            stage.setUserData(this);
+            AddBookingController addController = loader.getController();
             refresh();
             addController.btnCancel.setOnAction(event -> {
                 stage.close();

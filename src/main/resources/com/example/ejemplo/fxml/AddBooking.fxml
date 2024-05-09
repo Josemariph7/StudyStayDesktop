@@ -46,7 +46,7 @@
       </HBox>
       <ChoiceBox fx:id="ChoiceBoxStatus" prefHeight="27.0" prefWidth="154.0" style="-fx-background-color: transparent; -fx-border-color: #151928;" translateY="25.0" />
         <HBox alignment="CENTER" prefHeight="37.0" prefWidth="544.0" spacing="10" translateY="50.0">
-         <Button fx:id="btnAccept" mnemonicParsing="false" onAction="#handleAccept" prefHeight="37.0" prefWidth="112.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Accept">
+         <Button fx:id="btnAccept" mnemonicParsing="false" onAction="#" prefHeight="37.0" prefWidth="112.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Accept">
             <font>
                <Font size="16.0" />
             </font>

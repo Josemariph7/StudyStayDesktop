@@ -78,12 +78,11 @@ public class AddUserController {
             alert.setHeaderText(null);
             alert.initStyle(StageStyle.UTILITY);
             alert.setTitle("Add User");
-            alert.setContentText("Are you sure to add the new user?");
+            alert.setContentText("Are you sure to add the new User?");
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 userController.create(user);
                 System.out.println(user);
-                showSuccess("Registro exitoso.");
                 ((Stage) btnAccept.getScene().getWindow()).close();
                 updateItemAdminList();
             }
@@ -115,25 +114,6 @@ public class AddUserController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
-    }
-
-    /**
-     * Método para mostrar un mensaje de éxito.
-     */
-    private void showSuccess(String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Éxito");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
-    /**
-     * Maneja la acción de cancelar la modificación de usuario.
-     * @param actionEvent Evento del botón de cancelar
-     */
-    public void handleCancel(ActionEvent actionEvent) {
-        ((Stage) btnCancel.getScene().getWindow()).close();
     }
 
     /**

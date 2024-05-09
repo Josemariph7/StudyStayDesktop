@@ -1,23 +1,114 @@
 package com.example.ejemplo.controller;
 
+import com.example.ejemplo.model.Booking;
+import com.example.ejemplo.model.ForumTopic;
+import com.example.ejemplo.utils.Constants;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
+import java.io.IOException;
+import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 public class ItemBookingListController {
+    @FXML
     public Button btnModifyTopic;
-    public Button btnDeleteTopic;
-    public Button btnTopicDetails;
-    public Label lblEndDate;
-    public Label lblBookingCity;
-    public Label lblStartDate;
-    public Label lblBookingUser;
-    public Label lblBookingid;
+    @FXML public Button btnDeleteTopic;
+    @FXML public Button btnTopicDetails;
+    @FXML public Label lblEndDate;
+    @FXML public Label lblBookingCity;
+    @FXML public Label lblStartDate;
+    @FXML public Label lblBookingUser;
+    @FXML public Label lblBookingid;
+    @FXML public Label lblStatus;
 
-    public void handleDelete(ActionEvent actionEvent) {
-
-    }
+    private Booking booking;
+    private BookingController bookingController;
+    private Node node;
+    private VBox pnItemsBooking;
+    private AdminDashboardController adminDashboardController;
 
     public void handleModify(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.MODIFYBOOKING_FXML));
+            Parent root = loader.load();
+            ModifyBookingController modify = loader.getController();
+            modify.initData(booking, bookingController);
+            Stage stage = new Stage();
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setScene(new Scene(root));
+            stage.setUserData(this);
+            ModifyBookingController modifyController = loader.getController();
+            adminDashboardController.refresh();
+            modifyController.btnCancel.setOnAction(event -> {
+                stage.close();
+            });
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void initData(Booking booking, BookingController bookingController, Node node, VBox pnBookingsItems, AdminDashboardController adminDashboardController) {
+        this.booking = booking;
+        this.node = node;
+        this.pnItemsBooking = pnBookingsItems;
+        this.adminDashboardController = adminDashboardController;
+        this.bookingController = bookingController;
+        lblBookingid.setText(booking.getBookingId().toString());
+        if(booking.getUser()!=null) {
+            lblBookingUser.setText(booking.getUser().getName() + " " + booking.getUser().getLastName());
+        }else{
+            //eliminar
+        }
+        AccommodationController accommodationController= new AccommodationController();
+        lblBookingCity.setText(accommodationController.getAccommodationById(booking.getBookingId()).getCity());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedDate = booking.getStartDate().format(formatter);
+        lblStartDate.setText(formattedDate);
+        formattedDate=booking.getEndDate().format(formatter);
+        lblEndDate.setText(formattedDate);
+        lblStatus.setText(booking.getStatus().toString());
+    }
+
+    public void updateForumTopicData(Booking book) {
+        this.booking = book;
+        lblStatus.setText(booking.getStatus().toString());
+        lblStartDate.setText(booking.getStartDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        lblBookingid.setText(book.getBookingId().toString());
+        lblBookingUser.setText(booking.getUser().getName()+" " +booking.getUser().getLastName());
+        lblEndDate.setText(booking.getEndDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        AccommodationController accommodationController= new AccommodationController();
+        lblBookingCity.setText(accommodationController.getAccommodationById(booking.getBookingId()).getCity());
+    }
+
+    public void handleDelete(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText(null);
+        alert.setTitle("Delete Booking");
+        alert.setContentText("Are you sure you want to delete this Booking?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            bookingController.deleteBooking(booking.getBookingId());
+            int index = pnItemsBooking.getChildren().indexOf(node);
+            if (index != -1) {
+                pnItemsBooking.getChildren().remove(index);
+            } else {
+                System.out.println("El nodo no se encontró en el VBox.");
+            }
+            adminDashboardController.refresh();
+        }
+
     }
 }

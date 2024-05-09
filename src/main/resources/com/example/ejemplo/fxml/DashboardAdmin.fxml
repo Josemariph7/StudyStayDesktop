@@ -847,6 +847,11 @@
                         </Label>
                      </children>
                   </HBox>
+                  <Button fx:id="btnAddBooking" layoutX="1005.0" layoutY="193.0" mnemonicParsing="false" onAction="#handleAddBooking" prefHeight="32.0" prefWidth="133.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Create Booking">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
                     </children>
                 </Pane>
                 <Pane fx:id="pnlForum" style="-fx-background-color: #edf1ff;" visible="false">
