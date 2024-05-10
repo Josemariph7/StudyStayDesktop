@@ -51,4 +51,8 @@ public class ForumCommentController {
     public boolean updateComment(ForumComment comment) {
         return forumCommentDAO.update(comment);
     }
+
+    public List<ForumComment> getAllComments() {
+        return forumCommentDAO.getAll();
+    }
 }

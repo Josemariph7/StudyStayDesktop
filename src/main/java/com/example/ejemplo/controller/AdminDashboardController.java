@@ -24,14 +24,14 @@ import com.example.ejemplo.utils.Constants;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URL;
 import java.nio.file.Files;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static com.example.ejemplo.utils.Constants.*;
@@ -214,8 +214,6 @@ public class AdminDashboardController implements Initializable {
             System.out.println(conver);
         }
 
-
-
         updateUserStatistics();
         updateForumStatistics();
         updateConversationStatistics();
@@ -226,38 +224,94 @@ public class AdminDashboardController implements Initializable {
     private void updateConversationStatistics() {
         List<Conversation> convers = conversationController.getAllConversations();
         MessageController messageController = new MessageController();
-        int totalConversations = 0;
-        int totalMessages=0;
-        int newConversations = 0;
+        List<Message> messages = messageController.getAllMessages();
+        int totalConversations = convers.size();
+        int totalMessages=messages.size();
+        int averageMessagesConver;
         int newMessages = 0;
-        for (Conversation conver : convers) {
-            totalConversations++;
-            if (messageController.getAllMessages()!=null) {
-                List<Message> messages = messageController.getAllMessages();
+        if (messageController.getAllMessages()!=null) {
                 for (Message message : messages) {
-                    totalMessages++;
-                    if(message.getDateTime().isAfter(oneWeekAgo.atStartOfDay()) || message.equals(oneWeekAgo)){
+                    if(message.getDateTime().isAfter(oneWeekAgo.atStartOfDay())){
                         newMessages++;
                     }
                 }
-            }
         }
+        averageMessagesConver=totalMessages/totalConversations;
         TotalConversations.setText(String.valueOf(totalConversations));
         TotalMessages.setText(String.valueOf(totalMessages));
-        NewConversations.setText(String.valueOf(newConversations));
+        NewConversations.setText(String.valueOf(averageMessagesConver));
         NewMessages.setText(String.valueOf(newMessages));
     }
 
     private void updateForumStatistics() {
+        List<ForumTopic> topics = topicController.getAllTopics();
+        List<ForumComment> forumComments = new ForumCommentController().getAllComments();
+        int totalForums = topics.size();
+        int totalForumComments = forumComments.size();
+        int commentsLastWeek=0;
+        int topicsLastWeek=0;
+        for (ForumComment comment : forumComments) {
+            if(comment.getDateTime().isAfter(oneWeekAgo.atStartOfDay())){
+                commentsLastWeek++;
+            }
+        }
+        for (ForumTopic topic : topics) {
+            if(topic.getDateTime().isAfter(oneWeekAgo.atStartOfDay())){
+                topicsLastWeek++;
+            }
+        }
+        this.NewTopics.setText(String.valueOf(topicsLastWeek));
+        this.NewComments.setText(String.valueOf(commentsLastWeek));
+        this.TotalForumComments.setText(String.valueOf(totalForumComments));
+        this.TotalForumTopics.setText(String.valueOf(totalForums));
+
     }
 
     private void updateBookingStatistics(){
-
+        int totalBookings = bookingController.getAllBookings().size();
+        int currentBookings = 0;
+        int pendingBookings = 0;
+        int cancelledBookings = 0;
+        double totalAveragedPrice = 0.0;
+        for(Booking booking : bookingController.getAllBookings()){
+            if(booking.getStatus() == Booking.BookingStatus.CONFIRMED && booking.getEndDate().isAfter(LocalDateTime.now())){
+                currentBookings++;
+            } else if(booking.getStatus() == Booking.BookingStatus.PENDING){
+                pendingBookings++;
+            }else if(booking.getStatus() == Booking.BookingStatus.CANCELLED){
+                cancelledBookings++;
+            }
+        }
+    this.totalBookings.setText(String.valueOf(totalBookings));
+        this.currentBookings.setText(String.valueOf(currentBookings));
+        this.averagePrice1.setText(String.valueOf(pendingBookings));
+        this.bookingsLastWeek1.setText(String.valueOf(cancelledBookings));
     }
+
 
     private void updateAccommodationStatistics(){
+        List<Accommodation> allAccommodations = accommodationController.getAllAccommodations();
+        List<AccommodationReview> reviews = new AccommodationReviewController().getAllReviews();
+        int totalAccommodations = allAccommodations.size();
+        int totalReviews = reviews.size();
+        int availableAccommodations = 0;
+        BigDecimal totalPrices = new BigDecimal(0);
 
+        for(Accommodation accommodation : allAccommodations){
+            if(accommodation.isAvailability()){
+                availableAccommodations++;
+            }
+            totalPrices = totalPrices.add(accommodation.getPrice());
+        }
+
+        BigDecimal averagePrice = totalAccommodations == 0 ? BigDecimal.ZERO : totalPrices.divide(BigDecimal.valueOf(totalAccommodations), 0, RoundingMode.HALF_UP);
+
+        this.accommodationsLastWeek.setText(String.valueOf(totalReviews));
+        this.averagePrice.setText(String.valueOf(averagePrice)+"€");
+        this.availableAccommodations.setText(String.valueOf(availableAccommodations));
+        this.totalAccommodations.setText(String.valueOf(totalAccommodations));
     }
+
 
     /**
      * Actualiza las estadísticas de usuarios.
@@ -703,5 +757,11 @@ public class AdminDashboardController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void handleMinimize(MouseEvent event) {
+        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        stage.setIconified(true);
     }
 }

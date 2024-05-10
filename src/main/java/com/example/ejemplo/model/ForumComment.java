@@ -1,5 +1,8 @@
 package com.example.ejemplo.model;
 
+import com.example.ejemplo.controller.ForumTopicController;
+import com.example.ejemplo.controller.UserController;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -21,6 +24,16 @@ public class ForumComment {
     public ForumComment(ForumTopic topic, User author, String content, LocalDateTime dateTime) {
         this.topic = topic;
         this.author = author;
+        this.content = content;
+        this.dateTime = dateTime;
+    }
+
+    public ForumComment(long commentId, long topicId, long authorId, String content, LocalDateTime dateTime) {
+        UserController userController = new UserController();
+        ForumTopicController topicController = new ForumTopicController();
+        this.commentId = commentId;
+        this.topic = topicController.getTopic(topicId);
+        this.author = userController.getById(authorId);
         this.content = content;
         this.dateTime = dateTime;
     }

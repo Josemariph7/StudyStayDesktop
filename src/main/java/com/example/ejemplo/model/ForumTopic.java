@@ -69,7 +69,7 @@ public class ForumTopic {
         this.dateTime = dateTime;
     }
 
-    public List<ForumComment> getComments() {
+    public List<ForumComment> getComments(Long topicId) {
         return comments;
     }
 

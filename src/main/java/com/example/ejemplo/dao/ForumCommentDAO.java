@@ -135,4 +135,26 @@ public class ForumCommentDAO {
         comment.setDateTime(resultSet.getTimestamp("DateTime").toLocalDateTime());
         return comment;
     }
+
+    /**
+     * Obtiene todos los comentarios de la base de datos.
+     * @return Lista de todos los comentarios
+     */
+    public List<ForumComment> getAll() {
+        List<ForumComment> comments = new ArrayList<>();
+        String sql = "SELECT * FROM ForumComments";
+        try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
+
+            while (resultSet.next()) {
+                ForumComment comment = mapComment(resultSet);
+                comments.add(comment);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return comments;
+    }
+
 }

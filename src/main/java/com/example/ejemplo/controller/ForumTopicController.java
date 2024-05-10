@@ -1,6 +1,7 @@
 package com.example.ejemplo.controller;
 
 import com.example.ejemplo.dao.ForumTopicDAO;
+import com.example.ejemplo.model.ForumComment;
 import com.example.ejemplo.model.ForumTopic;
 
 import java.util.List;
@@ -49,5 +50,13 @@ public class ForumTopicController {
      */
     public boolean updateTopic(ForumTopic topic) {
         return forumTopicDAO.update(topic);
+    }
+
+    public ForumTopic getTopic(Long topicId) {
+        return forumTopicDAO.getById(topicId);
+    }
+
+    public List<ForumComment> getComments(Long topicId) {
+        return forumTopicDAO.getComments(topicId);
     }
 }

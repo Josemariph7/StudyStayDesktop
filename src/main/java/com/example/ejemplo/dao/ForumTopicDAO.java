@@ -3,6 +3,7 @@ package com.example.ejemplo.dao;
 import com.example.ejemplo.controller.UserController;
 import com.example.ejemplo.model.ForumComment;
 import com.example.ejemplo.model.ForumTopic;
+import com.example.ejemplo.model.Message;
 import com.example.ejemplo.model.User;
 
 import java.sql.*;
@@ -140,7 +141,58 @@ public class ForumTopicDAO {
         topic.setTitle(resultSet.getString("Title"));
         topic.setDescription(resultSet.getString("Description"));
         topic.setDateTime(resultSet.getTimestamp("DateTime").toLocalDateTime());
+        topic.getComments(topic.getTopicId());
         // Los comentarios se cargarán por separado, ya que no están incluidos en este método de mapeo
         return topic;
     }
+
+    public List<ForumComment> getComments(Long TopicId) {
+        List<ForumComment> comments = new ArrayList<>();
+        String sql = "SELECT * FROM ForumComments WHERE TopicId=?";
+        try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setLong(1, TopicId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    ForumComment comment = new ForumComment(
+                            resultSet.getLong("CommentId"),
+                            resultSet.getLong("TopicId"),
+                            resultSet.getLong("AuthorId"),
+                            resultSet.getString("Content"),
+                            resultSet.getTimestamp("DateTime").toLocalDateTime()
+                    );
+                    comments.add(comment);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        // Ordena los mensajes por fecha antes de devolverlos
+        comments.sort((m1, m2) -> m1.getDateTime().compareTo(m2.getDateTime()));
+        return comments;
+    }
+
+    /**
+     * Obtiene un tema del foro de la base de datos por su ID.
+     * @param topicId ID del tema a obtener
+     * @return Objeto ForumTopic si se encuentra, null de lo contrario
+     */
+    public ForumTopic getById(Long topicId) {
+        String sql = "SELECT * FROM ForumTopics WHERE TopicId=?";
+        try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setLong(1, topicId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return mapTopic(resultSet);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

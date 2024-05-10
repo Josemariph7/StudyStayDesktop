@@ -19,7 +19,7 @@
 
 <AnchorPane maxHeight="900.0" maxWidth="1440.0" minHeight="900.0" minWidth="1440.0" prefHeight="900.0" prefWidth="1440.0" style="-fx-background-color: #02030A;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ejemplo.controller.AdminDashboardController">
     <children>
-        <Pane id="dragArea" fx:id="dragArea" prefHeight="53.0" prefWidth="1440.0" style="-fx-background-color: transparent;" />
+        <Pane id="dragArea" fx:id="dragArea" prefHeight="53.0" prefWidth="1387.0" style="-fx-background-color: transparent;" />
         <VBox alignment="TOP_CENTER" prefHeight="576.0" prefWidth="256.0" style="-fx-background-color: #151928;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <StackPane>
@@ -455,7 +455,7 @@
                                         </Label>
                                     </children>
                                 </VBox>
-                                <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" translateX="-15.0">
+                                <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" translateX="-17.0">
                                     <children>
                                         <Label fx:id="totaladmins" alignment="CENTER" text="0" textFill="#fa5f7e">
                                             <font>
@@ -768,12 +768,12 @@
                                                 <Font name="System Bold" size="26.0" />
                                             </font>
                                         </Label>
-                                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="154.0" style="-fx-text-fill: #0c0e17;" text="New Bookings" textFill="#e7e5e5">
+                                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="154.0" style="-fx-text-fill: #0c0e17;" text="Cancelled" textFill="#e7e5e5">
                                             <font>
                                                 <Font size="15.0" />
                                             </font>
                                         </Label>
-                                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="127.0" style="-fx-text-fill: #0c0e17;" text="Last Week" textFill="#e7e5e5">
+                                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="127.0" style="-fx-text-fill: #0c0e17;" text="Bookings" textFill="#e7e5e5">
                                             <font>
                                                 <Font size="15.0" />
                                             </font>
@@ -791,14 +791,9 @@
                                 </VBox>
                             </content>
                         </ScrollPane>
-                        <ImageView fitHeight="184.0" fitWidth="419.0" layoutX="777.0" layoutY="-10.0">
+                        <ImageView fitHeight="184.0" fitWidth="419.0" layoutX="777.0" layoutY="-10.0" onMouseClicked="#handleMinimize">
                             <image>
                                 <Image url="@../multimedia/logoTransparente.png" />
-                            </image>
-                        </ImageView>
-                        <ImageView translateX="1158.0">
-                            <image>
-                                <Image url="@../multimedia/icons8-multiplicar-24.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="24.0" fitWidth="19.0" translateX="1138.0" translateY="5.0">
@@ -806,52 +801,57 @@
                                 <Image url="@../multimedia/icons8-línea-horizontal-24.png" />
                             </image>
                         </ImageView>
-                  <HBox alignment="CENTER_LEFT" layoutX="1.0" layoutY="188.0" prefHeight="42.0" prefWidth="1046.0" spacing="80.0" style="-fx-background-color: #edf1ff;">
-                     <children>
-                        <Label style="-fx-text-fill: #0c0e17;" text="ID" textFill="#e7e5e5" translateX="-35.0">
-                           <HBox.margin>
-                              <Insets left="50.0" />
-                           </HBox.margin>
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Label>
-                        <Label prefHeight="21.0" prefWidth="74.0" style="-fx-text-fill: #0c0e17;" text="User" textFill="#e7e5e5" translateX="-80.0">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Label>
-                        <Label prefHeight="21.0" prefWidth="64.0" style="-fx-text-fill: #0c0e17;" text="City" textFill="#e7e5e5" translateX="100.0">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Label>
-                        <Label prefHeight="21.0" prefWidth="102.0" style="-fx-text-fill: #0c0e17;" text="End Date" textFill="#e7e5e5" translateX="248.0">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Label>
-                        <Label prefHeight="21.0" prefWidth="102.0" style="-fx-text-fill: #0c0e17;" text="Start Date" textFill="#e7e5e5" translateX="-105.0">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </HBox>
-                  <Button fx:id="btnAddBooking" layoutX="1005.0" layoutY="193.0" mnemonicParsing="false" onAction="#handleAddBooking" prefHeight="32.0" prefWidth="133.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Create Booking">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Button>
+                        <ImageView translateX="1158.0">
+                            <image>
+                                <Image url="@../multimedia/icons8-multiplicar-24.png" />
+                            </image>
+                        </ImageView>
+                        <HBox alignment="CENTER_LEFT" layoutX="1.0" layoutY="188.0" prefHeight="42.0" prefWidth="1046.0" spacing="80.0" style="-fx-background-color: #edf1ff;">
+                            <children>
+                                <Label style="-fx-text-fill: #0c0e17;" text="ID" textFill="#e7e5e5" translateX="-35.0">
+                                    <HBox.margin>
+                                        <Insets left="50.0" />
+                                    </HBox.margin>
+                                    <font>
+                                        <Font size="15.0" />
+                                    </font>
+                                </Label>
+                                <Label prefHeight="21.0" prefWidth="74.0" style="-fx-text-fill: #0c0e17;" text="User" textFill="#e7e5e5" translateX="-80.0">
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                    <font>
+                                        <Font size="15.0" />
+                                    </font>
+                                </Label>
+                                <Label prefHeight="21.0" prefWidth="64.0" style="-fx-text-fill: #0c0e17;" text="City" textFill="#e7e5e5" translateX="100.0">
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                    <font>
+                                        <Font size="15.0" />
+                                    </font>
+                                </Label>
+                                <Label prefHeight="21.0" prefWidth="102.0" style="-fx-text-fill: #0c0e17;" text="End Date" textFill="#e7e5e5" translateX="248.0">
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                    <font>
+                                        <Font size="15.0" />
+                                    </font>
+                                </Label>
+                                <Label prefHeight="21.0" prefWidth="102.0" style="-fx-text-fill: #0c0e17;" text="Start Date" textFill="#e7e5e5" translateX="-105.0">
+                                    <font>
+                                        <Font size="15.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </HBox>
+                        <Button fx:id="btnAddBooking" layoutX="1005.0" layoutY="193.0" mnemonicParsing="false" onAction="#handleAddBooking" prefHeight="32.0" prefWidth="133.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Create Booking">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Button>
                     </children>
                 </Pane>
                 <Pane fx:id="pnlForum" style="-fx-background-color: #edf1ff;" visible="false">
@@ -882,7 +882,7 @@
                                         </Label>
                                     </children>
                                 </VBox>
-                                <VBox alignment="CENTER" prefHeight="92.0" prefWidth="184.0" translateX="-10.0">
+                                <VBox alignment="CENTER" prefHeight="92.0" prefWidth="184.0" translateX="-25.0">
                                     <children>
                                         <Label fx:id="TotalForumComments" alignment="CENTER" text="0" textFill="#26bfbc">
                                             <font>
@@ -901,7 +901,7 @@
                                         </Label>
                                     </children>
                                 </VBox>
-                                <VBox alignment="CENTER" prefHeight="92.0" prefWidth="127.0" translateX="-15.0">
+                                <VBox alignment="CENTER" prefHeight="92.0" prefWidth="127.0" translateX="-35.0">
                                     <children>
                                         <Label fx:id="NewTopics" alignment="CENTER" text="0" textFill="#fa5f7e">
                                             <font>
@@ -920,7 +920,7 @@
                                         </Label>
                                     </children>
                                 </VBox>
-                                <VBox alignment="CENTER" prefHeight="92.0" prefWidth="177.0" translateX="-26.0">
+                                <VBox alignment="CENTER" prefHeight="92.0" prefWidth="177.0" translateX="-48.0">
                                     <children>
                                         <Label fx:id="NewComments" alignment="CENTER" text="0" textFill="#de0000">
                                             <font>
@@ -1017,7 +1017,7 @@
                         </Label>
                         <HBox alignment="CENTER_LEFT" layoutX="45.0" layoutY="88.0" prefHeight="92.0" prefWidth="628.0" spacing="50.0">
                             <children>
-                                <VBox alignment="CENTER" prefHeight="92.0" prefWidth="145.0">
+                                <VBox alignment="CENTER" prefHeight="92.0" prefWidth="155.0">
                                     <children>
                                         <Label fx:id="TotalConversations" alignment="CENTER" text="0" textFill="#2a73ff">
                                             <font>
@@ -1036,7 +1036,7 @@
                                         </Label>
                                     </children>
                                 </VBox>
-                                <VBox alignment="CENTER" prefHeight="92.0" prefWidth="184.0" translateX="-10.0">
+                                <VBox alignment="CENTER" prefHeight="92.0" prefWidth="184.0" translateX="-15.0">
                                     <children>
                                         <Label fx:id="TotalMessages" alignment="CENTER" text="0" textFill="#26bfbc">
                                             <font>
@@ -1055,26 +1055,26 @@
                                         </Label>
                                     </children>
                                 </VBox>
-                                <VBox alignment="CENTER" prefHeight="92.0" prefWidth="127.0" translateX="-15.0">
+                                <VBox alignment="CENTER" prefHeight="92.0" prefWidth="195.0" translateX="-45.0">
                                     <children>
                                         <Label fx:id="NewConversations" alignment="CENTER" text="0" textFill="#fa5f7e">
                                             <font>
                                                 <Font name="System Bold" size="26.0" />
                                             </font>
                                         </Label>
-                                        <Label alignment="CENTER" prefHeight="21.0" prefWidth="151.0" style="-fx-text-fill: #0c0e17;" text="New Conversations" textFill="#e7e5e5">
+                                        <Label alignment="CENTER" prefHeight="21.0" prefWidth="151.0" style="-fx-text-fill: #0c0e17;" text="Average Messages" textFill="#e7e5e5">
                                             <font>
                                                 <Font size="15.0" />
                                             </font>
                                         </Label>
-                                        <Label alignment="CENTER" prefHeight="21.0" prefWidth="151.0" style="-fx-text-fill: #0c0e17;" text="Last Week" textFill="#e7e5e5">
+                                        <Label alignment="CENTER" prefHeight="21.0" prefWidth="151.0" style="-fx-text-fill: #0c0e17;" text="Per Conversation" textFill="#e7e5e5">
                                             <font>
                                                 <Font size="15.0" />
                                             </font>
                                         </Label>
                                     </children>
                                 </VBox>
-                                <VBox alignment="CENTER" prefHeight="92.0" prefWidth="177.0" translateX="-26.0">
+                                <VBox alignment="CENTER" prefHeight="92.0" prefWidth="177.0" translateX="-65.0">
                                     <children>
                                         <Label fx:id="NewMessages" alignment="CENTER" text="0" textFill="#de0000">
                                             <font>
@@ -1248,6 +1248,8 @@
             </Pane>
             </children>
         </StackPane>
+      <Pane layoutX="10.0" layoutY="10.0" onMouseClicked="#closeApp" prefHeight="17.0" prefWidth="19.0" translateX="1408.0" translateY="-6.0" />
+      <Pane layoutX="10.0" layoutY="10.0" onMouseClicked="#handleMinimize" prefHeight="17.0" prefWidth="19.0" translateX="1386.0" translateY="-5.0" />
     </children>
     <effect>
         <DropShadow color="#151928" />
