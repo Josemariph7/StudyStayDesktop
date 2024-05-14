@@ -28,7 +28,7 @@
             </Pane>
             </children>
         </Pane>
-        <ImageView fitHeight="192.0" fitWidth="436.0" translateX="30.0" translateY="-109.0">
+        <ImageView fitHeight="192.0" fitWidth="436.0" translateX="30.0" translateY="-110.0">
             <image>
                 <Image url="@../multimedia/logoTransparente.png" />
             </image>
@@ -44,7 +44,7 @@
         <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
             <children>
             <Pane prefHeight="31.0" prefWidth="27.0" />
-                <TextField fx:id="emailField" promptText="Email" styleClass="tf_box" translateY="-110.0" HBox.hgrow="ALWAYS">
+                <TextField id="text" fx:id="emailField" promptText="Email" styleClass="tf_box" translateY="-110.0" HBox.hgrow="ALWAYS">
                     <cursor>
                         <Cursor fx:constant="TEXT" />
                     </cursor>
@@ -59,7 +59,7 @@
         <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
             <children>
             <Pane prefHeight="31.0" prefWidth="27.0" />
-                <PasswordField fx:id="passwordField" promptText="Password" styleClass="tf_box" translateY="-85.0" HBox.hgrow="ALWAYS">
+                <PasswordField id="text" fx:id="passwordField" promptText="Password" styleClass="tf_box" translateY="-85.0" HBox.hgrow="ALWAYS">
                     <cursor>
                         <Cursor fx:constant="TEXT" />
                     </cursor>

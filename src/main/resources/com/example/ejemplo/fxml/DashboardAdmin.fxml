@@ -23,13 +23,13 @@
         <VBox alignment="TOP_CENTER" prefHeight="576.0" prefWidth="256.0" style="-fx-background-color: #151928;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <StackPane>
-                    <Circle fx:id="circle" centerX="100" centerY="100" fill="WHITE" radius="92.0" />
+                    <Circle fx:id="circle" centerX="100" centerY="100" fill="WHITE" radius="92.0" translateY="-2.0" />
 
                     <padding>
                         <Insets bottom="20.0" top="26.0" />
                     </padding>
                 </StackPane>
-                <Label fx:id="username" prefHeight="77.0" prefWidth="225.0" style="-fx-alignment: center;" textFill="#e7e5e5" translateY="-22.0">
+                <Label fx:id="username" prefHeight="77.0" prefWidth="225.0" style="-fx-alignment: center;" textFill="#e7e5e5" translateY="-27.0" wrapText="true">
                     <VBox.margin>
                         <Insets bottom="20.0" />
                     </VBox.margin>
@@ -37,7 +37,7 @@
                         <Font size="18.0" />
                     </font>
                 </Label>
-                <Button id="btnProfile" fx:id="btnProfile" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="42.0" prefWidth="259.0" style="-fx-background-color: #151928;" stylesheets="@../css/stylesdashboard.css" text="Profile" textFill="#e7e5e5" translateX="-2.0">
+                <Button id="btnProfile" fx:id="btnProfile" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="42.0" prefWidth="259.0" style="-fx-background-color: #151928;" stylesheets="@../css/stylesdashboard.css" text="Profile" textFill="#e7e5e5" translateX="-2.0" translateY="-20.0">
                     <graphic>
                         <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" translateX="2.0">
                             <image>
@@ -61,7 +61,7 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
-                <Button id="btnUsers" fx:id="btnUsers" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="42.0" prefWidth="259.0" style="-fx-background-color: #151928;" stylesheets="@../css/stylesdashboard.css" text="Users" translateY="10.0">
+                <Button id="btnUsers" fx:id="btnUsers" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="42.0" prefWidth="259.0" style="-fx-background-color: #151928;" stylesheets="@../css/stylesdashboard.css" text="Users" translateY="-10.0">
                     <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -79,7 +79,7 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
-                <Button fx:id="btnAccommodations" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="42.0" prefWidth="259.0" style="-fx-background-color: #151928;" stylesheets="@../css/stylesdashboard.css" text="Accomodations" translateY="20.0">
+                <Button fx:id="btnAccommodations" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="42.0" prefWidth="259.0" style="-fx-background-color: #151928;" stylesheets="@../css/stylesdashboard.css" text="Accomodations">
                     <padding>
                         <Insets left="50.0" />
                     </padding>
@@ -97,7 +97,7 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
-                <Button fx:id="btnBookings" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="42.0" prefWidth="259.0" style="-fx-background-color: #151928;" stylesheets="@../css/stylesdashboard.css" text="Bookings" translateX="1.0" translateY="30.0">
+                <Button fx:id="btnBookings" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="42.0" prefWidth="259.0" style="-fx-background-color: #151928;" stylesheets="@../css/stylesdashboard.css" text="Bookings" translateX="1.0" translateY="10.0">
                     <graphic>
                         <ImageView fitHeight="27.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true" translateX="2.0" translateY="-1.0">
                             <image>
@@ -115,7 +115,7 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
-                <Button fx:id="btnForum" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="42.0" prefWidth="259.0" style="-fx-background-color: #151928;" stylesheets="@../css/stylesdashboard.css" text="Forum" translateX="-1.0" translateY="40.0">
+                <Button fx:id="btnForum" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="42.0" prefWidth="259.0" style="-fx-background-color: #151928;" stylesheets="@../css/stylesdashboard.css" text="Forum" translateX="-1.0" translateY="20.0">
                     <graphic>
                         <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" translateX="4.0" translateY="1.0">
                             <image>
@@ -133,7 +133,7 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
-                <Button fx:id="btnSignout" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onMouseClicked="#signOut" prefHeight="42.0" prefWidth="259.0" style="-fx-background-color: #151928;" stylesheets="@../css/stylesdashboard.css" text="Sign Out" translateX="5.0" translateY="260.0">
+                <Button fx:id="btnSignout" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onMouseClicked="#signOut" prefHeight="42.0" prefWidth="259.0" style="-fx-background-color: #151928;" stylesheets="@../css/stylesdashboard.css" text="Sign Out" translateX="5.0" translateY="258.0">
                     <graphic>
                         <ImageView fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -151,7 +151,7 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
-                <Button fx:id="btnExit" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#closeApp" prefHeight="42.0" prefWidth="259.0" style="-fx-background-color: #151928;" stylesheets="@../css/stylesdashboard.css" text="Close App" translateX="5.0" translateY="265.0">
+                <Button fx:id="btnExit" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#closeApp" prefHeight="42.0" prefWidth="259.0" style="-fx-background-color: #151928;" stylesheets="@../css/stylesdashboard.css" text="Close App" translateX="5.0" translateY="263.0">
                     <padding>
                         <Insets left="50.0" />
                     </padding>
@@ -169,7 +169,7 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
-                <Button fx:id="btnConversations" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="42.0" prefWidth="259.0" style="-fx-background-color: #151928;" stylesheets="@../css/stylesdashboard.css" text="Conversations" translateY="-38.0">
+                <Button fx:id="btnConversations" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="42.0" prefWidth="259.0" style="-fx-background-color: #151928;" stylesheets="@../css/stylesdashboard.css" text=" Conversations" translateY="-58.0">
                     <graphic>
                         <ImageView fitHeight="27.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true" translateX="5.0">
                             <image>
@@ -187,7 +187,25 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
-                <Button fx:id="btnAboutUs" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="42.0" prefWidth="259.0" style="-fx-background-color: #151928;" stylesheets="@../css/stylesdashboard.css" text="About Us" translateX="5.0" translateY="85.0">
+            <Button fx:id="btnBackup" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleBackup" prefHeight="42.0" prefWidth="259.0" style="-fx-background-color: #151928;" stylesheets="@../css/stylesdashboard.css" text="Backup" translateX="6.0" translateY="-50.0">
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" translateX="4.0">
+                     <image>
+                        <Image url="@../multimedia/icons8-copias-de-seguridad-50.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+                <Button fx:id="btnAboutUs" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="42.0" prefWidth="259.0" style="-fx-background-color: #151928;" stylesheets="@../css/stylesdashboard.css" text="About Us" translateX="5.0" translateY="40.0">
                     <graphic>
                         <ImageView fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -205,6 +223,24 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
+            <Button fx:id="btnRefresh" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleRefresh" prefHeight="42.0" prefWidth="259.0" style="-fx-background-color: #151928;" stylesheets="@../css/stylesdashboard.css" text="Refresh DB" translateX="5.0" translateY="-50.0">
+               <graphic>
+                  <ImageView fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../multimedia/icons8-17387-0-73139-actualizar-izquierda-32-flechas-50.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
             </children>
         </VBox>
         <StackPane layoutX="258.0" prefHeight="900.0" prefWidth="1182.0" style="-fx-background-color: #edf1ff;">
@@ -257,13 +293,13 @@
                                 </HBox>
                                 <HBox prefHeight="100.0" prefWidth="970.0">
                                     <children>
-                                        <Label prefHeight="17.0" prefWidth="72.0" />
+                                        <Label prefHeight="17.0" prefWidth="40.0" />
                                         <Label prefHeight="30.0" prefWidth="132.0" text="Password: " translateY="-5.0">
                                             <font>
                                                 <Font name="System Bold" size="20.0" />
                                             </font>
                                         </Label>
-                                        <Label fx:id="passwordlabel" prefHeight="30.0" prefWidth="249.0" translateX="1.0" translateY="-5.0">
+                                        <Label fx:id="passwordlabel" prefHeight="30.0" prefWidth="186.0" translateX="1.0" translateY="-5.0">
                                             <font>
                                                 <Font size="20.0" />
                                             </font>
@@ -278,11 +314,6 @@
                                                 <Font size="20.0" />
                                             </font>
                                         </Label>
-                                        <Button fx:id="btnChangePhoto" mnemonicParsing="false" onAction="#handleChangePhoto" prefHeight="32.0" prefWidth="142.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" stylesheets="@../css/stylesdashboard.css" text="Change Photo" translateX="60.0" translateY="40.0">
-                                            <font>
-                                                <Font size="14.0" />
-                                            </font>
-                                        </Button>
                                     </children>
                                 </HBox>
                                 <HBox prefHeight="94.0" prefWidth="970.0">
@@ -406,9 +437,14 @@
                                 <Image url="@../multimedia/icons8-línea-horizontal-24.png" />
                             </image>
                         </ImageView>
+                            <Button fx:id="btnChangePhoto" layoutY="1.0" mnemonicParsing="false" onAction="#handleChangePhoto" prefHeight="32.0" prefWidth="142.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" stylesheets="@../css/stylesdashboard.css" text="Change Photo" translateX="923.0" translateY="318.0">
+                                <font>
+                                    <Font size="14.0" />
+                                </font>
+                            </Button>
                     </children>
                 </Pane>
-                <Pane fx:id="pnlUsers" prefHeight="892.0" prefWidth="1183.0" style="-fx-background-color: #edf1ff;" visible="false">
+                <Pane fx:id="pnlUsers" prefHeight="892.0" prefWidth="1183.0" style="-fx-background-color: #edf1ff;">
                     <children>
                         <Label layoutX="57.0" layoutY="25.0" prefHeight="66.0" prefWidth="388.0" style="-fx-text-fill: #0c0e17;" text="Users Management" textFill="#e7e5e5" translateY="-3.0">
                             <font>
@@ -695,7 +731,7 @@
                         </ImageView>
                     </children>
                 </Pane>
-                <Pane fx:id="pnlBookings" style="-fx-background-color: #edf1ff;">
+                <Pane fx:id="pnlBookings" style="-fx-background-color: #edf1ff;" visible="false">
                     <children>
                         <Label layoutX="57.0" layoutY="25.0" prefHeight="66.0" prefWidth="580.0" style="-fx-text-fill: #0c0e17;" text="Bookings Management" textFill="#e7e5e5">
                             <font>

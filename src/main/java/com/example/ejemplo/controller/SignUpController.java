@@ -1,6 +1,7 @@
 package com.example.ejemplo.controller;
 
 import com.example.ejemplo.model.User;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -51,6 +52,7 @@ public class SignUpController implements Initializable {
     public DatePicker birthDatePicker;
     @FXML
     public CheckBox adminCheckbox;
+    @FXML public TextField adminCodeField;
     @FXML
     private Button signUpButton;
     @FXML
@@ -67,7 +69,7 @@ public class SignUpController implements Initializable {
         String[] genders={"Male", "Female", "Other"};
         GenderChoiceBox.getItems().addAll(genders);
         GenderChoiceBox.setValue("Gender");
-        birthDatePicker.setValue(LocalDate.now());
+        birthDatePicker.setValue(LocalDate.now().atStartOfDay().toLocalDate());
         System.out.println(birthDatePicker.getValue());
     }
 
@@ -116,7 +118,7 @@ public class SignUpController implements Initializable {
         if (!validateEmail(email)) errors.append("Formato de email inválido.\n");
         if (!validateName(name)) errors.append("El nombre debe contener al menos un apellido y solo caracteres válidos.\n");
         if (!validatePassword(password)) errors.append("La contraseña debe tener más de 8 caracteres y contener al menos una letra mayúscula y un número.\n");
-        if (!validatePhone(phone)) errors.append("El teléfono debe comenzar con +34 seguido de 9 dígitos.\n");
+        if (!validatePhone(phone)) errors.append("El teléfono debe tener 9 dígitos.\n");
 
         if (!errors.isEmpty()) {
             showError(errors.toString());
@@ -130,18 +132,22 @@ public class SignUpController implements Initializable {
         }
 
         try {
-            // Verifica si el usuario ya existe
             if (userExists(email)) {
                 showError(Constants.USER_EXISTS_ERROR);
                 return;
             }
-            System.out.println();
+            if (adminCheckbox.isSelected()&& !Objects.equals(adminCodeField.getText(), Constants.ADMINCODE)) {
+                showError(Constants.ADMIN_ERROR);
+                return;
+            }
+            if (adminCheckbox.isSelected()&& !Objects.equals(adminCodeField.getText(), "")) {
+                showError(Constants.EMPTY_CODE);
+                return;
+            }
             // Crea un nuevo objeto de usuario y lo guarda en la base de datos
             User user = new User(name,surnames,email,password,phone,birthDate, LocalDateTime.now(),gender,dni,null,null,isAdmin);
             userController.create(user);
-            System.out.println(user);
             showSuccess("Registro exitoso.");
-            // Limpia los campos después del registro exitoso
             nameField.setText("");
             signupEmailField.setText("");
             passwordField.setText("");
@@ -225,6 +231,14 @@ public class SignUpController implements Initializable {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             System.exit(0);
+        }
+    }
+
+    public void handleDisable(ActionEvent actionEvent) {
+        if(adminCheckbox.isSelected()){
+            adminCodeField.setVisible(true);
+        }else{
+            adminCodeField.setVisible(false);
         }
     }
 }

@@ -16,18 +16,18 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import com.example.ejemplo.utils.Constants;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URL;
 import java.nio.file.Files;
+import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -35,70 +35,133 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static com.example.ejemplo.utils.Constants.*;
+import static java.time.LocalDate.now;
 
 /**
  * Controlador para el panel de administrador.
  */
 public class AdminDashboardController implements Initializable {
 
-    @FXML public VBox pnItemsForum;
-    @FXML public VBox pnAccommodationItems;
-    @FXML public Label genrelabel;
-    @FXML public Label txtBirthDate;
-    @FXML public TextArea bioTextArea;
-    @FXML public VBox pnConversationsItems;
-    @FXML public Label NewMessages;
-    @FXML public Label NewConversations;
-    @FXML public Label TotalMessages;
-    @FXML public Label TotalConversations;
-    @FXML public Pane pnlConversations;
-    @FXML public Label NewComments;
-    @FXML public Label NewTopics;
-    @FXML public Label TotalForumComments;
-    @FXML public Label TotalForumTopics;
-    @FXML public VBox pnBookingsItems;
-    @FXML public Label bookingsLastWeek1;
-    @FXML public Label averagePrice1;
-    @FXML public Label currentBookings;
-    @FXML public Label totalBookings;
-    @FXML public Pane pnlBookings;
-    @FXML public Label accommodationsLastWeek;
-    @FXML public Label averagePrice;
-    @FXML public Label availableAccommodations;
-    @FXML public Label totalAccommodations;
-    @FXML public Button btnAddUser;
-    @FXML public Button btnConversations;
-    @FXML public Button btnAboutUs;
-    @FXML public Button btnBookings;
-    @FXML public Pane pnlAboutUs;
-    @FXML public Button btnAddConversation;
-    @FXML private Button btnExit;
-    @FXML private Label namelabel;
-    @FXML private Label idlabel;
-    @FXML private Label passwordlabel;
-    @FXML private Label datelabel;
-    @FXML private Label emaillabel;
-    @FXML private Label phonelabel;
-    @FXML private Button btnChangePhoto;
-    @FXML private Pane dragArea;
-    @FXML private Label username;
-    @FXML private VBox pnItems;
-    @FXML private Button btnProfile;
-    @FXML private Button btnUsers;
-    @FXML private Button btnAccommodations;
-    @FXML private Button btnForum;
-    @FXML private Button btnSignout;
-    @FXML private Pane pnlProfile;
-    @FXML private Pane pnlUsers;
-    @FXML private Pane pnlForum;
-    @FXML private Pane pnlAccommodations;
-    @FXML private Label totalusers;
-    @FXML private Label totalclients;
-    @FXML private Label totaladmins;
-    @FXML private Label lastweek;
-    @FXML private Circle circle;
-    @FXML private Circle circleProfile;
-    @FXML private VBox pnItemsForumTopics;
+    @FXML
+    public VBox pnItemsForum;
+    @FXML
+    public VBox pnAccommodationItems;
+    @FXML
+    public Label genrelabel;
+    @FXML
+    public Label txtBirthDate;
+    @FXML
+    public TextArea bioTextArea;
+    @FXML
+    public VBox pnConversationsItems;
+    @FXML
+    public Label NewMessages;
+    @FXML
+    public Label NewConversations;
+    @FXML
+    public Label TotalMessages;
+    @FXML
+    public Label TotalConversations;
+    @FXML
+    public Pane pnlConversations;
+    @FXML
+    public Label NewComments;
+    @FXML
+    public Label NewTopics;
+    @FXML
+    public Label TotalForumComments;
+    @FXML
+    public Label TotalForumTopics;
+    @FXML
+    public VBox pnBookingsItems;
+    @FXML
+    public Label bookingsLastWeek1;
+    @FXML
+    public Label averagePrice1;
+    @FXML
+    public Label currentBookings;
+    @FXML
+    public Label totalBookings;
+    @FXML
+    public Pane pnlBookings;
+    @FXML
+    public Label accommodationsLastWeek;
+    @FXML
+    public Label averagePrice;
+    @FXML
+    public Label availableAccommodations;
+    @FXML
+    public Label totalAccommodations;
+    @FXML
+    public Button btnAddUser;
+    @FXML
+    public Button btnConversations;
+    @FXML
+    public Button btnAboutUs;
+    @FXML
+    public Button btnBookings;
+    @FXML
+    public Pane pnlAboutUs;
+    @FXML
+    public Button btnAddConversation;
+    @FXML
+    public Button btnRefresh;
+    @FXML
+    public Button btnBackup;
+    @FXML
+    private Button btnExit;
+    @FXML
+    private Label namelabel;
+    @FXML
+    private Label idlabel;
+    @FXML
+    private Label passwordlabel;
+    @FXML
+    private Label datelabel;
+    @FXML
+    private Label emaillabel;
+    @FXML
+    private Label phonelabel;
+    @FXML
+    private Button btnChangePhoto;
+    @FXML
+    private Pane dragArea;
+    @FXML
+    private Label username;
+    @FXML
+    private VBox pnItems;
+    @FXML
+    private Button btnProfile;
+    @FXML
+    private Button btnUsers;
+    @FXML
+    private Button btnAccommodations;
+    @FXML
+    private Button btnForum;
+    @FXML
+    private Button btnSignout;
+    @FXML
+    private Pane pnlProfile;
+    @FXML
+    private Pane pnlUsers;
+    @FXML
+    private Pane pnlForum;
+    @FXML
+    private Pane pnlAccommodations;
+    @FXML
+    private Label totalusers;
+    @FXML
+    private Label totalclients;
+    @FXML
+    private Label totaladmins;
+    @FXML
+    private Label lastweek;
+    @FXML
+    private Circle circle;
+    @FXML
+    private Circle circleProfile;
+    @FXML
+    private VBox pnItemsForumTopics;
 
     // Otros atributos
     private User currentUser;
@@ -107,12 +170,13 @@ public class AdminDashboardController implements Initializable {
     private final UserController userController = new UserController();
     private final ForumTopicController topicController = new ForumTopicController();
     private final AccommodationController accommodationController = new AccommodationController();
-    private final ConversationController conversationController=new ConversationController();
-    private final BookingController bookingController=new BookingController();
-    private final LocalDate oneWeekAgo = LocalDate.now().minusWeeks(1);
+    private final ConversationController conversationController = new ConversationController();
+    private final BookingController bookingController = new BookingController();
+    private final LocalDate oneWeekAgo = now().minusWeeks(1);
 
     /**
      * Inicializa el controlador.
+     *
      * @param location  La ubicación utilizada para resolver las rutas relativas para el objeto raíz.
      * @param resources Los recursos utilizados para localizar el objeto raíz.
      */
@@ -132,14 +196,14 @@ public class AdminDashboardController implements Initializable {
         refresh();
     }
 
-    public void refresh(){
+    public void refresh() {
         pnItems.getChildren().clear();
         pnItemsForum.getChildren().clear();
         pnAccommodationItems.getChildren().clear();
         pnConversationsItems.getChildren().clear();
         pnBookingsItems.getChildren().clear();
 
-        if(currentUser!=null) {
+        if (currentUser != null) {
             refreshProfile();
         }
 
@@ -196,7 +260,6 @@ public class AdminDashboardController implements Initializable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            System.out.println(acco);
         }
 
         // Obtener todos los alojamientos y actualizar estadísticas
@@ -211,7 +274,6 @@ public class AdminDashboardController implements Initializable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            System.out.println(conver);
         }
 
         updateUserStatistics();
@@ -226,17 +288,17 @@ public class AdminDashboardController implements Initializable {
         MessageController messageController = new MessageController();
         List<Message> messages = messageController.getAllMessages();
         int totalConversations = convers.size();
-        int totalMessages=messages.size();
+        int totalMessages = messages.size();
         int averageMessagesConver;
         int newMessages = 0;
-        if (messageController.getAllMessages()!=null) {
-                for (Message message : messages) {
-                    if(message.getDateTime().isAfter(oneWeekAgo.atStartOfDay())){
-                        newMessages++;
-                    }
+        if (messageController.getAllMessages() != null) {
+            for (Message message : messages) {
+                if (message.getDateTime().isAfter(oneWeekAgo.atStartOfDay())) {
+                    newMessages++;
                 }
+            }
         }
-        averageMessagesConver=totalMessages/totalConversations;
+        averageMessagesConver = totalMessages / totalConversations;
         TotalConversations.setText(String.valueOf(totalConversations));
         TotalMessages.setText(String.valueOf(totalMessages));
         NewConversations.setText(String.valueOf(averageMessagesConver));
@@ -248,15 +310,15 @@ public class AdminDashboardController implements Initializable {
         List<ForumComment> forumComments = new ForumCommentController().getAllComments();
         int totalForums = topics.size();
         int totalForumComments = forumComments.size();
-        int commentsLastWeek=0;
-        int topicsLastWeek=0;
+        int commentsLastWeek = 0;
+        int topicsLastWeek = 0;
         for (ForumComment comment : forumComments) {
-            if(comment.getDateTime().isAfter(oneWeekAgo.atStartOfDay())){
+            if (comment.getDateTime().isAfter(oneWeekAgo.atStartOfDay())) {
                 commentsLastWeek++;
             }
         }
         for (ForumTopic topic : topics) {
-            if(topic.getDateTime().isAfter(oneWeekAgo.atStartOfDay())){
+            if (topic.getDateTime().isAfter(oneWeekAgo.atStartOfDay())) {
                 topicsLastWeek++;
             }
         }
@@ -267,29 +329,29 @@ public class AdminDashboardController implements Initializable {
 
     }
 
-    private void updateBookingStatistics(){
+    private void updateBookingStatistics() {
         int totalBookings = bookingController.getAllBookings().size();
         int currentBookings = 0;
         int pendingBookings = 0;
         int cancelledBookings = 0;
         double totalAveragedPrice = 0.0;
-        for(Booking booking : bookingController.getAllBookings()){
-            if(booking.getStatus() == Booking.BookingStatus.CONFIRMED && booking.getEndDate().isAfter(LocalDateTime.now())){
+        for (Booking booking : bookingController.getAllBookings()) {
+            if (booking.getStatus() == Booking.BookingStatus.CONFIRMED && booking.getEndDate().isAfter(LocalDateTime.now())) {
                 currentBookings++;
-            } else if(booking.getStatus() == Booking.BookingStatus.PENDING){
+            } else if (booking.getStatus() == Booking.BookingStatus.PENDING) {
                 pendingBookings++;
-            }else if(booking.getStatus() == Booking.BookingStatus.CANCELLED){
+            } else if (booking.getStatus() == Booking.BookingStatus.CANCELLED) {
                 cancelledBookings++;
             }
         }
-    this.totalBookings.setText(String.valueOf(totalBookings));
+        this.totalBookings.setText(String.valueOf(totalBookings));
         this.currentBookings.setText(String.valueOf(currentBookings));
         this.averagePrice1.setText(String.valueOf(pendingBookings));
         this.bookingsLastWeek1.setText(String.valueOf(cancelledBookings));
     }
 
 
-    private void updateAccommodationStatistics(){
+    private void updateAccommodationStatistics() {
         List<Accommodation> allAccommodations = accommodationController.getAllAccommodations();
         List<AccommodationReview> reviews = new AccommodationReviewController().getAllReviews();
         int totalAccommodations = allAccommodations.size();
@@ -297,8 +359,8 @@ public class AdminDashboardController implements Initializable {
         int availableAccommodations = 0;
         BigDecimal totalPrices = new BigDecimal(0);
 
-        for(Accommodation accommodation : allAccommodations){
-            if(accommodation.isAvailability()){
+        for (Accommodation accommodation : allAccommodations) {
+            if (accommodation.isAvailability()) {
                 availableAccommodations++;
             }
             totalPrices = totalPrices.add(accommodation.getPrice());
@@ -307,7 +369,7 @@ public class AdminDashboardController implements Initializable {
         BigDecimal averagePrice = totalAccommodations == 0 ? BigDecimal.ZERO : totalPrices.divide(BigDecimal.valueOf(totalAccommodations), 0, RoundingMode.HALF_UP);
 
         this.accommodationsLastWeek.setText(String.valueOf(totalReviews));
-        this.averagePrice.setText(String.valueOf(averagePrice)+"€");
+        this.averagePrice.setText(String.valueOf(averagePrice) + "€");
         this.availableAccommodations.setText(String.valueOf(availableAccommodations));
         this.totalAccommodations.setText(String.valueOf(totalAccommodations));
     }
@@ -319,7 +381,7 @@ public class AdminDashboardController implements Initializable {
     public void updateUserStatistics() {
         List<User> usersAux = userController.getAll();
         int totalUsers = 0;
-        int totalClients=0;
+        int totalClients = 0;
         int totalAdmins = 0;
         int registeredLastWeek = 0;
 
@@ -344,6 +406,7 @@ public class AdminDashboardController implements Initializable {
 
     /**
      * Gestiona los clics en los botones.
+     *
      * @param actionEvent El evento de acción.
      */
     public void handleClicks(ActionEvent actionEvent) {
@@ -357,8 +420,7 @@ public class AdminDashboardController implements Initializable {
             pnlConversations.setVisible(false);
             pnlAboutUs.setVisible(false);
         }
-        if(actionEvent.getSource()== btnUsers)
-        {
+        if (actionEvent.getSource() == btnUsers) {
             pnlUsers.setVisible(true);
             pnlUsers.toFront();
             pnlProfile.setVisible(false);
@@ -422,6 +484,7 @@ public class AdminDashboardController implements Initializable {
 
     /**
      * Realiza el cierre de sesión.
+     *
      * @param actionEvent El evento del mouse.
      */
     public void signOut(MouseEvent actionEvent) {
@@ -430,19 +493,19 @@ public class AdminDashboardController implements Initializable {
         }
     }
 
-    public void refreshProfile(){
-        username.setText(currentUser.getName()+" "+currentUser.getLastName());
-        namelabel.setText(currentUser.getName()+" "+currentUser.getLastName());
+    public void refreshProfile() {
+        username.setText(currentUser.getName() + " " + currentUser.getLastName());
+        namelabel.setText(currentUser.getName() + " " + currentUser.getLastName());
         idlabel.setText(String.valueOf(currentUser.getUserId()));
         genrelabel.setText(" ");
-        if(currentUser.getGender()!=null){
-            if(currentUser.getGender()== User.Gender.MALE){
+        if (currentUser.getGender() != null) {
+            if (currentUser.getGender() == User.Gender.MALE) {
                 genrelabel.setText("Male");
             } else {
-                if (currentUser.getGender()== User.Gender.FEMALE) {
+                if (currentUser.getGender() == User.Gender.FEMALE) {
                     genrelabel.setText("Female");
                 } else {
-                    if (currentUser.getGender()== User.Gender.OTHER) {
+                    if (currentUser.getGender() == User.Gender.OTHER) {
                         genrelabel.setText("Other");
                     }
                 }
@@ -462,12 +525,13 @@ public class AdminDashboardController implements Initializable {
 
     /**
      * Inicializa los datos del usuario.
+     *
      * @param user El usuario actual.
      */
     public void initData(User user) {
 
         // Cargar la imagen de perfil del usuario desde la base de datos
-        currentUser=user;
+        currentUser = user;
         byte[] profilePictureBytes = currentUser.getProfilePicture();
         if (profilePictureBytes != null && profilePictureBytes.length > 0) {
             try {
@@ -512,9 +576,9 @@ public class AdminDashboardController implements Initializable {
         try {
             AtomicReference<FXMLLoader> loader = new AtomicReference<>(new FXMLLoader(getClass().getResource(Constants.MODIFYUSER_FXML)));
             Parent root = loader.get().load();
-            System.out.println("Usuario que se intenta modificar: "+currentUser);
+            System.out.println("Usuario que se intenta modificar: " + currentUser);
             ModifyUserController modify = loader.get().getController();
-            modify.initData(currentUser, userController,this);
+            modify.initData(currentUser, userController, this);
             Stage stage = new Stage();
             stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(new Scene(root));
@@ -542,33 +606,31 @@ public class AdminDashboardController implements Initializable {
                 datelabel.setText(formattedDate);
                 emaillabel.setText(currentUser.getEmail());
                 phonelabel.setText(currentUser.getPhone());
-                userController.update(currentUser);
-                this.refresh();
-                System.out.println("SE HA MODIFICADO: "+currentUser);
-                List<User> users = userController.getAll();
-                while(!pnItems.getChildren().isEmpty()) {
-                    pnItems.getChildren().remove(0);
-                }
-                System.out.println(currentUser);
-                initData(currentUser);
-                System.out.println(currentUser);
-                for (User user : users) {
-                    updateUserStatistics();
-                    try {
-                        loader.set(new FXMLLoader(getClass().getResource(Constants.ITEM_USER_LIST_FXML)));
-                        Node node = loader.get().load();
-                        // Configurar el controlador del nodo
-                        ItemUserListController controller = loader.get().getController();
-                        controller.initData(user, userController, node, pnItems, this); // Pasa el usuario al controlador del nodo
-                        this.refresh();
-                        pnItems.getChildren().add(node);
-                    } catch (IOException e) {
-                        e.printStackTrace();
+
+                if(modifyController.genderChoiceBox.getValue()!=null){
+                    if(modifyController.genderChoiceBox.getValue().toString().equalsIgnoreCase("Male")){
+                        currentUser.setGender(User.Gender.MALE);
+                        genrelabel.setText("Male");
+                    }else {
+                        if (modifyController.genderChoiceBox.getValue().toString().equalsIgnoreCase("Female")) {
+                            currentUser.setGender(User.Gender.FEMALE);
+                            genrelabel.setText("Female");
+                        } else {
+                            if (modifyController.genderChoiceBox.getValue().toString().equalsIgnoreCase("Other")) {
+                                currentUser.setGender(User.Gender.OTHER);
+                                genrelabel.setText("Other");
+                            }
+                        }
                     }
                 }
+                System.out.println(currentUser);
+                refresh();
+                initData(currentUser);
+                userController.update(currentUser);
                 stage.close();
             });
             stage.show();
+            refresh();
             initData(currentUser);
         } catch (IOException e) {
             e.printStackTrace();
@@ -577,6 +639,7 @@ public class AdminDashboardController implements Initializable {
 
     /**
      * Cambia la foto de perfil del usuario.
+     *
      * @param event El evento del botón.
      */
     @FXML
@@ -586,7 +649,7 @@ public class AdminDashboardController implements Initializable {
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif")
         );
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
             try {
@@ -622,6 +685,7 @@ public class AdminDashboardController implements Initializable {
 
     /**
      * Muestra un mensaje de error.
+     *
      * @param message El mensaje de error.
      */
     private void showError(String message) {
@@ -664,7 +728,7 @@ public class AdminDashboardController implements Initializable {
                 scene.setFill(Color.TRANSPARENT);
                 stage.setScene(scene);
                 stage.show();
-              } catch (IOException e) {
+            } catch (IOException e) {
                 showError(Constants.LOAD_VIEW_ERROR);
                 throw new RuntimeException(e);
             }
@@ -673,24 +737,24 @@ public class AdminDashboardController implements Initializable {
 
     @FXML
     public void handleAddUser(ActionEvent actionEvent) {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource(ADDUSER_FXML));
-                Parent root = loader.load();
-                AddUserController add = loader.getController();
-                add.initData();
-                Stage stage = new Stage();
-                stage.initStyle(StageStyle.UNDECORATED);
-                stage.setScene(new Scene(root));
-                stage.setUserData(this);
-                AddUserController addController = loader.getController();
-                this.updateUserStatistics();
-                addController.btnCancel.setOnAction(event -> {
-                    stage.close();
-                });
-                stage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(ADDUSER_FXML));
+            Parent root = loader.load();
+            AddUserController add = loader.getController();
+            add.initData();
+            Stage stage = new Stage();
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setScene(new Scene(root));
+            stage.setUserData(this);
+            AddUserController addController = loader.getController();
+            this.updateUserStatistics();
+            addController.btnCancel.setOnAction(event -> {
+                stage.close();
+            });
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -764,4 +828,162 @@ public class AdminDashboardController implements Initializable {
         Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
         stage.setIconified(true);
     }
+
+    public void handleRefresh(ActionEvent actionEvent) {
+        refresh();
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Refresh");
+        alert.setHeaderText(null);
+        alert.setContentText("Database reloaded");
+        alert.show();
+    }
+
+    public void handleBackup(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Select an option");
+        alert.setHeaderText(null);
+        alert.setContentText("What do you want to do?");
+
+        ButtonType buttonImportar = new ButtonType("Import DB");
+        ButtonType buttonExportar = new ButtonType("Export DB");
+        ButtonType buttonCancelar = new ButtonType("Cancelar");
+
+        alert.getButtonTypes().setAll(buttonImportar, buttonExportar, buttonCancelar);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent()) {
+            if (result.get() == buttonImportar) {
+                // Importar el archivo SQL
+                importDB();
+            } else if (result.get() == buttonExportar) {
+                // Exportar la base de datos a un archivo SQL
+                exportDB();
+            } else {
+                System.out.println("Operación cancelada.");
+            }
+        }
+    }
+
+    public void exportDB() {
+        String dbName = "studystaydb";
+        String dbUser = "admin";
+        String dbPass = "admin";
+
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Select a directory to backup");
+        Stage stage = (Stage) btnBackup.getScene().getWindow();
+        File selectedDirectory = directoryChooser.showDialog(stage);
+
+        if (selectedDirectory != null) {
+            LocalDateTime now = LocalDateTime.now();
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm");
+            String formattedDateTime = now.format(formatter);
+            String backupPath = selectedDirectory.getAbsolutePath() + File.separator + formattedDateTime + ".sql";
+
+            String mysqlDumpPath = "C:\\xampp\\mysql\\bin\\mysqldump";
+
+            try {
+                ProcessBuilder processBuilder = new ProcessBuilder();
+                processBuilder.command(mysqlDumpPath, "-u" + dbUser, "-p" + dbPass, dbName); // Opciones adicionales para eliminar comentarios
+                processBuilder.redirectOutput(new File(backupPath));
+
+                Process process = processBuilder.start();
+                int exitCode = process.waitFor();
+                if (exitCode == 0) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Backup");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Security DataBase copy generated in: " + backupPath);
+                    alert.show();
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Backup");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Error creating a backup. Output code: " + exitCode);
+                    alert.show();
+                }
+                removeCommentsFromFile(backupPath);
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    public void importDB() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select the SQL file to import");
+
+        // Configurar filtro para mostrar solo archivos .sql
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("SQL files (*.sql)", "*.sql");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        File selectedFile = fileChooser.showOpenDialog(new Stage());
+        if (selectedFile != null) {
+            String dbUrl = "jdbc:mysql://localhost:3306/studystaydb";
+            String dbUser = "admin";
+            String dbPass = "admin";
+
+            try (Connection connection = DriverManager.getConnection(dbUrl, dbUser, dbPass);
+                 Statement statement = connection.createStatement()) {
+
+                // Leer el archivo SQL y omitir líneas de comentarios y bloques de comentarios
+                StringBuilder sql = new StringBuilder();
+                try (BufferedReader reader = new BufferedReader(new FileReader(selectedFile))) {
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                                sql.append(line);
+                                sql.append("\n");
+                    }
+                }
+
+                // Verificar si el script SQL tiene contenido
+                if (sql.length() > 0) {
+                    System.out.println(sql);
+                    statement.execute(String.valueOf(sql));
+                    System.out.println(sql.toString());
+                    System.out.println("Database imported successfully.");
+                } else {
+                    System.out.println("SQL file is empty or contains only comments.");
+                }
+
+            } catch (SQLException e) {
+                System.err.println("Error loading Database: " + e.getMessage());
+            } catch (Exception e) {
+                System.err.println("Error while importing SQL file " + e.getMessage());
+            }
+        } else {
+            System.out.println("File was not selected");
+        }
+    }
+
+    public void removeCommentsFromFile(String filePath) {
+        File file = new File(filePath);
+        StringBuilder stringBuilder = new StringBuilder();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                // Eliminar comentarios de una línea
+                line = line.replaceAll("--.*", "");
+                // Eliminar comentarios de varias líneas
+                line = line.replaceAll("/\\*.*?\\*/;", "");
+                // Eliminar punto y coma después de */
+                line = line.replaceAll("\\*/\\s*;", "*/");
+                stringBuilder.append(line).append("\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Escribir el contenido modificado de vuelta al archivo
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            writer.write(stringBuilder.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

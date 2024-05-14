@@ -33,20 +33,23 @@
     -fx-text-fill: whitesmoke;
 }
 
-.text-field {
+#text {
     -fx-text-fill: white;
+}
+
+#datepicker{
+    -fx-text-fill: black;
 }
 
 .choice-box {
     -fx-background-color: #2196f3;
     -fx-background-radius: 5px;
-    -fx-text-fill: whitesmoke;
+    -fx-text-fill: #DEDEE4;
 }
-/*
+
 .choice-box .context-menu {
     -fx-background-color: whitesmoke;
 }
-*/
 
 .check-box .box {
     -fx-background-color: white;
@@ -55,9 +58,7 @@
 }
 
 .check-box:selected .mark {
-
     -fx-background-color: white;
-
 }
 
 .check-box:selected .box {

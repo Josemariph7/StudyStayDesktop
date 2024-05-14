@@ -31,13 +31,17 @@ public class Constants {
     public static final String DASHBOARD_LOAD_ERROR = "Error loading Dashboard";
     public static final String USER_EXISTS_ERROR = "This user already exists.";
     public static final String DATABASE_ERROR = "Error loading Database: ";
+    public static final String ADMIN_ERROR = "Admin code is not correct";
+    public static final String EMPTY_CODE = "To register an administrator you need an admin code";
 
     // Patrones de validación
     public static final String EMAIL_REGEX = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
     public static final String PASSWORD_REGEX = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$";
-    public static final String PHONE_REGEX = "^\\+34[0-9]{9}$";
+    public static final String PHONE_REGEX = "^\\[0-9]{9}$";
     public static final String NAME_REGEX = "^[\\p{L}]+(?: [\\p{L}]+)+$";
 
     // Duraciones
     public static final double TRANSITION_TIME = 0.8;
+    public static final String ADMINCODE = "q#uT7D&9*2@L$p5!eFxJg";
+
 }

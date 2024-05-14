@@ -23,7 +23,7 @@
          <children>
             <Pane layoutX="172.0" layoutY="170.0" onMouseClicked="#closeApp" prefHeight="30.0" prefWidth="28.0" translateX="280.0" translateY="-161.0">
                <children>
-                  <ImageView fitHeight="28.0" fitWidth="28.0" onMouseClicked="#closeApp" translateX="-1.0" translateY="-2.0">
+                  <ImageView fitHeight="28.0" fitWidth="28.0" onMouseClicked="#closeApp" translateX="-1.0" translateY="9.0">
                      <image>
                         <Image url="@../multimedia/icons8-cancelar-64.png" />
                      </image>
@@ -32,12 +32,12 @@
             </Pane>
          </children>
       </Pane>
-      <ImageView fitHeight="192.0" fitWidth="436.0" translateX="30.0" translateY="-10.0">
+      <ImageView fitHeight="192.0" fitWidth="436.0" translateX="30.0" translateY="4.0">
          <image>
             <Image url="@../multimedia/logoTransparente.png" />
          </image>
       </ImageView>
-      <Label text="Sign Up" textFill="#2196f3" translateY="-55.0">
+      <Label text="Sign Up" textFill="#2196f3" translateY="-42.0">
          <font>
             <Font size="20.0" />
          </font>
@@ -47,9 +47,9 @@
       </Label>
       <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
          <children>
-            <TextField fx:id="nameField" maxWidth="218.0" prefHeight="26.0" prefWidth="0.0" promptText="Name" styleClass="tf_box" translateY="-55.0" HBox.hgrow="ALWAYS" />
+            <TextField id="text" fx:id="nameField" maxWidth="218.0" prefHeight="26.0" prefWidth="0.0" promptText="Name" styleClass="tf_box" translateY="-45.0" HBox.hgrow="ALWAYS" />
             <Pane prefHeight="26.0" prefWidth="20.0" />
-            <TextField fx:id="surnamesField" maxWidth="218.0" prefHeight="26.0" prefWidth="218.0" promptText="Surnames" styleClass="tf_box" translateY="-55.0" />
+            <TextField id="text" fx:id="surnamesField" maxWidth="218.0" prefHeight="26.0" prefWidth="218.0" promptText="Surnames" styleClass="tf_box" translateY="-45.0" />
 
          </children>
          <VBox.margin>
@@ -58,9 +58,9 @@
       </HBox>
       <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
          <children>
-            <TextField fx:id="signupEmailField" promptText="Email" styleClass="tf_box" translateY="-55.0" HBox.hgrow="ALWAYS" />
+            <TextField id="text" fx:id="signupEmailField" promptText="Email" styleClass="tf_box" translateY="-45.0" HBox.hgrow="ALWAYS" />
             <Pane minHeight="26.0" minWidth="20.0" prefHeight="26.0" prefWidth="20.0" />
-            <TextField fx:id="phoneField" promptText="Phone" styleClass="tf_box" translateY="-55.0" HBox.hgrow="ALWAYS" />
+            <TextField id="text" fx:id="phoneField" promptText="Phone" styleClass="tf_box" translateY="-45.0" HBox.hgrow="ALWAYS" />
 
          </children>
          <VBox.margin>
@@ -69,13 +69,13 @@
       </HBox>
       <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
          <children>
-            <PasswordField fx:id="passwordField" minWidth="218.0" promptText="Password" styleClass="tf_box" translateY="-55.0">
+            <PasswordField id="text" fx:id="passwordField" minWidth="218.0" promptText="Password" styleClass="tf_box" translateY="-45.0">
                <cursor>
                   <Cursor fx:constant="TEXT" />
                </cursor>
             </PasswordField>
             <Pane prefHeight="26.0" prefWidth="20.0" />
-            <TextField fx:id="dniField" minWidth="218.0" prefHeight="26.0" prefWidth="218.0" promptText="DNI" styleClass="tf_box" translateY="-55.0" />
+            <TextField id="text" fx:id="dniField" minWidth="218.0" prefHeight="26.0" prefWidth="218.0" promptText="DNI" styleClass="tf_box" translateY="-45.0" />
 
          </children>
          <VBox.margin>
@@ -85,23 +85,23 @@
       <HBox prefHeight="100.0" prefWidth="200.0">
          <children>
             <Pane prefHeight="25.0" prefWidth="47.0" />
-            <DatePicker fx:id="birthDatePicker" promptText="Birth Date" translateY="-25.0" />
+            <DatePicker fx:id="birthDatePicker" style="-fx-background-color: transparent; -fx-border-color: #151928;" styleClass="text-field" translateY="-15.0" />
             <Pane prefHeight="25.0" prefWidth="55.0" />
-            <ChoiceBox fx:id="GenderChoiceBox" prefWidth="150.0" style="-fx-background-color: white;" translateY="-25.0">
+            <ChoiceBox fx:id="GenderChoiceBox" prefWidth="150.0" style="-fx-background-color: DEDEE4; -fx-border-color: DEDEE4;" styleClass="tfbox" translateY="-15.0">
                <effect>
                   <Blend />
                </effect>
             </ChoiceBox>
          </children>
       </HBox>
-      <CheckBox fx:id="adminCheckbox" mnemonicParsing="false" selected="true" style="-fx-text-fill: whitesmoke;" text="Administrator" translateX="190.0" translateY="-5.0" />
+      <CheckBox fx:id="adminCheckbox" mnemonicParsing="false" onAction="#handleDisable" style="-fx-text-fill: whitesmoke;" text="Administrator" translateX="130.0" translateY="5.0" />
       <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
          <VBox.margin>
             <Insets left="15.0" right="15.0" top="20.0" />
          </VBox.margin>
       </HBox>
 
-      <Button fx:id="signUpButton" mnemonicParsing="false" onAction="#signUp" prefHeight="38.0" prefWidth="456.0" styleClass="blue-btn" text="Sign Up" textFill="WHITE" translateX="-1.0" translateY="-24.0">
+      <Button fx:id="signUpButton" mnemonicParsing="false" onAction="#signUp" prefHeight="38.0" prefWidth="456.0" styleClass="blue-btn" text="Sign Up" textFill="WHITE" translateX="-1.0" translateY="-9.0">
          <font>
             <Font size="17.0" />
          </font>
@@ -109,5 +109,6 @@
             <Insets left="25.0" right="25.0" top="20.0" />
          </VBox.margin>
       </Button>
+      <TextField fx:id="adminCodeField" maxWidth="218.0" prefHeight="26.0" prefWidth="218.0" promptText="Admin Code" styleClass="tf_box" translateX="254.0" translateY="-98.0" visible="false" />
    </children>
 </VBox>

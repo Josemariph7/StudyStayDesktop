@@ -47,16 +47,16 @@ public class ModifyUserController {
         user.setName(txtName.getText());
         user.setPassword(txtPassword.getText());
         user.setPhone(txtPhone.getText());
-        User.Gender gender;
+
         if(genderChoiceBox.getValue()!=null){
-            if(Objects.equals(genderChoiceBox.getValue(), "Male")){
-                gender=User.Gender.MALE;
+            if(genderChoiceBox.getValue().toString().equalsIgnoreCase("Male")){
+                user.setGender(User.Gender.MALE);
             }else {
-                if (Objects.equals(genderChoiceBox.getValue(), "Female")) {
-                    gender = User.Gender.FEMALE;
+                if (genderChoiceBox.getValue().toString().equalsIgnoreCase("Female")) {
+                    user.setGender(User.Gender.FEMALE);
                 } else {
-                    if (Objects.equals(genderChoiceBox.getValue(), "Other")) {
-                        gender = User.Gender.OTHER;
+                    if (genderChoiceBox.getValue().toString().equalsIgnoreCase("Other")) {
+                        user.setGender(User.Gender.OTHER);
                     }
                 }
             }
@@ -66,7 +66,6 @@ public class ModifyUserController {
         System.out.println(user);
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText(null);
-        alert.initStyle(StageStyle.UTILITY);
         alert.setTitle("Modify User");
         alert.setContentText("Are you sure to modify this User?");
         Optional<ButtonType> result = alert.showAndWait();
