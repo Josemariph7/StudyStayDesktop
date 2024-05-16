@@ -13,6 +13,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -114,5 +115,26 @@ public class ItemConversationListController {
             adminDashboardController.refresh();
         }
 
+    }
+
+    public void handleDetails(MouseEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.DETAILSCONVERSATION_FXML));
+            Parent root = loader.load();
+            ConversationDetailsController details = loader.getController();
+            details.initData(conversation, conversationController, adminDashboardController);
+            Stage stage = new Stage();
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setScene(new Scene(root));
+            stage.setUserData(this);
+            ConversationDetailsController detailsController = loader.getController();
+            adminDashboardController.refresh();
+            detailsController.btnBack.setOnAction(event -> {
+                stage.close();
+            });
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

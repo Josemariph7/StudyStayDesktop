@@ -51,12 +51,18 @@ public class ModifyUserController {
         if(genderChoiceBox.getValue()!=null){
             if(genderChoiceBox.getValue().toString().equalsIgnoreCase("Male")){
                 user.setGender(User.Gender.MALE);
+                if(Objects.equals(user.getUserId(), adminDashboardController.currentUser.getUserId()))
+                    adminDashboardController.genrelabel.setText("Male");
             }else {
                 if (genderChoiceBox.getValue().toString().equalsIgnoreCase("Female")) {
                     user.setGender(User.Gender.FEMALE);
+                    if(Objects.equals(user.getUserId(), adminDashboardController.currentUser.getUserId()))
+                        adminDashboardController.genrelabel.setText("Female");
                 } else {
                     if (genderChoiceBox.getValue().toString().equalsIgnoreCase("Other")) {
                         user.setGender(User.Gender.OTHER);
+                        if(Objects.equals(user.getUserId(), adminDashboardController.currentUser.getUserId()))
+                            adminDashboardController.genrelabel.setText("Other");
                     }
                 }
             }

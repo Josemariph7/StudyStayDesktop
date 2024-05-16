@@ -115,4 +115,25 @@ public class ItemForumListController {
 
     }
 
+    public void handleDetails(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.DETAILSFORUM_FXML));
+            Parent root = loader.load();
+            ForumDetailsController details = loader.getController();
+            details.initData(forumTopic, forumTopicController,  dashboard);
+            Stage stage = new Stage();
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setScene(new Scene(root));
+            stage.setUserData(this);
+            ForumDetailsController detailsController = loader.getController();
+            dashboard.refresh();
+            detailsController.btnBack.setOnAction(event -> {
+                stage.close();
+            });
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

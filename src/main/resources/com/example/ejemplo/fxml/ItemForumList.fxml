@@ -45,16 +45,16 @@
               </Label>
          </children>
       </Pane>
+      <Pane prefHeight="53.0" prefWidth="61.0" />
       <Pane prefHeight="53.0" prefWidth="125.0">
          <children>
-            <Button fx:id="btnTopicDetails" layoutX="59.0" layoutY="1.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="112.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="View Details" translateY="10.0">
+            <Button fx:id="btnTopicDetails" layoutX="59.0" layoutY="1.0" mnemonicParsing="false" onAction="#handleDetails" prefHeight="32.0" prefWidth="112.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="View Details" translateX="-59.0" translateY="10.0">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
          </children>
       </Pane>
-      <Pane prefHeight="53.0" prefWidth="61.0" />
       <Pane prefHeight="53.0" prefWidth="79.0">
          <children>
               <Button fx:id="btnModifyTopic" mnemonicParsing="false" onAction="#handleModify" prefHeight="32.0" prefWidth="66.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Modify" translateY="10.0">

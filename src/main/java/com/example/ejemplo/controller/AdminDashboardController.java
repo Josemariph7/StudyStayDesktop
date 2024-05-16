@@ -164,7 +164,7 @@ public class AdminDashboardController implements Initializable {
     private VBox pnItemsForumTopics;
 
     // Otros atributos
-    private User currentUser;
+    public User currentUser;
     private double xOffset = 0;
     private double yOffset = 0;
     private final UserController userController = new UserController();
@@ -192,7 +192,6 @@ public class AdminDashboardController implements Initializable {
             dragArea.getScene().getWindow().setY(event.getScreenY() - yOffset);
         });
         dragArea.toFront();
-
         refresh();
     }
 
@@ -203,7 +202,7 @@ public class AdminDashboardController implements Initializable {
         pnConversationsItems.getChildren().clear();
         pnBookingsItems.getChildren().clear();
 
-        if (currentUser != null) {
+        if (this.currentUser != null) {
             refreshProfile();
         }
 
@@ -494,33 +493,29 @@ public class AdminDashboardController implements Initializable {
     }
 
     public void refreshProfile() {
-        username.setText(currentUser.getName() + " " + currentUser.getLastName());
-        namelabel.setText(currentUser.getName() + " " + currentUser.getLastName());
+        username.setText(currentUser.getName());
+        namelabel.setText(currentUser.getName());
         idlabel.setText(String.valueOf(currentUser.getUserId()));
-        genrelabel.setText(" ");
-        if (currentUser.getGender() != null) {
-            if (currentUser.getGender() == User.Gender.MALE) {
+        passwordlabel.setText(currentUser.getPassword());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedDate = currentUser.getRegistrationDate().format(formatter);
+        datelabel.setText(formattedDate);
+        emaillabel.setText(currentUser.getEmail());
+        phonelabel.setText(currentUser.getPhone());
+
+        if(currentUser.getGender()!=null){
+            if(currentUser.getGender().toString().equalsIgnoreCase("Male")){
                 genrelabel.setText("Male");
-            } else {
-                if (currentUser.getGender() == User.Gender.FEMALE) {
+            }else {
+                if (currentUser.getGender().toString().equalsIgnoreCase("Female")) {
                     genrelabel.setText("Female");
                 } else {
-                    if (currentUser.getGender() == User.Gender.OTHER) {
+                    if (currentUser.getGender().toString().equalsIgnoreCase("Other")) {
                         genrelabel.setText("Other");
                     }
                 }
             }
         }
-        bioTextArea.setText(currentUser.getBio());
-        passwordlabel.setText(currentUser.getPassword());
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String formattedDate = currentUser.getRegistrationDate().format(formatter);
-        datelabel.setText(formattedDate);
-        DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String formattedBirthDate = currentUser.getBirthDate().format(formatter2);
-        txtBirthDate.setText(formattedBirthDate);
-        emaillabel.setText(currentUser.getEmail());
-        phonelabel.setText(currentUser.getPhone());
     }
 
     /**
@@ -531,7 +526,7 @@ public class AdminDashboardController implements Initializable {
     public void initData(User user) {
 
         // Cargar la imagen de perfil del usuario desde la base de datos
-        currentUser = user;
+        this.currentUser = user;
         byte[] profilePictureBytes = currentUser.getProfilePicture();
         if (profilePictureBytes != null && profilePictureBytes.length > 0) {
             try {
@@ -624,9 +619,9 @@ public class AdminDashboardController implements Initializable {
                     }
                 }
                 System.out.println(currentUser);
-                refresh();
                 initData(currentUser);
                 userController.update(currentUser);
+                refresh();
                 stage.close();
             });
             stage.show();

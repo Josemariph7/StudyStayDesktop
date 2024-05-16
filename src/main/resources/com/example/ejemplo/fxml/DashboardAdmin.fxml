@@ -453,7 +453,7 @@
                         </Label>
                         <HBox alignment="CENTER_LEFT" layoutX="45.0" layoutY="88.0" prefHeight="92.0" prefWidth="608.0" spacing="50.0">
                             <children>
-                                <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" translateX="-1.0">
                                     <children>
                                         <Label fx:id="totalusers" alignment="CENTER" text="0" textFill="#2a73ff">
                                             <font>
@@ -601,7 +601,7 @@
                                 <Image url="@../multimedia/logoTransparente.png" />
                             </image>
                         </ImageView>
-                        <Button fx:id="btnAddUser" layoutX="1111.0" layoutY="193.0" mnemonicParsing="false" onAction="#handleAddUser" prefHeight="32.0" prefWidth="47.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Add">
+                        <Button fx:id="btnAddUser" layoutX="1043.0" layoutY="192.0" mnemonicParsing="false" onAction="#handleAddUser" prefHeight="32.0" prefWidth="127.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Create New User">
                             <font>
                                 <Font size="14.0" />
                             </font>
@@ -820,7 +820,7 @@
                         </HBox>
                         <ScrollPane layoutX="-1.0" layoutY="232.0" prefHeight="667.0" prefWidth="1180.0" style="-fx-background-color: #e0e7ff; -fx-border-color: #edf1ff;" stylesheets="@../css/stylesdashboard.css" translateX="2.0">
                             <content>
-                                <VBox fx:id="pnBookingsItems" prefHeight="653.0" prefWidth="1151.0" spacing="5.0" style="-fx-background-color: #edf1ff;" translateX="1.0">
+                                <VBox fx:id="pnBookingsItems" prefHeight="664.0" prefWidth="1154.0" spacing="5.0" style="-fx-background-color: #edf1ff;" translateX="1.0">
                                     <padding>
                                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                     </padding>
@@ -852,7 +852,7 @@
                                         <Font size="15.0" />
                                     </font>
                                 </Label>
-                                <Label prefHeight="21.0" prefWidth="74.0" style="-fx-text-fill: #0c0e17;" text="User" textFill="#e7e5e5" translateX="-80.0">
+                                <Label prefHeight="21.0" prefWidth="74.0" style="-fx-text-fill: #0c0e17;" text="User" textFill="#e7e5e5" translateX="-78.0">
                                     <HBox.margin>
                                         <Insets />
                                     </HBox.margin>
@@ -860,7 +860,7 @@
                                         <Font size="15.0" />
                                     </font>
                                 </Label>
-                                <Label prefHeight="21.0" prefWidth="64.0" style="-fx-text-fill: #0c0e17;" text="City" textFill="#e7e5e5" translateX="100.0">
+                                <Label prefHeight="21.0" prefWidth="64.0" style="-fx-text-fill: #0c0e17;" text="City" textFill="#e7e5e5" translateX="39.0">
                                     <HBox.margin>
                                         <Insets />
                                     </HBox.margin>
@@ -868,7 +868,7 @@
                                         <Font size="15.0" />
                                     </font>
                                 </Label>
-                                <Label prefHeight="21.0" prefWidth="102.0" style="-fx-text-fill: #0c0e17;" text="End Date" textFill="#e7e5e5" translateX="248.0">
+                                <Label prefHeight="21.0" prefWidth="102.0" style="-fx-text-fill: #0c0e17;" text="End Date" textFill="#e7e5e5" translateX="227.0">
                                     <HBox.margin>
                                         <Insets />
                                     </HBox.margin>
@@ -876,14 +876,19 @@
                                         <Font size="15.0" />
                                     </font>
                                 </Label>
-                                <Label prefHeight="21.0" prefWidth="102.0" style="-fx-text-fill: #0c0e17;" text="Start Date" textFill="#e7e5e5" translateX="-105.0">
+                                <Label prefHeight="21.0" prefWidth="102.0" style="-fx-text-fill: #0c0e17;" text="Start Date" textFill="#e7e5e5" translateX="-130.0">
                                     <font>
                                         <Font size="15.0" />
                                     </font>
                                 </Label>
+                        <Label prefHeight="21.0" prefWidth="102.0" style="-fx-text-fill: #0c0e17;" text="Status" textFill="#e7e5e5" translateX="29.0">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
                             </children>
                         </HBox>
-                        <Button fx:id="btnAddBooking" layoutX="1005.0" layoutY="193.0" mnemonicParsing="false" onAction="#handleAddBooking" prefHeight="32.0" prefWidth="133.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Create Booking">
+                        <Button fx:id="btnAddBooking" layoutX="1017.0" layoutY="193.0" mnemonicParsing="false" onAction="#handleAddBooking" prefHeight="32.0" prefWidth="154.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Create New Booking">
                             <font>
                                 <Font size="14.0" />
                             </font>
@@ -1037,7 +1042,7 @@
                                 <Image url="@../multimedia/icons8-línea-horizontal-24.png" />
                             </image>
                         </ImageView>
-                  <Button fx:id="btnAddTopic" layoutX="1005.0" layoutY="191.0" mnemonicParsing="false" onAction="#handleAddForumTopic" prefHeight="32.0" prefWidth="165.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Create Forum Topic">
+                  <Button fx:id="btnAddTopic" layoutX="1033.0" layoutY="193.0" mnemonicParsing="false" onAction="#handleAddForumTopic" prefHeight="32.0" prefWidth="139.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Create New Topic">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -1141,7 +1146,7 @@
                                         <Font size="15.0" />
                                     </font>
                                 </Label>
-                                <Label prefHeight="21.0" prefWidth="74.0" style="-fx-text-fill: #0c0e17;" text="User 1" textFill="#e7e5e5" translateX="-68.0">
+                                <Label prefHeight="21.0" prefWidth="74.0" style="-fx-text-fill: #0c0e17;" text="User 1" textFill="#e7e5e5" translateX="-73.0">
                                     <HBox.margin>
                                         <Insets />
                                     </HBox.margin>
@@ -1157,7 +1162,7 @@
                                         <Font size="15.0" />
                                     </font>
                                 </Label>
-                                <Label prefHeight="21.0" prefWidth="102.0" style="-fx-text-fill: #0c0e17;" text="Nº Messages" textFill="#e7e5e5" translateX="130.0">
+                                <Label prefHeight="21.0" prefWidth="102.0" style="-fx-text-fill: #0c0e17;" text="Nº Messages" textFill="#e7e5e5" translateX="142.0">
                                     <HBox.margin>
                                         <Insets />
                                     </HBox.margin>
@@ -1181,7 +1186,7 @@
                                 <Image url="@../multimedia/logoTransparente.png" />
                             </image>
                         </ImageView>
-                        <Button fx:id="btnAddConversation" layoutX="1015.0" layoutY="180.0" mnemonicParsing="false" onAction="#handleAddConversation" prefHeight="32.0" prefWidth="133.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Add Conversation">
+                        <Button fx:id="btnAddConversation" layoutX="990.0" layoutY="193.0" mnemonicParsing="false" onAction="#handleAddConversation" prefHeight="32.0" prefWidth="182.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Create New Conversation">
                             <font>
                                 <Font size="14.0" />
                             </font>

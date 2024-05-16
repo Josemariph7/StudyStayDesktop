@@ -6,7 +6,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -16,6 +18,7 @@ import com.example.ejemplo.utils.Constants;
 
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 /**
  * Controlador para los elementos de la lista de usuarios en el panel de administrador.
@@ -94,15 +97,22 @@ public class ItemUserListController {
      */
     @FXML
     public void handleDelete() {
-        userController.delete(user.getUserId());
-        int index = pnItems.getChildren().indexOf(node);
-        if (index != -1) {
-            pnItems.getChildren().remove(index);
-        } else {
-            System.out.println("El nodo no se encontró en el VBox.");
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText(null);
+        alert.setTitle("Delete User");
+        alert.setContentText("Are you sure you want to delete this User?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            userController.delete(user.getUserId());
+            int index = pnItems.getChildren().indexOf(node);
+            if (index != -1) {
+                pnItems.getChildren().remove(index);
+            } else {
+                System.out.println("El nodo no se encontró en el VBox.");
+            }
+            dashboard.updateUserStatistics();
+            System.out.println("Eliminar usuario: " + user);
         }
-        dashboard.updateUserStatistics();
-        System.out.println("Eliminar usuario: " + user);
     }
 
     /**

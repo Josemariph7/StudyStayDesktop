@@ -18,27 +18,27 @@
               </Label>
          </children>
       </Pane>
-      <Pane prefHeight="53.0" prefWidth="270.0">
+      <Pane prefHeight="53.0" prefWidth="279.0">
          <children>
-              <Label fx:id="lblConversationUser1" layoutX="12.0" layoutY="1.0" prefHeight="20.0" prefWidth="287.0" style="-fx-text-fill: #0c0e17;" text="User1" textFill="#b7c3d7" translateX="4.0" translateY="16.0">
+              <Label fx:id="lblConversationUser1" layoutX="12.0" layoutY="1.0" prefHeight="20.0" prefWidth="287.0" style="-fx-text-fill: #0c0e17;" text="User1" textFill="#b7c3d7" translateX="-3.0" translateY="16.0">
                   <font>
                       <Font size="14.0" />
                   </font>
               </Label>
          </children>
       </Pane>
-      <Pane prefHeight="53.0" prefWidth="268.0" translateX="20.0">
+      <Pane prefHeight="53.0" prefWidth="281.0" translateX="20.0">
          <children>
-              <Label fx:id="lblConversationUser2" prefHeight="20.0" prefWidth="296.0" style="-fx-text-fill: #0c0e17;" text="User2" textFill="#b7c3d7" translateX="-10.0" translateY="16.0">
+              <Label fx:id="lblConversationUser2" prefHeight="20.0" prefWidth="296.0" style="-fx-text-fill: #0c0e17;" text="User2" textFill="#b7c3d7" translateX="-24.0" translateY="16.0">
                   <font>
                       <Font size="14.0" />
                   </font>
               </Label>
          </children>
       </Pane>
-      <Pane prefHeight="53.0" prefWidth="214.0">
+      <Pane prefHeight="53.0" prefWidth="237.0">
          <children>
-              <Label fx:id="lblNumberMessages" prefHeight="20.0" prefWidth="248.0" style="-fx-text-fill: #0c0e17;" text="Messages" textFill="#b7c3d7" translateX="-22.0" translateY="16.0">
+              <Label fx:id="lblNumberMessages" prefHeight="20.0" prefWidth="248.0" style="-fx-text-fill: #0c0e17;" text="Messages" textFill="#b7c3d7" translateX="-37.0" translateY="16.0">
                   <font>
                       <Font size="14.0" />
                   </font>
@@ -47,14 +47,13 @@
       </Pane>
       <Pane prefHeight="53.0" prefWidth="125.0">
          <children>
-            <Button fx:id="btnConverDetails" mnemonicParsing="false" prefHeight="32.0" prefWidth="112.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="View Details" translateX="60.0" translateY="10.0">
+            <Button fx:id="btnConverDetails" mnemonicParsing="false" onMouseClicked="#handleDetails" prefHeight="32.0" prefWidth="112.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="View Details" translateY="10.0">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
          </children>
       </Pane>
-      <Pane prefHeight="53.0" prefWidth="61.0" />
       <Pane prefHeight="53.0" prefWidth="79.0">
          <children>
               <Button fx:id="btnModifyConver" mnemonicParsing="false" onAction="#handleModify" prefHeight="32.0" prefWidth="66.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Modify" translateY="10.0">
