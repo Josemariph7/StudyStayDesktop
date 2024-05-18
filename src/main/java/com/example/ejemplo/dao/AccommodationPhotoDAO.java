@@ -29,6 +29,7 @@ public class AccommodationPhotoDAO {
             statement.setBytes(2, photo.getPhotoData());
 
             int rowsAffected = statement.executeUpdate();
+            connection.close();
             return rowsAffected > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -51,6 +52,7 @@ public class AccommodationPhotoDAO {
             statement.setLong(2, photo.getPhotoId());
 
             int rowsAffected = statement.executeUpdate();
+            connection.close();
             return rowsAffected > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -71,6 +73,7 @@ public class AccommodationPhotoDAO {
 
             statement.setLong(1, photoId);
             int rowsAffected = statement.executeUpdate();
+            connection.close();
             return rowsAffected > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -94,6 +97,7 @@ public class AccommodationPhotoDAO {
                 AccommodationPhoto photo = mapAccommodationPhoto(resultSet);
                 photoList.add(photo);
             }
+            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -13,34 +14,33 @@
 <AnchorPane prefHeight="842.0" prefWidth="638.0" style="-fx-background-color: #151928;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ejemplo.controller.ConversationDetailsController">
 
     <VBox alignment="CENTER" layoutX="-1.0" layoutY="102.0" prefHeight="145.0" prefWidth="318.0" spacing="10.0" style="-fx-background-color: #edf1ff;" translateX="2.0" translateY="2.0">
-
         <HBox alignment="CENTER" spacing="10" translateY="-5.0">
-         <Label style="-fx-text-fill: #151928;" text="User 1">
-            <font>
-               <Font name="System Bold" size="16.0" />
-            </font>
-         </Label>
+            <Label style="-fx-text-fill: #151928;" text="User 1">
+                <font>
+                    <Font name="System Bold" size="16.0" />
+                </font>
+            </Label>
         </HBox>
         <HBox alignment="CENTER_LEFT" prefHeight="28.0" prefWidth="278.0" spacing="10" translateX="10.0" translateY="2.0">
-         <children>
-            <Label text="Id: " translateX="112.0">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label fx:id="idUser1" prefHeight="20.0" prefWidth="117.0" translateX="103.0">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-         </children>
+            <children>
+                <Label text="Id: " translateX="112.0">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <Label fx:id="idUser1" prefHeight="20.0" prefWidth="117.0" translateX="103.0">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+            </children>
         </HBox>
         <HBox alignment="CENTER" spacing="10" translateX="10.0" translateY="10.0" />
-      <Label fx:id="nameUser1" alignment="CENTER" prefHeight="20.0" prefWidth="301.0" translateY="-8.0">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
+        <Label fx:id="nameUser1" alignment="CENTER" prefHeight="20.0" prefWidth="301.0" translateY="-8.0">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
         <padding>
             <Insets left="20.0" right="20.0" />
         </padding>
@@ -54,62 +54,67 @@
             </Label>
         </children>
     </Pane>
-   <VBox alignment="CENTER" layoutX="-1.0" layoutY="248.0" prefHeight="593.0" prefWidth="636.0" spacing="10.0" style="-fx-background-color: #edf1ff;" translateX="2.0">
-      <padding>
-         <Insets left="20.0" right="20.0" />
-      </padding>
-      <children>
-         <ScrollPane prefHeight="534.0" prefWidth="599.0" style="-fx-background-color: #e0e7ff; -fx-border-color: #151928;" stylesheets="@../css/stylesdashboard.css">
-            <content>
-               <Pane prefHeight="532.0" prefWidth="576.0" style="-fx-background-color: #edf1ff;" />
-            </content>
-         </ScrollPane>
-         <HBox alignment="CENTER" prefHeight="14.0" prefWidth="543.0" spacing="10">
-            <children>
-               <Button fx:id="btnBack" mnemonicParsing="false" prefHeight="37.0" prefWidth="112.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Back" translateY="-3.0">
-                  <font>
-                     <Font size="16.0" />
-                  </font>
-               </Button>
-            </children>
-         </HBox>
-      </children>
-   </VBox>
-   <VBox alignment="CENTER" layoutX="318.0" layoutY="104.0" prefHeight="145.0" prefWidth="317.0" spacing="10.0" style="-fx-background-color: #edf1ff;" translateX="2.0">
-      <padding>
-         <Insets left="20.0" right="20.0" />
-      </padding>
-      <children>
-         <HBox alignment="CENTER" spacing="10" translateX="1.0" translateY="-5.0">
-            <children>
-               <Label style="-fx-text-fill: #151928;" text="User 2">
-                  <font>
-                     <Font name="System Bold" size="16.0" />
-                  </font>
-               </Label>
-            </children>
-         </HBox>
-         <HBox alignment="CENTER_LEFT" prefHeight="28.0" prefWidth="278.0" spacing="10" translateX="10.0" translateY="2.0">
-            <children>
-               <Label text="Id: " translateX="112.0">
-                  <font>
-                     <Font size="14.0" />
-                  </font>
-               </Label>
-               <Label fx:id="idUser2" prefHeight="20.0" prefWidth="117.0" translateX="103.0">
-                  <font>
-                     <Font size="14.0" />
-                  </font>
-               </Label>
-            </children>
-         </HBox>
-         <HBox alignment="CENTER" spacing="10" translateX="10.0" translateY="10.0" />
-         <Label fx:id="nameUser2" alignment="CENTER" prefHeight="20.0" prefWidth="300.0" translateX="-1.0" translateY="-8.0">
-            <font>
-               <Font size="14.0" />
-            </font>
-         </Label>
-      </children>
-   </VBox>
+    <VBox alignment="CENTER" layoutX="-1.0" layoutY="248.0" prefHeight="593.0" prefWidth="636.0" spacing="10.0" style="-fx-background-color: #edf1ff;" translateX="2.0">
+        <padding>
+            <Insets left="20.0" right="20.0" />
+        </padding>
+        <children>
+            <ScrollPane prefHeight="534.0" prefWidth="599.0" style="-fx-background-color: #e0e7ff; -fx-border-color: #151928;" stylesheets="@../css/stylesdashboard.css">
+                <content>
+                    <ListView fx:id="listViewMessages" prefHeight="534.0" prefWidth="577.0" />
+                </content>
+            </ScrollPane>
+            <HBox alignment="CENTER" prefHeight="14.0" prefWidth="543.0" spacing="10">
+                <children>
+                    <Button fx:id="btnBack" mnemonicParsing="false" prefHeight="37.0" prefWidth="112.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Back" translateY="-3.0">
+                        <font>
+                            <Font size="16.0" />
+                        </font>
+                    </Button>
+                    <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#handleDelete" prefHeight="37.0" prefWidth="112.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Delete" translateY="-3.0">
+                        <font>
+                            <Font size="16.0" />
+                        </font>
+                    </Button>
+                </children>
+            </HBox>
+        </children>
+    </VBox>
+    <VBox alignment="CENTER" layoutX="318.0" layoutY="104.0" prefHeight="145.0" prefWidth="317.0" spacing="10.0" style="-fx-background-color: #edf1ff;" translateX="2.0">
+        <padding>
+            <Insets left="20.0" right="20.0" />
+        </padding>
+        <children>
+            <HBox alignment="CENTER" spacing="10" translateX="1.0" translateY="-5.0">
+                <children>
+                    <Label style="-fx-text-fill: #151928;" text="User 2">
+                        <font>
+                            <Font name="System Bold" size="16.0" />
+                        </font>
+                    </Label>
+                </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="28.0" prefWidth="278.0" spacing="10" translateX="10.0" translateY="2.0">
+                <children>
+                    <Label text="Id: " translateX="112.0">
+                        <font>
+                            <Font size="14.0" />
+                        </font>
+                    </Label>
+                    <Label fx:id="idUser2" prefHeight="20.0" prefWidth="117.0" translateX="103.0">
+                        <font>
+                            <Font size="14.0" />
+                        </font>
+                    </Label>
+                </children>
+            </HBox>
+            <HBox alignment="CENTER" spacing="10" translateX="10.0" translateY="10.0" />
+            <Label fx:id="nameUser2" alignment="CENTER" prefHeight="20.0" prefWidth="300.0" translateX="-1.0" translateY="-8.0">
+                <font>
+                    <Font size="14.0" />
+                </font>
+            </Label>
+        </children>
+    </VBox>
 
 </AnchorPane>

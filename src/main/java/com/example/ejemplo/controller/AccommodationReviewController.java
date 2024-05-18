@@ -50,4 +50,5 @@ public class AccommodationReviewController {
     public boolean deleteReview(Long reviewId) {
         return accommodationReviewDAO.delete(reviewId);
     }
+
 }

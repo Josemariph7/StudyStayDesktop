@@ -114,7 +114,7 @@ public class AccommodationDAO {
         String sql = "UPDATE Accommodations SET OwnerId=?, Address=?, City=?, Price=?, Description=?, " +
                 "Capacity=?, Services=?, Availability=?, Rating=? WHERE AccommodationId=?";
         try (
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+                PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setLong(1, accommodation.getOwner().getUserId());
             statement.setString(2, accommodation.getAddress());
@@ -169,8 +169,8 @@ public class AccommodationDAO {
         String deleteAccommodationSql = "DELETE FROM Accommodations WHERE AccommodationId=?";
         String deletePhotosSql = "DELETE FROM AccommodationPhotos WHERE AccommodationId=?";
         try (
-             PreparedStatement deleteAccommodationStatement = connection.prepareStatement(deleteAccommodationSql);
-             PreparedStatement deletePhotosStatement = connection.prepareStatement(deletePhotosSql)) {
+                PreparedStatement deleteAccommodationStatement = connection.prepareStatement(deleteAccommodationSql);
+                PreparedStatement deletePhotosStatement = connection.prepareStatement(deletePhotosSql)) {
 
             // Eliminamos las fotos asociadas al alojamiento
             deletePhotosStatement.setLong(1, accommodationId);
@@ -204,11 +204,10 @@ public class AccommodationDAO {
         // Mapeo de los inquilinos
         UserController userController = new UserController();
         List<User> tenants = userController.getAll();
-        List<Booking>bookings;
         if (tenants != null && !tenants.isEmpty()) {
             for (User user : tenants) {
-                bookings = user.getBookings();
-                if(bookings != null && !bookings.isEmpty()){
+                List<Booking> bookings = user.getBookings();
+                if (bookings != null && !bookings.isEmpty()) {
                     for (Booking booking : bookings) {
                         if (Objects.equals(booking.getAccommodation().getAccommodationId(), accommodation.getAccommodationId())) {
                             accommodation.addTenant(user);
@@ -230,27 +229,13 @@ public class AccommodationDAO {
         List<AccommodationPhoto> photoList = getPhotosForAccommodation(accommodation.getAccommodationId()); // Llamamos al método estático getPhotosForAccommodation
         accommodation.setPhotos(photoList);
 
-
-        /*
-        *
-        * ERROR AQUI
-        *
-        * */
-        /*
-        AccommodationReviewController accommodationReviewController = new AccommodationReviewController();
-        List<AccommodationReview> reviews=accommodationReviewController.getAllReviews();
-        if(reviews != null && !reviews.isEmpty()){
-            for (AccommodationReview review : reviews) {
-                if(Objects.equals(review.getAccommodation().getAccommodationId(), accommodation.getAccommodationId())){
-                    accommodation.getReviews().add(review);
-                }
-            }
-        }
-
-        accommodation.setReviews(reviews);*/
+        // Mapeo de las reseñas del alojamiento
+        //List<AccommodationReview> reviews = getReviewsByAccommodation(accommodation.getAccommodationId());
+        //accommodation.setReviews(reviews);
 
         return accommodation;
     }
+
 
     /**
      * Obtiene las fotos asociadas a un alojamiento específico.
@@ -352,11 +337,13 @@ public class AccommodationDAO {
      * @return Lista de inquilinos del alojamiento
      */
     public static List<User> getTenantsForAccommodation(Long accommodationId) {
-       List<User> tenants = new ArrayList<>();
-       Accommodation accommodation=getById(accommodationId);
+        List<User> tenants = new ArrayList<>();
+        Accommodation accommodation=getById(accommodationId);
         assert accommodation != null;
         tenants=accommodation.getTenants();
         return tenants;
     }
+
+
 
 }

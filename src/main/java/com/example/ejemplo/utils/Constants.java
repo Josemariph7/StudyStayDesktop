@@ -14,6 +14,8 @@ public class Constants {
     public static final String ADDCONVERSATION_FXML = "/com/example/ejemplo/fxml/AddConversation.fxml";
     public static final String ADDFORUMTOPIC_FXML = "/com/example/ejemplo/fxml/AddForumTopic.fxml";
     public static final String ADDBOOKING_FXML = "/com/example/ejemplo/fxml/AddBooking.fxml";
+    public static final String ADDACCOMMODATION_FXML = "/com/example/ejemplo/fxml/AddAccommodation.fxml";
+
     public static final String MODIFYCONVERSATION_FXML = "/com/example/ejemplo/fxml/ModifyConversation.fxml";
     public static final String MODIFYFORUMTOPIC_FXML = "/com/example/ejemplo/fxml/ModifyForumTopic.fxml";
     public static final String DETAILSCONVERSATION_FXML = "/com/example/ejemplo/fxml/ConversationDetails.fxml";

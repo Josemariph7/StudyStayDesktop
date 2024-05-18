@@ -182,7 +182,6 @@ public class ForumTopicDAO {
         String sql = "SELECT * FROM ForumTopics WHERE TopicId=?";
         try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
              PreparedStatement statement = connection.prepareStatement(sql)) {
-
             statement.setLong(1, topicId);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {

@@ -797,6 +797,28 @@ public class AdminDashboardController implements Initializable {
     }
 
     @FXML
+    public void handleAddAccommodation(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(ADDACCOMMODATION_FXML));
+            Parent root = loader.load();
+            AddAccommodationController add = loader.getController();
+            add.initData();
+            Stage stage = new Stage();
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setScene(new Scene(root));
+            stage.setUserData(this);
+            AddAccommodationController addController = loader.getController();
+            refresh();
+            addController.btnCancel.setOnAction(event -> {
+                stage.close();
+            });
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
     public void handleAddBooking(ActionEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(ADDBOOKING_FXML));
@@ -979,6 +1001,4 @@ public class AdminDashboardController implements Initializable {
             e.printStackTrace();
         }
     }
-
-
 }

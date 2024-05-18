@@ -444,7 +444,7 @@
                             </Button>
                     </children>
                 </Pane>
-                <Pane fx:id="pnlUsers" prefHeight="892.0" prefWidth="1183.0" style="-fx-background-color: #edf1ff;">
+                <Pane fx:id="pnlUsers" prefHeight="892.0" prefWidth="1183.0" style="-fx-background-color: #edf1ff;" visible="false">
                     <children>
                         <Label layoutX="57.0" layoutY="25.0" prefHeight="66.0" prefWidth="388.0" style="-fx-text-fill: #0c0e17;" text="Users Management" textFill="#e7e5e5" translateY="-3.0">
                             <font>
@@ -618,8 +618,13 @@
                         </ImageView>
                     </children>
                 </Pane>
-                <Pane fx:id="pnlAccommodations" style="-fx-background-color: #edf1ff;" visible="false">
+                <Pane fx:id="pnlAccommodations" style="-fx-background-color: #edf1ff;">
                     <children>
+                  <Button fx:id="btnAddAccommodation" layoutX="1017.0" layoutY="150.0" mnemonicParsing="false" onAction="#handleAddAccommodation" prefHeight="32.0" prefWidth="154.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Add Accommodation">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
                         <Label layoutX="57.0" layoutY="25.0" prefHeight="66.0" prefWidth="580.0" style="-fx-text-fill: #0c0e17;" text="Accommodation Management" textFill="#e7e5e5">
                             <font>
                                 <Font size="40.0" />

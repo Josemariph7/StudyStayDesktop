@@ -70,10 +70,20 @@ public class AddBookingController {
             alert.setContentText("Are you sure to add the new Booking?");
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
-                bookingController.createBooking(booking);
-                AdminDashboardController itemCtrl;
-                itemCtrl = (AdminDashboardController) btnAccept.getScene().getWindow().getUserData();
-                itemCtrl.refresh();
+                if(booking.getAccommodation().getCapacity()<=booking.getAccommodation().getTenants().size()) {
+                    bookingController.createBooking(booking);
+                    booking.getAccommodation().getTenants().add(booking.getUser());
+                    AdminDashboardController itemCtrl;
+                    itemCtrl = (AdminDashboardController) btnAccept.getScene().getWindow().getUserData();
+                    itemCtrl.refresh();
+                }else{
+                    booking.getAccommodation().setAvailability(false);
+                    Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setHeaderText(null);
+                    alert.initStyle(StageStyle.UTILITY);
+                    alert.setTitle("Error");
+                    alert.setContentText("This accommodation is full");
+                }
             }
             ((Stage) btnAccept.getScene().getWindow()).close();
         } catch (SQLException e) {

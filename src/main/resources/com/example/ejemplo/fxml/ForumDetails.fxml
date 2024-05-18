@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -12,15 +13,15 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="842.0" prefWidth="638.0" style="-fx-background-color: #151928;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ejemplo.controller.ForumDetailsController">
-    <Pane prefHeight="104.0" prefWidth="600.0" style="-fx-background-color: #151928;">
-        <children>
-            <Label alignment="CENTER" layoutX="28.0" layoutY="18.0" prefHeight="69.0" prefWidth="318.0" text="Detailed Forum Topic" textFill="#e8e8e8">
-                <font>
-                    <javafx.scene.text.Font size="30.0" />
-                </font>
-            </Label>
-        </children>
-    </Pane>
+   <Pane prefHeight="104.0" prefWidth="600.0" style="-fx-background-color: #151928;">
+      <children>
+         <Label alignment="CENTER" layoutX="28.0" layoutY="18.0" prefHeight="69.0" prefWidth="318.0" text="Detailed Forum Topic" textFill="#e8e8e8">
+            <font>
+               <javafx.scene.text.Font size="30.0" />
+            </font>
+         </Label>
+      </children>
+   </Pane>
    <VBox alignment="CENTER" layoutX="-1.0" layoutY="278.0" prefHeight="563.0" prefWidth="636.0" spacing="10.0" style="-fx-background-color: #edf1ff;" translateX="2.0">
       <padding>
          <Insets left="20.0" right="20.0" />
@@ -28,17 +29,25 @@
       <children>
          <ScrollPane prefHeight="511.0" prefWidth="596.0" style="-fx-background-color: #e0e7ff; -fx-border-color: #151928;" stylesheets="@../css/stylesdashboard.css">
             <content>
-               <Pane prefHeight="509.0" prefWidth="575.0" style="-fx-background-color: #edf1ff;" />
+               <ListView fx:id="listViewComments" prefHeight="509.0" prefWidth="575.0" />
             </content>
          </ScrollPane>
          <HBox alignment="CENTER" prefHeight="14.0" prefWidth="543.0" spacing="10">
-            <children>
-               <Button fx:id="btnBack" mnemonicParsing="false" prefHeight="37.0" prefWidth="112.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Back" translateY="-5.0">
-                  <font>
-                     <Font size="16.0" />
-                  </font>
-               </Button>
-            </children>
+            <Button fx:id="btnBack" mnemonicParsing="false" prefHeight="37.0" prefWidth="112.0"
+                    style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;"
+                    text="Back" translateY="-5.0">
+               <font>
+                  <Font size="16.0"/>
+               </font>
+            </Button>
+            <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#handleDelete" prefHeight="37.0"
+                    prefWidth="112.0"
+                    style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;"
+                    text="Delete" translateY="-5.0">
+               <font>
+                  <Font size="16.0"/>
+               </font>
+            </Button>
          </HBox>
       </children>
    </VBox>
@@ -80,8 +89,7 @@
                </Label>
             </children>
          </HBox>
-         <TextArea fx:id="txtAreaDescription" maxWidth="530.0" prefHeight="74.0" prefWidth="530.0" promptText="Description" style="-fx-background-color: transparent; -fx-border-color: #151928;" translateY="-7.0" />
+         <TextArea fx:id="txtAreaDescription" editable="false" maxWidth="530.0" prefHeight="74.0" prefWidth="530.0" promptText="Description" style="-fx-background-color: transparent; -fx-border-color: #151928;" translateY="-7.0" />
       </children>
    </VBox>
-
 </AnchorPane>

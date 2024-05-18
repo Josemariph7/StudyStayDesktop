@@ -114,7 +114,6 @@ public class ItemConversationListController {
             }
             adminDashboardController.refresh();
         }
-
     }
 
     public void handleDetails(MouseEvent actionEvent) {

@@ -45,10 +45,11 @@ public class AddForumTopicController {
 
     public void handleAccept(ActionEvent actionEvent) {
         UserController userController = new UserController();
+        ForumCommentController forumCommentController = new ForumCommentController();
         String id=ChoiceBoxAuthor.getValue().toString();
         String[] partes = id.split("\\s", 2);
         forumTopic.setAuthor(userController.getById(Long.valueOf(partes[0])));
-        forumTopic.setComments(null);
+        forumTopic.setComments(forumCommentController.getCommentsByTopic(forumTopic.getTopicId()));
         forumTopic.setTitle(lblTopicTitle.getText());
         forumTopic.setDescription(txtAreaDescription.getText());
         forumTopic.setDateTime(LocalDateTime.now());

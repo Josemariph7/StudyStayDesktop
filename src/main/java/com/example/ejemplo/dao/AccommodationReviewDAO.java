@@ -19,14 +19,27 @@ public class AccommodationReviewDAO {
     private static final String USERNAME = "root"; // Nombre de usuario de la base de datos
     private static final String PASSWORD = ""; // Contraseña de la base de datos
 
-    private Connection connection;
-
-    public AccommodationReviewDAO() {
-        try {
-            this.connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+    /**
+     * Obtiene todas las reseñas de un alojamiento específico.
+     * @param accommodationId ID del alojamiento
+     * @return Lista de reseñas del alojamiento
+     */
+    public List<AccommodationReview> getReviewsForAccommodation(Long accommodationId) {
+        List<AccommodationReview> reviewList = new ArrayList<>();
+        String sql = "SELECT * FROM AccommodationReviews WHERE AccommodationId = ?";
+        try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setLong(1, accommodationId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    AccommodationReview review = mapReview(resultSet);
+                    reviewList.add(review);
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return reviewList;
     }
 
     /**
@@ -35,8 +48,10 @@ public class AccommodationReviewDAO {
      */
     public List<AccommodationReview> getAll() {
         List<AccommodationReview> reviewList = new ArrayList<>();
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT * FROM AccommodationReviews")) {
+        String sql = "SELECT * FROM AccommodationReviews";
+        try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
 
             while (resultSet.next()) {
                 AccommodationReview review = mapReview(resultSet);
@@ -56,7 +71,8 @@ public class AccommodationReviewDAO {
     public boolean create(AccommodationReview review) {
         String sql = "INSERT INTO AccommodationReviews (AccommodationId, AuthorId, Rating, Comment, DateTime) " +
                 "VALUES (?, ?, ?, ?, ?)";
-        try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setLong(1, review.getAccommodation().getAccommodationId());
             statement.setLong(2, review.getAuthor().getUserId());
@@ -92,7 +108,8 @@ public class AccommodationReviewDAO {
     public boolean update(AccommodationReview review) {
         String sql = "UPDATE AccommodationReviews SET AccommodationId=?, AuthorId=?, Rating=?, Comment=?, DateTime=? " +
                 "WHERE ReviewId=?";
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setLong(1, review.getAccommodation().getAccommodationId());
             statement.setLong(2, review.getAuthor().getUserId());
@@ -116,7 +133,8 @@ public class AccommodationReviewDAO {
      */
     public boolean delete(Long reviewId) {
         String sql = "DELETE FROM AccommodationReviews WHERE ReviewId=?";
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setLong(1, reviewId);
             int rowsAffected = statement.executeUpdate();
