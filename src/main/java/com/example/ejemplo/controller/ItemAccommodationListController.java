@@ -1,25 +1,30 @@
 package com.example.ejemplo.controller;
 
-import com.example.ejemplo.model.Accommodation;
-import com.example.ejemplo.model.AccommodationPhoto;
-import com.example.ejemplo.model.AccommodationReview;
+import com.example.ejemplo.model.*;
+import com.example.ejemplo.utils.Constants;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.ByteArrayInputStream;
+import java.util.Optional;
 
 public class ItemAccommodationListController {
     // Constante para la imagen predeterminada
@@ -57,12 +62,12 @@ public class ItemAccommodationListController {
     private AccommodationController accommodationController;
     private Accommodation accommodation;
     private Node node;
-    private VBox pnItemsTopic;
+    private VBox pnItemsAccommodation;
     private AdminDashboardController dashboard;
 
     public void initData(Accommodation acco, AccommodationController accommodationController, Node node, VBox pnItems, AdminDashboardController adminDashboardController) {
         this.dashboard = adminDashboardController;
-        this.pnItemsTopic = pnItems;
+        this.pnItemsAccommodation = pnItems;
         this.accommodation = acco;
         this.node = node;
         this.accommodationController = accommodationController;
@@ -108,6 +113,28 @@ public class ItemAccommodationListController {
         setAvailabilityIcon(accommodation.isAvailability());
     }
 
+    @FXML
+    private void handleModify() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.MODIFYACCOMMODATION_FXML));
+            Parent root = loader.load();
+            ModifyAccommodationController modify = loader.getController();
+            modify.initData(accommodation, accommodationController, dashboard);
+            Stage stage = new Stage();
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setScene(new Scene(root));
+            stage.setUserData(this);
+            ModifyAccommodationController modifyController = loader.getController();
+            dashboard.refresh();
+            modifyController.btnCancel.setOnAction(event -> {
+                stage.close();
+            });
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void setAvailabilityIcon(boolean isAvailable) {
         try {
             String iconPath = isAvailable ? "/com/example/ejemplo/multimedia/icons8-de-acuerdo-48.png" : "/com/example/ejemplo/multimedia/icons8-cancelar-48.png";
@@ -118,4 +145,37 @@ public class ItemAccommodationListController {
             System.err.println("Error: Unable to load availability icon. Check the file path.");
         }
     }
+
+    @FXML
+    public void handleDelete() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText(null);
+        alert.setTitle("Delete Accommodation");
+        alert.setContentText("Are you sure you want to delete this Accommodation?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            accommodationController.deleteAccommodation(accommodation.getAccommodationId());
+            int index = pnItemsAccommodation.getChildren().indexOf(node);
+            if (index != -1) {
+                pnItemsAccommodation.getChildren().remove(index);
+            } else {
+                System.out.println("El nodo no se encontró en el VBox.");
+            }
+            dashboard.refresh();
+        }
+    }
+
+    public void updateAccommodationData(Accommodation accommodation) {
+        this.accommodation = accommodation;
+        lblAccommodationId.setText("ID-" + accommodation.getAccommodationId().toString());
+        lblAdress.setText("Adress: " + accommodation.getAddress());
+        lblCity.setText("City: " + accommodation.getCity());
+        lblPrice.setText("Price: " + accommodation.getPrice().toString());
+        lblCapacity.setText("Capacity: " + accommodation.getCapacity());
+        lblAvailability.setText("Availability: " + accommodation.isAvailability());
+        lblRating.setText("Rating: " + accommodation.getRating());
+        areaDescription.setText(accommodation.getDescription());
+        dashboard.refresh();
+    }
+
 }

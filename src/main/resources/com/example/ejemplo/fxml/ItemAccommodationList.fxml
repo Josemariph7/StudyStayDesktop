@@ -85,7 +85,7 @@
          </children>
       </VBox>
       <TextArea fx:id="areaDescription" editable="false" maxHeight="125.0" maxWidth="293.0" prefHeight="125.0" prefWidth="293.0" promptText="Description" style="-fx-background-color: #edf1ff;" translateX="60.0" />
-        <Button fx:id="btnModifyAccommodation" mnemonicParsing="false" prefHeight="32.0" prefWidth="75.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Modify" translateX="147.0" translateY="-48.0">
+        <Button fx:id="btnModifyAccommodation" onAction="#handleModify" mnemonicParsing="false" prefHeight="32.0" prefWidth="75.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Modify" translateX="147.0" translateY="-48.0">
             <font>
                 <Font size="14.0" />
             </font>
@@ -95,7 +95,7 @@
             <Font size="14.0" />
          </font>
       </Button>
-        <Button fx:id="btnDeleteAccommodation" mnemonicParsing="false" prefHeight="32.0" prefWidth="70.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Delete" translateX="-14.0" translateY="46.0">
+        <Button fx:id="btnDeleteAccommodation" onAction="#handleDelete" mnemonicParsing="false" prefHeight="32.0" prefWidth="70.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Delete" translateX="-14.0" translateY="46.0">
             <font>
                 <Font size="14.0" />
             </font>

@@ -164,7 +164,5 @@ public class ItemUserListController {
         dashboard.refresh();
     }
 
-    public void updateConversationData(Conversation conver) {
-    }
 }
 
