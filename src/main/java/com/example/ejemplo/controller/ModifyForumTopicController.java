@@ -63,6 +63,5 @@ public class ModifyForumTopicController {
             ChoiceBoxTopicAuthor.setValue(author);
             lblForumTopicTitle.setText(forumTopic.getTitle());
             txtAreaTopicDescription.setText(forumTopic.getDescription());
-
     }
 }
