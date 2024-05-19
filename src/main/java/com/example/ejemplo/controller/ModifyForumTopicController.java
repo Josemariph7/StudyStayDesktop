@@ -38,7 +38,7 @@ public class ModifyForumTopicController {
         if (result.isPresent() && result.get() == ButtonType.OK) {
             forumTopicController.updateTopic(forumTopic);
             ItemForumListController itemCtrl;
-            itemCtrl= (ItemForumListController) btnAccept.getScene().getWindow().getUserData();
+            itemCtrl=(ItemForumListController) btnAccept.getScene().getWindow().getUserData();
             itemCtrl.updateForumTopicData(forumTopic);
             adminDashboardController.refresh();
         }
@@ -56,7 +56,6 @@ public class ModifyForumTopicController {
             List<String> users = new ArrayList<>();;
             for (User user : userlist) {
                 users.add(user.getUserId() + "  " + user.getName() + " " + user.getLastName());
-
             }
             String author=forumTopic.getAuthor().getUserId()+"  "+ forumTopic.getAuthor().getName()+" "+ forumTopic.getAuthor().getLastName();
             ChoiceBoxTopicAuthor.getItems().addAll(users);
