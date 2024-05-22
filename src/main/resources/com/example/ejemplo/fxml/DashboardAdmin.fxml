@@ -187,24 +187,24 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
-            <Button fx:id="btnBackup" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleBackup" prefHeight="42.0" prefWidth="259.0" style="-fx-background-color: #151928;" stylesheets="@../css/stylesdashboard.css" text="Backup" translateX="6.0" translateY="-50.0">
-               <graphic>
-                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" translateX="4.0">
-                     <image>
-                        <Image url="@../multimedia/icons8-copias-de-seguridad-50.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <padding>
-                  <Insets left="50.0" />
-               </padding>
-               <font>
-                  <Font size="15.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
+                <Button fx:id="btnBackup" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleBackup" prefHeight="42.0" prefWidth="259.0" style="-fx-background-color: #151928;" stylesheets="@../css/stylesdashboard.css" text="Backup" translateX="6.0" translateY="-50.0">
+                    <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" translateX="4.0">
+                            <image>
+                                <Image url="@../multimedia/icons8-copias-de-seguridad-50.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <padding>
+                        <Insets left="50.0" />
+                    </padding>
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Button>
                 <Button fx:id="btnAboutUs" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="42.0" prefWidth="259.0" style="-fx-background-color: #151928;" stylesheets="@../css/stylesdashboard.css" text="About Us" translateX="5.0" translateY="40.0">
                     <graphic>
                         <ImageView fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
@@ -223,24 +223,24 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
-            <Button fx:id="btnRefresh" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleRefresh" prefHeight="42.0" prefWidth="259.0" style="-fx-background-color: #151928;" stylesheets="@../css/stylesdashboard.css" text="Refresh DB" translateX="5.0" translateY="-50.0">
-               <graphic>
-                  <ImageView fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../multimedia/icons8-17387-0-73139-actualizar-izquierda-32-flechas-50.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <padding>
-                  <Insets left="50.0" />
-               </padding>
-               <font>
-                  <Font size="15.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
+                <Button fx:id="btnRefresh" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleRefresh" prefHeight="42.0" prefWidth="259.0" style="-fx-background-color: #151928;" stylesheets="@../css/stylesdashboard.css" text="Refresh DB" translateX="5.0" translateY="-50.0">
+                    <graphic>
+                        <ImageView fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../multimedia/icons8-17387-0-73139-actualizar-izquierda-32-flechas-50.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <padding>
+                        <Insets left="50.0" />
+                    </padding>
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Button>
             </children>
         </VBox>
         <StackPane layoutX="258.0" prefHeight="900.0" prefWidth="1182.0" style="-fx-background-color: #edf1ff;">
@@ -437,11 +437,11 @@
                                 <Image url="@../multimedia/icons8-línea-horizontal-24.png" />
                             </image>
                         </ImageView>
-                            <Button fx:id="btnChangePhoto" layoutY="1.0" mnemonicParsing="false" onAction="#handleChangePhoto" prefHeight="32.0" prefWidth="142.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" stylesheets="@../css/stylesdashboard.css" text="Change Photo" translateX="923.0" translateY="318.0">
-                                <font>
-                                    <Font size="14.0" />
-                                </font>
-                            </Button>
+                        <Button fx:id="btnChangePhoto" layoutY="1.0" mnemonicParsing="false" onAction="#handleChangePhoto" prefHeight="32.0" prefWidth="142.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" stylesheets="@../css/stylesdashboard.css" text="Change Photo" translateX="923.0" translateY="318.0">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Button>
                     </children>
                 </Pane>
                 <Pane fx:id="pnlUsers" prefHeight="892.0" prefWidth="1183.0" style="-fx-background-color: #edf1ff;" visible="false">
@@ -620,11 +620,11 @@
                 </Pane>
                 <Pane fx:id="pnlAccommodations" style="-fx-background-color: #edf1ff;">
                     <children>
-                  <Button fx:id="btnAddAccommodation" layoutX="1017.0" layoutY="150.0" mnemonicParsing="false" onAction="#handleAddAccommodation" prefHeight="32.0" prefWidth="154.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Add Accommodation">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Button>
+                        <Button fx:id="btnAddAccommodation" layoutX="1017.0" layoutY="150.0" mnemonicParsing="false" onAction="#handleAddAccommodation" prefHeight="32.0" prefWidth="154.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Add Accommodation">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Button>
                         <Label layoutX="57.0" layoutY="25.0" prefHeight="66.0" prefWidth="580.0" style="-fx-text-fill: #0c0e17;" text="Accommodation Management" textFill="#e7e5e5">
                             <font>
                                 <Font size="40.0" />
@@ -886,11 +886,11 @@
                                         <Font size="15.0" />
                                     </font>
                                 </Label>
-                        <Label prefHeight="21.0" prefWidth="102.0" style="-fx-text-fill: #0c0e17;" text="Status" textFill="#e7e5e5" translateX="29.0">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Label>
+                                <Label prefHeight="21.0" prefWidth="102.0" style="-fx-text-fill: #0c0e17;" text="Status" textFill="#e7e5e5" translateX="29.0">
+                                    <font>
+                                        <Font size="15.0" />
+                                    </font>
+                                </Label>
                             </children>
                         </HBox>
                         <Button fx:id="btnAddBooking" layoutX="1017.0" layoutY="193.0" mnemonicParsing="false" onAction="#handleAddBooking" prefHeight="32.0" prefWidth="154.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Create New Booking">
@@ -1047,11 +1047,11 @@
                                 <Image url="@../multimedia/icons8-línea-horizontal-24.png" />
                             </image>
                         </ImageView>
-                  <Button fx:id="btnAddTopic" layoutX="1033.0" layoutY="193.0" mnemonicParsing="false" onAction="#handleAddForumTopic" prefHeight="32.0" prefWidth="139.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Create New Topic">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Button>
+                        <Button fx:id="btnAddTopic" layoutX="1033.0" layoutY="193.0" mnemonicParsing="false" onAction="#handleAddForumTopic" prefHeight="32.0" prefWidth="139.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Create New Topic">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Button>
                     </children>
                 </Pane>
                 <Pane fx:id="pnlConversations" style="-fx-background-color: #edf1ff;" visible="false">
@@ -1208,94 +1208,94 @@
                         </ImageView>
                     </children>
                 </Pane>
-            <Pane fx:id="pnlAboutUs" style="-fx-background-color: #edf1ff;" visible="false">
-               <children>
-                  <Label layoutX="67.0" layoutY="39.0" prefHeight="66.0" prefWidth="235.0" style="-fx-text-fill: #151928;" text="About Us" textFill="#e5e5e5">
-                     <font>
-                        <Font size="40.0" />
-                     </font>
-                  </Label>
-                  <ImageView fitHeight="184.0" fitWidth="419.0" layoutX="777.0" layoutY="-10.0">
-                     <image>
-                        <Image url="@../multimedia/logoTransparente.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView translateX="1158.0">
-                     <image>
-                        <Image url="@../multimedia/icons8-multiplicar-24.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="24.0" fitWidth="19.0" translateX="1138.0" translateY="5.0">
-                     <image>
-                        <Image url="@../multimedia/icons8-línea-horizontal-24.png" />
-                     </image>
-                  </ImageView>
-                      <Label fx:id="username11111" layoutX="72.0" layoutY="120.0" prefHeight="32.0" prefWidth="225.0" style="-fx-alignment: center; -fx-text-fill: black;" text="Welcome to StudyStay!" textFill="#e7e5e5" wrapText="true">
-                          <font>
-                              <Font size="14.0" />
-                          </font>
-                      </Label>
-                  <Label fx:id="username1" layoutX="112.0" layoutY="151.0" prefHeight="66.0" prefWidth="936.0" style="-fx-alignment: center; -fx-text-fill: black;" text="Hello! I'm José María Pozo Hidalgo, and I'm the lead developer of Studystay. Currently, I'm studying Multiplatform Application Development (DAM), and this project is part of my final studies project." textFill="#e7e5e5" wrapText="true">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="67.0" layoutY="308.0" prefHeight="66.0" prefWidth="235.0" style="-fx-text-fill: #151928;" text="StudyStay" textFill="#e7e5e5">
-                     <font>
-                        <Font size="40.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="username11" layoutX="112.0" layoutY="401.0" prefHeight="53.0" prefWidth="936.0" style="-fx-alignment: center; -fx-text-fill: black;" text="Studystay Desktop is a database management application designed to streamline the management of data related to the project. On this app, you can administrate any data related with the android app." textFill="#e7e5e5" wrapText="true">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="username111" layoutX="112.0" layoutY="463.0" prefHeight="53.0" prefWidth="936.0" style="-fx-alignment: center; -fx-text-fill: black;" text="Studystay Mobile is a database management application designed to streamline the management of data related to accommodations, users, and conversations." textFill="#e7e5e5" wrapText="true">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="72.0" layoutY="555.0" prefHeight="66.0" prefWidth="358.0" style="-fx-text-fill: #151928;" text="Technologies Used" textFill="#e7e5e5">
-                     <font>
-                        <Font size="40.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="username1111" layoutX="111.0" layoutY="649.0" prefHeight="24.0" prefWidth="280.0" style="-fx-alignment: center; -fx-text-fill: black;" text="Programming Language: Java 20 (OpenJDK)" textFill="#e7e5e5" wrapText="true">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="username11112" layoutX="115.0" layoutY="787.0" prefHeight="24.0" prefWidth="184.0" style="-fx-alignment: center; -fx-text-fill: black;" text="Version Control Tool: GitHub" textFill="#e7e5e5" wrapText="true">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="username11113" layoutX="111.0" layoutY="684.0" prefHeight="24.0" prefWidth="358.0" style="-fx-alignment: center; -fx-text-fill: black;" text="Integrated Development Environment (IDE): IntelliJ IDEA" textFill="#e7e5e5" wrapText="true">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="username11114" layoutX="111.0" layoutY="719.0" prefHeight="24.0" prefWidth="314.0" style="-fx-alignment: center; -fx-text-fill: black;" text="Graphical User Interface (GUI) Framework: JavaFX" textFill="#e7e5e5" wrapText="true">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="username11115" layoutX="117.0" layoutY="753.0" prefHeight="24.0" prefWidth="184.0" style="-fx-alignment: center; -fx-text-fill: black;" text="UI Design Tool: Scene Builder" textFill="#e7e5e5" wrapText="true">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="username12" layoutX="112.0" layoutY="210.0" prefHeight="66.0" prefWidth="936.0" style="-fx-alignment: center; -fx-text-fill: black;" text="The goal of StudyStay Desktop is to provide a robust and user-friendly application that simplifies the management of accommodation-related data for the administrators of the system." textFill="#e7e5e5" wrapText="true">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-               </children>
-            </Pane>
+                <Pane fx:id="pnlAboutUs" style="-fx-background-color: #edf1ff;" visible="false">
+                    <children>
+                        <Label layoutX="67.0" layoutY="39.0" prefHeight="66.0" prefWidth="235.0" style="-fx-text-fill: #151928;" text="About Us" textFill="#e5e5e5">
+                            <font>
+                                <Font size="40.0" />
+                            </font>
+                        </Label>
+                        <ImageView fitHeight="184.0" fitWidth="419.0" layoutX="777.0" layoutY="-10.0">
+                            <image>
+                                <Image url="@../multimedia/logoTransparente.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView translateX="1158.0">
+                            <image>
+                                <Image url="@../multimedia/icons8-multiplicar-24.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitHeight="24.0" fitWidth="19.0" translateX="1138.0" translateY="5.0">
+                            <image>
+                                <Image url="@../multimedia/icons8-línea-horizontal-24.png" />
+                            </image>
+                        </ImageView>
+                        <Label fx:id="username11111" layoutX="72.0" layoutY="120.0" prefHeight="32.0" prefWidth="225.0" style="-fx-alignment: center; -fx-text-fill: black;" text="Welcome to StudyStay!" textFill="#e7e5e5" wrapText="true">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="username1" layoutX="112.0" layoutY="151.0" prefHeight="66.0" prefWidth="936.0" style="-fx-alignment: center; -fx-text-fill: black;" text="Hello! I'm José María Pozo Hidalgo, and I'm the lead developer of Studystay. Currently, I'm studying Multiplatform Application Development (DAM), and this project is part of my final studies project." textFill="#e7e5e5" wrapText="true">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <Label layoutX="67.0" layoutY="308.0" prefHeight="66.0" prefWidth="235.0" style="-fx-text-fill: #151928;" text="StudyStay" textFill="#e7e5e5">
+                            <font>
+                                <Font size="40.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="username11" layoutX="112.0" layoutY="401.0" prefHeight="53.0" prefWidth="936.0" style="-fx-alignment: center; -fx-text-fill: black;" text="Studystay Desktop is a database management application designed to streamline the management of data related to the project. On this app, you can administrate any data related with the android app." textFill="#e7e5e5" wrapText="true">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="username111" layoutX="112.0" layoutY="463.0" prefHeight="53.0" prefWidth="936.0" style="-fx-alignment: center; -fx-text-fill: black;" text="Studystay Mobile is a database management application designed to streamline the management of data related to accommodations, users, and conversations." textFill="#e7e5e5" wrapText="true">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <Label layoutX="72.0" layoutY="555.0" prefHeight="66.0" prefWidth="358.0" style="-fx-text-fill: #151928;" text="Technologies Used" textFill="#e7e5e5">
+                            <font>
+                                <Font size="40.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="username1111" layoutX="111.0" layoutY="649.0" prefHeight="24.0" prefWidth="280.0" style="-fx-alignment: center; -fx-text-fill: black;" text="Programming Language: Java 20 (OpenJDK)" textFill="#e7e5e5" wrapText="true">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="username11112" layoutX="115.0" layoutY="787.0" prefHeight="24.0" prefWidth="184.0" style="-fx-alignment: center; -fx-text-fill: black;" text="Version Control Tool: GitHub" textFill="#e7e5e5" wrapText="true">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="username11113" layoutX="111.0" layoutY="684.0" prefHeight="24.0" prefWidth="358.0" style="-fx-alignment: center; -fx-text-fill: black;" text="Integrated Development Environment (IDE): IntelliJ IDEA" textFill="#e7e5e5" wrapText="true">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="username11114" layoutX="111.0" layoutY="719.0" prefHeight="24.0" prefWidth="314.0" style="-fx-alignment: center; -fx-text-fill: black;" text="Graphical User Interface (GUI) Framework: JavaFX" textFill="#e7e5e5" wrapText="true">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="username11115" layoutX="117.0" layoutY="753.0" prefHeight="24.0" prefWidth="184.0" style="-fx-alignment: center; -fx-text-fill: black;" text="UI Design Tool: Scene Builder" textFill="#e7e5e5" wrapText="true">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="username12" layoutX="112.0" layoutY="210.0" prefHeight="66.0" prefWidth="936.0" style="-fx-alignment: center; -fx-text-fill: black;" text="The goal of StudyStay Desktop is to provide a robust and user-friendly application that simplifies the management of accommodation-related data for the administrators of the system." textFill="#e7e5e5" wrapText="true">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </Pane>
             </children>
         </StackPane>
-      <Pane layoutX="10.0" layoutY="10.0" onMouseClicked="#closeApp" prefHeight="17.0" prefWidth="19.0" translateX="1408.0" translateY="-6.0" />
-      <Pane layoutX="10.0" layoutY="10.0" onMouseClicked="#handleMinimize" prefHeight="17.0" prefWidth="19.0" translateX="1386.0" translateY="-5.0" />
+        <Pane layoutX="10.0" layoutY="10.0" onMouseClicked="#closeApp" prefHeight="17.0" prefWidth="19.0" translateX="1408.0" translateY="-6.0" />
+        <Pane layoutX="10.0" layoutY="10.0" onMouseClicked="#handleMinimize" prefHeight="17.0" prefWidth="19.0" translateX="1386.0" translateY="-5.0" />
     </children>
     <effect>
         <DropShadow color="#151928" />

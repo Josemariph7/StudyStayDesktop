@@ -90,7 +90,7 @@
                 <Font size="14.0" />
             </font>
         </Button>
-      <Button fx:id="btnDetailedAccommodation" mnemonicParsing="false" prefHeight="32.0" prefWidth="109.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Show Details" translateX="48.0" translateY="-1.0">
+      <Button fx:id="btnDetailedAccommodation" onAction="#handleDetails" mnemonicParsing="false" prefHeight="32.0" prefWidth="109.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Show Details" translateX="48.0" translateY="-1.0">
          <font>
             <Font size="14.0" />
          </font>

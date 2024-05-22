@@ -2,6 +2,7 @@ package com.example.ejemplo.controller;
 
 import com.example.ejemplo.model.*;
 import com.example.ejemplo.utils.Constants;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -178,4 +179,25 @@ public class ItemAccommodationListController {
         dashboard.refresh();
     }
 
+    public void handleDetails(ActionEvent actionEvent) {
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.DETAILSACCOMMODATION_FXML));
+            Parent root = loader.load();
+            AccommodationDetailsController details = loader.getController();
+            details.initData(accommodation, accommodationController, dashboard);
+            Stage stage = new Stage();
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setScene(new Scene(root));
+            stage.setUserData(this);
+            AccommodationDetailsController detailsController = loader.getController();
+            dashboard.refresh();
+            detailsController.btnBack.setOnAction(event -> {
+                stage.close();
+            });
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

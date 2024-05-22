@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="842.0" prefWidth="638.0" style="-fx-background-color: #151928;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ejemplo.controller.AccommodationDetailsController">
+   <Pane prefHeight="104.0" prefWidth="600.0" style="-fx-background-color: #151928;">
+      <children>
+         <Label alignment="CENTER" layoutX="28.0" layoutY="18.0" prefHeight="69.0" prefWidth="346.0" text="Detailed Accommodation" textFill="#e8e8e8">
+            <font>
+               <javafx.scene.text.Font size="30.0" />
+            </font>
+         </Label>
+      </children>
+   </Pane>
+   <VBox alignment="CENTER" layoutX="-1.0" layoutY="568.0" prefHeight="273.0" prefWidth="636.0" spacing="10.0" style="-fx-background-color: #edf1ff;" translateX="2.0">
+      <padding>
+         <Insets left="20.0" right="20.0" />
+      </padding>
+      <children>
+         <ScrollPane prefHeight="199.0" prefWidth="596.0" style="-fx-background-color: #e0e7ff; -fx-border-color: #151928;" stylesheets="@../css/stylesdashboard.css">
+            <content>
+               <ListView fx:id="listViewComments" prefHeight="509.0" prefWidth="575.0" />
+            </content>
+         </ScrollPane>
+         <HBox alignment="CENTER" prefHeight="14.0" prefWidth="543.0" spacing="10">
+            <Button fx:id="btnBack" mnemonicParsing="false" prefHeight="37.0" prefWidth="112.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Back" translateY="-5.0">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#handleDelete" prefHeight="37.0" prefWidth="112.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Delete" translateY="-5.0">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+         </HBox>
+      </children>
+   </VBox>
+   <VBox alignment="CENTER" layoutX="1.0" layoutY="95.0" prefHeight="473.0" prefWidth="636.0" spacing="10.0" style="-fx-background-color: #edf1ff;">
+      <padding>
+         <Insets left="20.0" right="20.0" />
+      </padding>
+      <children>
+         <VBox alignment="CENTER" spacing="10">
+            <Label fx:id="lblAuthor" prefHeight="17.0" prefWidth="291.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblCreationDate" prefHeight="17.0" prefWidth="174.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblAddress" prefHeight="17.0" prefWidth="291.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblCity" prefHeight="17.0" prefWidth="174.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblPrice" prefHeight="17.0" prefWidth="174.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblCapacity" prefHeight="17.0" prefWidth="174.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblServices" prefHeight="17.0" prefWidth="174.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblAvailability" prefHeight="17.0" prefWidth="174.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblRating" prefHeight="17.0" prefWidth="174.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <StackPane fx:id="imageCarousel" prefHeight="200.0" prefWidth="600.0" />
+         </VBox>
+      </children>
+   </VBox>
+</AnchorPane>
