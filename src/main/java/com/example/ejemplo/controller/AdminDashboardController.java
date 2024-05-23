@@ -1,6 +1,7 @@
 package com.example.ejemplo.controller;
 
 import com.example.ejemplo.model.*;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -920,13 +921,12 @@ public class AdminDashboardController implements Initializable {
                     alert.setContentText("Error creating a backup. Output code: " + exitCode);
                     alert.show();
                 }
-                removeCommentsFromFile(backupPath);
+               // removeCommentsFromFile(backupPath);
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
             }
         }
     }
-
 
     public void importDB() {
         FileChooser fileChooser = new FileChooser();
@@ -938,67 +938,62 @@ public class AdminDashboardController implements Initializable {
 
         File selectedFile = fileChooser.showOpenDialog(new Stage());
         if (selectedFile != null) {
-            String dbUrl = "jdbc:mysql://localhost:3306/studystaydb";
-            String dbUser = "admin";
-            String dbPass = "admin";
+            Task<Void> importTask = new Task<Void>() {
+                @Override
+                protected Void call() throws Exception {
+                    String dbName = "studystaydb";
+                    String dbUser = "admin";
+                    String dbPass = "admin";
+                    String mysqlPath = "C:\\xampp\\mysql\\bin\\mysql";
 
-            try (Connection connection = DriverManager.getConnection(dbUrl, dbUser, dbPass);
-                 Statement statement = connection.createStatement()) {
+                    List<String> command = new ArrayList<>();
+                    command.add(mysqlPath);
+                    command.add("-u" + dbUser);
+                    command.add("-p" + dbPass);
+                    command.add(dbName);
+                    command.add("-e");
+                    command.add("source " + selectedFile.getAbsolutePath());
 
-                // Leer el archivo SQL y omitir líneas de comentarios y bloques de comentarios
-                StringBuilder sql = new StringBuilder();
-                try (BufferedReader reader = new BufferedReader(new FileReader(selectedFile))) {
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                                sql.append(line);
-                                sql.append("\n");
+                    ProcessBuilder processBuilder = new ProcessBuilder(command);
+                    processBuilder.redirectErrorStream(true);
+
+                    Process process = processBuilder.start();
+                    int exitCode = process.waitFor();
+                    if (exitCode == 0) {
+                        updateMessage("Database imported successfully.");
+                    } else {
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+                        String line;
+                        StringBuilder errorMessage = new StringBuilder();
+                        while ((line = reader.readLine()) != null) {
+                            errorMessage.append(line).append("\n");
+                        }
+                        updateMessage("Error importing the database. Exit code: " + exitCode + "\n" + errorMessage.toString());
                     }
+                    return null;
                 }
+            };
 
-                // Verificar si el script SQL tiene contenido
-                if (sql.length() > 0) {
-                    System.out.println(sql);
-                    statement.execute(String.valueOf(sql));
-                    System.out.println(sql.toString());
-                    System.out.println("Database imported successfully.");
-                } else {
-                    System.out.println("SQL file is empty or contains only comments.");
-                }
+            importTask.setOnSucceeded(e -> {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Import");
+                alert.setHeaderText(null);
+                alert.setContentText(importTask.getMessage());
+                alert.show();
+            });
 
-            } catch (SQLException e) {
-                System.err.println("Error loading Database: " + e.getMessage());
-            } catch (Exception e) {
-                System.err.println("Error while importing SQL file " + e.getMessage());
-            }
+            importTask.setOnFailed(e -> {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Import");
+                alert.setHeaderText(null);
+                alert.setContentText("Error importing the database.");
+                alert.show();
+            });
+
+            new Thread(importTask).start();
         } else {
             System.out.println("File was not selected");
         }
     }
 
-    public void removeCommentsFromFile(String filePath) {
-        File file = new File(filePath);
-        StringBuilder stringBuilder = new StringBuilder();
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                // Eliminar comentarios de una línea
-                line = line.replaceAll("--.*", "");
-                // Eliminar comentarios de varias líneas
-                line = line.replaceAll("/\\*.*?\\*/;", "");
-                // Eliminar punto y coma después de */
-                line = line.replaceAll("\\*/\\s*;", "*/");
-                stringBuilder.append(line).append("\n");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // Escribir el contenido modificado de vuelta al archivo
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-            writer.write(stringBuilder.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }

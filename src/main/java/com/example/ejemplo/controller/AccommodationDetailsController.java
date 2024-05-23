@@ -42,7 +42,7 @@ public class AccommodationDetailsController {
     @FXML
     private Label lblRating;
     @FXML
-    private ListView<AccommodationReview> listViewComments;
+    private ListView<String> listViewComments;
     @FXML
     private StackPane imageCarousel;
     @FXML
@@ -59,7 +59,7 @@ public class AccommodationDetailsController {
         this.accommodationController = accommodationController;
         displayAccommodationInfo();
         loadReviews();
-        setupImageCarousel();
+      //  setupImageCarousel();
     }
 
     private void displayAccommodationInfo() {
@@ -76,36 +76,45 @@ public class AccommodationDetailsController {
 
     private void loadReviews() {
         List<AccommodationReview> reviews = reviewController.getAllReviews();
-        List<AccommodationReview> reviewsToAdd = new ArrayList<>();
+        List<String> formattedReviews = new ArrayList<>();
         for (AccommodationReview review : reviews) {
             if (review.getAccommodation().equals(accommodation)) {
-                reviewsToAdd.add(review);
+                formattedReviews.add(formatReview(review));
             }
         }
-        listViewComments.getItems().addAll(reviewsToAdd);
+        listViewComments.getItems().addAll(formattedReviews);
     }
+
+    private String formatReview(AccommodationReview review) {
+        return String.format("Author: %s\nRating: %.1f\nDate: %s\nComment: %s\n",
+                review.getAuthor().getName(),
+                review.getRating(),
+                review.getDateTime().toLocalDate(),
+                review.getComment());
+    }
+
 
     private void setupImageCarousel() {
         List<AccommodationPhoto> photos = accommodation.getPhotos();
         if (photos == null || photos.isEmpty()) {
             ImageView defaultImageView = new ImageView(new Image(Constants.DEFAULT_ACCOMMODATION_PICTURE));
-            defaultImageView.setFitHeight(200);
-            defaultImageView.setFitWidth(600);
+            //defaultImageView.setFitHeight(200);
+            //defaultImageView.setFitWidth(600);
             imageCarousel.getChildren().add(defaultImageView);
         } else {
             for (AccommodationPhoto photo : photos) {
                 Image image = new Image(new ByteArrayInputStream(photo.getPhotoData()));
                 ImageView imageView = new ImageView(image);
-                imageView.setFitHeight(200);
-                imageView.setFitWidth(600);
+                //imageView.setFitHeight(200);
+                //imageView.setFitWidth(600);
                 imageCarousel.getChildren().add(imageView);
             }
         }
     }
 
     @FXML
-    private void handleDelete() {
-        AccommodationReview selectedReview = listViewComments.getSelectionModel().getSelectedItem();
+    private void handleDelete() {/*
+        String selectedReview = listViewComments.getSelectionModel().getSelectedItem();
         if (selectedReview != null) {
             boolean result = reviewController.deleteReview(selectedReview.getReviewId());
             if (result) {
@@ -126,6 +135,6 @@ public class AccommodationDetailsController {
             alert.setTitle("Warning");
             alert.setHeaderText("No review selected.");
             alert.showAndWait();
-        }
+        }*/
     }
 }

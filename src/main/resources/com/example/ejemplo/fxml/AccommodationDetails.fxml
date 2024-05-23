@@ -5,9 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
@@ -23,83 +21,78 @@
          </Label>
       </children>
    </Pane>
-   <VBox alignment="CENTER" layoutX="-1.0" layoutY="568.0" prefHeight="273.0" prefWidth="636.0" spacing="10.0" style="-fx-background-color: #edf1ff;" translateX="2.0">
+   <VBox alignment="CENTER" layoutX="1.0" layoutY="95.0" prefHeight="745.0" prefWidth="636.0" spacing="10.0" style="-fx-background-color: #edf1ff;">
       <padding>
          <Insets left="20.0" right="20.0" />
       </padding>
-      <children>
-         <ScrollPane prefHeight="199.0" prefWidth="596.0" style="-fx-background-color: #e0e7ff; -fx-border-color: #151928;" stylesheets="@../css/stylesdashboard.css">
-            <content>
-               <ListView fx:id="listViewComments" prefHeight="509.0" prefWidth="575.0" />
-            </content>
-         </ScrollPane>
-         <HBox alignment="CENTER" prefHeight="14.0" prefWidth="543.0" spacing="10">
-            <Button fx:id="btnBack" mnemonicParsing="false" prefHeight="37.0" prefWidth="112.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Back" translateY="-5.0">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
-            <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#handleDelete" prefHeight="37.0" prefWidth="112.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Delete" translateY="-5.0">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
-         </HBox>
-      </children>
    </VBox>
-   <VBox alignment="CENTER" layoutX="1.0" layoutY="95.0" prefHeight="473.0" prefWidth="636.0" spacing="10.0" style="-fx-background-color: #edf1ff;">
-      <padding>
-         <Insets left="20.0" right="20.0" />
-      </padding>
-      <children>
-         <VBox alignment="CENTER" spacing="10">
-            <Label fx:id="lblAuthor" prefHeight="17.0" prefWidth="291.0">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label fx:id="lblCreationDate" prefHeight="17.0" prefWidth="174.0">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label fx:id="lblAddress" prefHeight="17.0" prefWidth="291.0">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label fx:id="lblCity" prefHeight="17.0" prefWidth="174.0">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label fx:id="lblPrice" prefHeight="17.0" prefWidth="174.0">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label fx:id="lblCapacity" prefHeight="17.0" prefWidth="174.0">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label fx:id="lblServices" prefHeight="17.0" prefWidth="174.0">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label fx:id="lblAvailability" prefHeight="17.0" prefWidth="174.0">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label fx:id="lblRating" prefHeight="17.0" prefWidth="174.0">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <StackPane fx:id="imageCarousel" prefHeight="200.0" prefWidth="600.0" />
-         </VBox>
-      </children>
-   </VBox>
+   <Label fx:id="lblAuthor" layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="291.0" translateY="121.0">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Label>
+   <Label fx:id="lblCreationDate" layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="174.0" translateY="124.0">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Label>
+   <Label fx:id="lblAddress" layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="291.0" translateY="157.0">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Label>
+   <Label fx:id="lblCity" layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="174.0" translateY="230.0">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Label>
+   <Label fx:id="lblPrice" layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="174.0" translateX="320.0" translateY="101.0">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Label>
+   <Label fx:id="lblCapacity" layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="174.0" translateX="331.0" translateY="124.0">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Label>
+   <Label fx:id="lblServices" layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="174.0" translateX="329.0" translateY="160.0">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Label>
+   <Label fx:id="lblAvailability" layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="174.0" translateX="295.0" translateY="210.0">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Label>
+   <Label fx:id="lblRating" layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="174.0" translateX="339.0" translateY="239.0">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Label>
+   <StackPane fx:id="imageCarousel" layoutX="10.0" layoutY="10.0" minHeight="216.0" prefHeight="232.0" prefWidth="336.0" translateX="142.0" translateY="269.0" />
+   <Button fx:id="previousPhoto" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Left" translateY="404.0" />
+   <Button fx:id="nextPhoto" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Right" translateX="560.0" translateY="396.0" />
+   <ScrollPane layoutX="10.0" layoutY="10.0" minHeight="262.0" prefHeight="262.0" prefWidth="302.0" style="-fx-background-color: #e0e7ff; -fx-border-color: #151928;" stylesheets="@../css/stylesdashboard.css" translateX="2.0" translateY="516.0">
+      <content>
+         <ListView fx:id="listViewComments" prefHeight="264.0" prefWidth="577.0" translateX="-5.0" />
+      </content>
+   </ScrollPane>
+   <Button fx:id="btnBack" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="112.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Back" translateX="189.0" translateY="786.0">
+      <font>
+         <Font size="16.0" />
+      </font>
+   </Button>
+   <Button fx:id="btnDelete" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleDelete" prefHeight="37.0" prefWidth="113.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Delete" translateX="317.0" translateY="786.0">
+      <font>
+         <Font size="16.0" />
+      </font>
+   </Button>
+   <Button fx:id="nextPhoto1" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" text="Delete Image" translateX="22.0" translateY="447.0" />
+   <ScrollPane layoutX="20.0" layoutY="20.0" minHeight="262.0" prefHeight="262.0" prefWidth="302.0" style="-fx-background-color: #e0e7ff; -fx-border-color: #151928;" stylesheets="@../css/stylesdashboard.css" translateX="306.0" translateY="506.0">
+      <content>
+         <ListView fx:id="listViewComments1" prefHeight="264.0" prefWidth="577.0" />
+      </content>
+   </ScrollPane>
 </AnchorPane>

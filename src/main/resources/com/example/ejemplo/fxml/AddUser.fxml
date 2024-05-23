@@ -56,7 +56,7 @@
       <HBox prefHeight="32.0" prefWidth="558.0">
          <children>
             <ChoiceBox fx:id="genderChoiceBox" prefHeight="25.0" prefWidth="106.0" style="-fx-background-color: transparent; -fx-border-color: #151928;" translateX="52.0" translateY="11.0" />
-            <DatePicker fx:id="birthDatePicker" prefHeight="25.0" prefWidth="141.0" promptText="Birth Date" translateX="102.0" translateY="10.0" />
+            <DatePicker fx:id="birthDatePicker" prefHeight="25.0" prefWidth="141.0" promptText="Birth Date" style="-fx-background-color: transparent; -fx-border-color: #151928;" translateX="102.0" translateY="10.0" />
             <CheckBox fx:id="adminCheckbox" mnemonicParsing="false" selected="true" style="-fx-text-fill: black;" text="Administrator" translateX="165.0" translateY="13.0" />
          </children>
       </HBox>
