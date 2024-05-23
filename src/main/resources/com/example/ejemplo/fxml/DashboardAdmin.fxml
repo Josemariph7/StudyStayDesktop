@@ -245,7 +245,7 @@
         </VBox>
         <StackPane layoutX="258.0" prefHeight="900.0" prefWidth="1182.0" style="-fx-background-color: #edf1ff;">
             <children>
-                <Pane fx:id="pnlProfile" prefHeight="200.0" prefWidth="200.0" visible="false">
+                <Pane fx:id="pnlProfile" prefHeight="200.0" prefWidth="200.0">
                     <children>
                         <StackPane layoutX="70.0" layoutY="-32.0" prefHeight="250.0" prefWidth="250.0" translateX="800.0" translateY="60.0">
                             <padding>
@@ -618,7 +618,7 @@
                         </ImageView>
                     </children>
                 </Pane>
-                <Pane fx:id="pnlAccommodations" style="-fx-background-color: #edf1ff;">
+                <Pane fx:id="pnlAccommodations" style="-fx-background-color: #edf1ff;" visible="false">
                     <children>
                         <Button fx:id="btnAddAccommodation" layoutX="1017.0" layoutY="150.0" mnemonicParsing="false" onAction="#handleAddAccommodation" prefHeight="32.0" prefWidth="154.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Add Accommodation">
                             <font>

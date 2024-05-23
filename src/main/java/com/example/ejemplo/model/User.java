@@ -27,7 +27,7 @@ public class User {
     private List<ForumComment> posts; // Lista de publicaciones realizadas por el usuario
     private List<AccommodationReview> reviews; // Lista de reseñas realizadas por el usuario
     private List<Accommodation> accommodations; // Lista de alojamientos gestionados por el usuario
-
+    private List<Message> messages;
     /**
      * Enumeración que representa el género del usuario.
      */

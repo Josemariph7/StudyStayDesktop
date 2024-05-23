@@ -193,13 +193,13 @@ public class AdminDashboardController implements Initializable {
             dragArea.getScene().getWindow().setY(event.getScreenY() - yOffset);
         });
         dragArea.toFront();
-        refresh();
+        loadDatabase();
     }
 
     /**
      * Actualiza la interfaz de usuario y las estadísticas.
      */
-    public void refresh() {
+    public void loadDatabase() {
         pnItems.getChildren().clear();
         pnItemsForum.getChildren().clear();
         pnAccommodationItems.getChildren().clear();
@@ -285,6 +285,129 @@ public class AdminDashboardController implements Initializable {
         updateBookingStatistics();
         updateAccommodationStatistics();
     }
+
+    /**
+     * Actualiza la interfaz de usuario y las estadísticas.
+     */
+    public void refresh() {
+        // Limpieza de elementos de la interfaz (debe ejecutarse en el hilo de JavaFX)
+        pnItems.getChildren().clear();
+        pnItemsForum.getChildren().clear();
+        pnAccommodationItems.getChildren().clear();
+        pnConversationsItems.getChildren().clear();
+        pnBookingsItems.getChildren().clear();
+
+        Task<Void> refreshTask = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                if (currentUser != null) {
+                    javafx.application.Platform.runLater(() -> refreshProfile());
+                }
+
+                List<User> users = userController.getAll();
+                for (User user : users) {
+                    try {
+                        FXMLLoader loaderUsers = new FXMLLoader(getClass().getResource(Constants.ITEM_USER_LIST_FXML));
+                        Node node = loaderUsers.load();
+                        ItemUserListController controller = loaderUsers.getController();
+                        controller.initData(user, userController, node, pnItems, AdminDashboardController.this);
+                        javafx.application.Platform.runLater(() -> {
+                            if (!pnItems.getChildren().contains(node)) {
+                                pnItems.getChildren().add(node);
+                            }
+                        });
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                // Obtener todos los temas del foro y actualizar estadísticas
+                List<ForumTopic> topics = topicController.getAllTopics();
+                for (ForumTopic topic : topics) {
+                    try {
+                        FXMLLoader loaderForumTopics = new FXMLLoader(getClass().getResource(Constants.ITEM_FORUMTOPIC_LIST_FXML));
+                        Node node = loaderForumTopics.load();
+                        ItemForumListController controller = loaderForumTopics.getController();
+                        controller.initData(topic, topicController, node, pnItemsForum, AdminDashboardController.this);
+                        javafx.application.Platform.runLater(() -> {
+                            if (!pnItemsForum.getChildren().contains(node)) {
+                                pnItemsForum.getChildren().add(node);
+                            }
+                        });
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                List<Booking> bookings = bookingController.getAllBookings();
+                for (Booking booking : bookings) {
+                    try {
+                        FXMLLoader loaderBookings = new FXMLLoader(getClass().getResource(Constants.ITEM_BOOKING_LIST_FXML));
+                        Node node = loaderBookings.load();
+                        ItemBookingListController controller = loaderBookings.getController();
+                        controller.initData(booking, bookingController, node, pnBookingsItems, AdminDashboardController.this);
+                        javafx.application.Platform.runLater(() -> {
+                            if (!pnBookingsItems.getChildren().contains(node)) {
+                                pnBookingsItems.getChildren().add(node);
+                            }
+                        });
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                // Obtener todos los alojamientos y actualizar estadísticas
+                List<Accommodation> accommodations = accommodationController.getAllAccommodations();
+                for (Accommodation acco : accommodations) {
+                    try {
+                        FXMLLoader loaderAccommodation = new FXMLLoader(getClass().getResource(Constants.ITEM_ACCOMMODATION_LIST_FXML));
+                        Node node = loaderAccommodation.load();
+                        ItemAccommodationListController controller = loaderAccommodation.getController();
+                        controller.initData(acco, accommodationController, node, pnAccommodationItems, AdminDashboardController.this);
+                        javafx.application.Platform.runLater(() -> {
+                            if (!pnAccommodationItems.getChildren().contains(node)) {
+                                pnAccommodationItems.getChildren().add(node);
+                            }
+                        });
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                // Obtener todas las conversaciones y actualizar estadísticas
+                List<Conversation> conversations = conversationController.getAllConversations();
+                for (Conversation conver : conversations) {
+                    try {
+                        FXMLLoader loaderConversations = new FXMLLoader(getClass().getResource(Constants.ITEM_CONVERSATION_LIST_FXML));
+                        Node node = loaderConversations.load();
+                        ItemConversationListController controller = loaderConversations.getController();
+                        controller.initData(conver, conversationController, node, pnConversationsItems, AdminDashboardController.this);
+                        javafx.application.Platform.runLater(() -> {
+                            if (!pnConversationsItems.getChildren().contains(node)) {
+                                pnConversationsItems.getChildren().add(node);
+                            }
+                        });
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                // Actualizar estadísticas
+                javafx.application.Platform.runLater(() -> {
+                    updateUserStatistics();
+                    updateForumStatistics();
+                    updateConversationStatistics();
+                    updateBookingStatistics();
+                    updateAccommodationStatistics();
+                });
+
+                return null;
+            }
+        };
+
+        new Thread(refreshTask).start();
+    }
+
 
     /**
      * Actualiza las estadísticas de conversaciones.
