@@ -1,7 +1,6 @@
 package com.example.ejemplo.controller;
 
 import com.example.ejemplo.model.Accommodation;
-import com.example.ejemplo.model.AccommodationPhoto;
 import com.example.ejemplo.model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,6 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Controlador para modificar un alojamiento.
+ */
 public class ModifyAccommodationController {
     public Button btnCancel;
     public Button btnAccept;
@@ -30,16 +32,27 @@ public class ModifyAccommodationController {
     public AccommodationController accommodationController;
     private AdminDashboardController adminDashboardController;
 
+    /**
+     * Inicializa los datos del alojamiento.
+     *
+     * @param accommodation El alojamiento a modificar.
+     * @param accommodationController El controlador del alojamiento.
+     * @param dashboard El controlador del panel de administrador.
+     */
     public void initData(Accommodation accommodation, AccommodationController accommodationController, AdminDashboardController dashboard) {
-        this.accommodation=accommodation;
-        this.accommodationController=accommodationController;
-        this.adminDashboardController=dashboard;
+        this.accommodation = accommodation;
+        this.accommodationController = accommodationController;
+        this.adminDashboardController = dashboard;
         initChoiceBoxes();
-
     }
 
+    /**
+     * Maneja el evento de aceptación para modificar el alojamiento.
+     *
+     * @param actionEvent El evento de acción.
+     */
     public void handleAccept(ActionEvent actionEvent) {
-        UserController  userController= new UserController();
+        UserController userController = new UserController();
         String[] partes = OwnerChoiceBox.getValue().toString().split("\\s", 2);
         accommodation.setOwner(userController.getById(Long.valueOf(partes[0])));
         accommodation.setDescription(txtAreaDescription.getText());
@@ -57,26 +70,39 @@ public class ModifyAccommodationController {
         if (result.isPresent() && result.get() == ButtonType.OK) {
             accommodationController.updateAccommodation(accommodation);
             ItemAccommodationListController itemCtrl;
-            itemCtrl= (ItemAccommodationListController) btnAccept.getScene().getWindow().getUserData();
+            itemCtrl = (ItemAccommodationListController) btnAccept.getScene().getWindow().getUserData();
             itemCtrl.updateAccommodationData(accommodation);
             adminDashboardController.refresh();
         }
         ((Stage) btnAccept.getScene().getWindow()).close();
     }
 
+    /**
+     * Maneja el evento de cancelación.
+     *
+     * @param actionEvent El evento de acción.
+     */
     public void handleCancel(ActionEvent actionEvent) {
         ((Stage) btnCancel.getScene().getWindow()).close();
     }
 
-    public Accommodation getAccommodation(){
+    /**
+     * Obtiene el alojamiento.
+     *
+     * @return El alojamiento.
+     */
+    public Accommodation getAccommodation() {
         return accommodation;
     }
 
+    /**
+     * Inicializa los ChoiceBoxes con los datos correspondientes.
+     */
     public void initChoiceBoxes() {
         initializeCities();
         initializeOwners();
         initializeCapacity();
-        OwnerChoiceBox.setValue(accommodation.getOwner().getUserId()+" "+accommodation.getOwner().getName()+" "+accommodation.getOwner().getLastName());
+        OwnerChoiceBox.setValue(accommodation.getOwner().getUserId() + " " + accommodation.getOwner().getName() + " " + accommodation.getOwner().getLastName());
         CityChoiceBox.setValue(accommodation.getCity());
         CapacityChoiceBox.setValue(accommodation.getCapacity());
         txtAddress.setText(accommodation.getAddress());
@@ -85,6 +111,9 @@ public class ModifyAccommodationController {
         txtAreaDescription.setText(accommodation.getDescription());
     }
 
+    /**
+     * Inicializa el ChoiceBox de ciudades.
+     */
     private void initializeCities() {
         ObservableList<String> cities = FXCollections.observableArrayList(
                 "Albacete", "Alicante", "Almería", "Ávila", "Badajoz", "Barcelona", "Burgos", "Cáceres", "Cádiz", "Castellón",
@@ -95,6 +124,9 @@ public class ModifyAccommodationController {
         CityChoiceBox.setItems(cities);
     }
 
+    /**
+     * Inicializa el ChoiceBox de propietarios.
+     */
     private void initializeOwners() {
         List<User> userlist;
         UserController userCtrl = new UserController();
@@ -106,6 +138,9 @@ public class ModifyAccommodationController {
         OwnerChoiceBox.setItems(FXCollections.observableArrayList(users));
     }
 
+    /**
+     * Inicializa el ChoiceBox de capacidad.
+     */
     private void initializeCapacity() {
         ObservableList<Integer> capacity = FXCollections.observableArrayList();
         for (int i = 1; i <= 10; i++) {

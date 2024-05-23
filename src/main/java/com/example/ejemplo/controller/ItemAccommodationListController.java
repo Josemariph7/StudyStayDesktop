@@ -19,14 +19,14 @@ import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.io.ByteArrayInputStream;
 import java.util.Optional;
 
+/**
+ * Controlador para la vista de elementos de la lista de alojamientos.
+ */
 public class ItemAccommodationListController {
     // Constante para la imagen predeterminada
     private static final String DEFAULT_ACCOMMODATION_PICTURE = "/com/example/ejemplo/multimedia/icons8-cabaña-100.png";
@@ -66,6 +66,15 @@ public class ItemAccommodationListController {
     private VBox pnItemsAccommodation;
     private AdminDashboardController dashboard;
 
+    /**
+     * Inicializa los datos del alojamiento y la interfaz de usuario.
+     *
+     * @param acco El alojamiento.
+     * @param accommodationController El controlador de alojamiento.
+     * @param node El nodo actual.
+     * @param pnItems El VBox de los elementos de alojamiento.
+     * @param adminDashboardController El controlador del panel de administrador.
+     */
     public void initData(Accommodation acco, AccommodationController accommodationController, Node node, VBox pnItems, AdminDashboardController adminDashboardController) {
         this.dashboard = adminDashboardController;
         this.pnItemsAccommodation = pnItems;
@@ -102,7 +111,7 @@ public class ItemAccommodationListController {
         List<AccommodationReview> allreviews = reviewController.getAllReviews();
         for (AccommodationReview review : allreviews) {
             if (Objects.equals(review.getAccommodation().getAccommodationId(), accommodation.getAccommodationId())) {
-                cont = cont + review.getRating();
+                cont += review.getRating();
                 nReviews++;
             }
         }
@@ -114,6 +123,9 @@ public class ItemAccommodationListController {
         setAvailabilityIcon(accommodation.isAvailability());
     }
 
+    /**
+     * Maneja la acción de modificar el alojamiento.
+     */
     @FXML
     private void handleModify() {
         try {
@@ -136,6 +148,11 @@ public class ItemAccommodationListController {
         }
     }
 
+    /**
+     * Establece el ícono de disponibilidad según el estado del alojamiento.
+     *
+     * @param isAvailable Indica si el alojamiento está disponible.
+     */
     private void setAvailabilityIcon(boolean isAvailable) {
         try {
             String iconPath = isAvailable ? "/com/example/ejemplo/multimedia/icons8-de-acuerdo-48.png" : "/com/example/ejemplo/multimedia/icons8-cancelar-48.png";
@@ -147,6 +164,9 @@ public class ItemAccommodationListController {
         }
     }
 
+    /**
+     * Maneja la acción de eliminar el alojamiento.
+     */
     @FXML
     public void handleDelete() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -166,6 +186,11 @@ public class ItemAccommodationListController {
         }
     }
 
+    /**
+     * Actualiza los datos del alojamiento en la interfaz de usuario.
+     *
+     * @param accommodation El alojamiento actualizado.
+     */
     public void updateAccommodationData(Accommodation accommodation) {
         this.accommodation = accommodation;
         lblAccommodationId.setText("ID-" + accommodation.getAccommodationId().toString());
@@ -179,8 +204,12 @@ public class ItemAccommodationListController {
         dashboard.refresh();
     }
 
+    /**
+     * Maneja la acción de mostrar los detalles del alojamiento.
+     *
+     * @param actionEvent El evento de acción.
+     */
     public void handleDetails(ActionEvent actionEvent) {
-
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.DETAILSACCOMMODATION_FXML));
             Parent root = loader.load();

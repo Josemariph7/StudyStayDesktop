@@ -13,7 +13,6 @@ module com.example.proyectofinal {
     requires com.almasb.fxgl.all;
     requires java.sql;
     requires org.json;
-    requires org.junit.jupiter.api;
     requires junit;
     requires javafx.swing;
 
@@ -25,5 +24,6 @@ module com.example.proyectofinal {
     /*opens com.example.ejemplo.test to org.junit.jupiter.api;
     exports com.example.ejemplo.test;*/
     exports com.example.ejemplo.model;
+    exports com.example.ejemplo.test;
 
 }

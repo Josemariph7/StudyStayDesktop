@@ -15,6 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Controlador para modificar una conversación.
+ */
 public class ModifyConversationController {
     @FXML public ChoiceBox ChoiceBoxModifyConverUser1;
     @FXML public ChoiceBox ChoiceBoxModifyConverUser2;
@@ -26,35 +29,39 @@ public class ModifyConversationController {
     private AdminDashboardController adminDashboardController;
 
     /**
-     * Inicializa los datos de la conversacion en la ventana de modificación.
+     * Inicializa los datos de la conversación en la ventana de modificación.
      *
-     * @param conver                   Conversacion a modificar
-     * @param conversationController   Controlador de Conversaciones
-     * @param adminDashboardController
+     * @param conver                   La conversación a modificar.
+     * @param conversationController   El controlador de conversaciones.
+     * @param adminDashboardController El controlador del panel de administrador.
      */
     public void initData(Conversation conver, ConversationController conversationController, AdminDashboardController adminDashboardController) {
         this.converCtrl = conversationController;
         this.conver = conver;
-        this.adminDashboardController=adminDashboardController;
+        this.adminDashboardController = adminDashboardController;
         if (conver != null) {
             List<User> userlist;
             UserController userCtrl = new UserController();
-            userlist=userCtrl.getAll();
-            List<String> users= new ArrayList<>();
-            for (User user : userlist){
-                users.add(user.getUserId()+"  "+user.getName()+" "+user.getLastName());
+            userlist = userCtrl.getAll();
+            List<String> users = new ArrayList<>();
+            for (User user : userlist) {
+                users.add(user.getUserId() + "  " + user.getName() + " " + user.getLastName());
             }
             ChoiceBoxModifyConverUser1.getItems().addAll(users);
             ChoiceBoxModifyConverUser2.getItems().addAll(users);
-            User user1=userCtrl.getById(conver.getUser1Id());
-            User user2=userCtrl.getById(conver.getUser2Id());
-            ChoiceBoxModifyConverUser1.getSelectionModel().select(user1.getUserId()+"  "+user1.getName()+" "+user1.getLastName());
-            ChoiceBoxModifyConverUser2.getSelectionModel().select(user2.getUserId()+"  "+user2.getName()+" "+user2.getLastName());
+            User user1 = userCtrl.getById(conver.getUser1Id());
+            User user2 = userCtrl.getById(conver.getUser2Id());
+            ChoiceBoxModifyConverUser1.getSelectionModel().select(user1.getUserId() + "  " + user1.getName() + " " + user1.getLastName());
+            ChoiceBoxModifyConverUser2.getSelectionModel().select(user2.getUserId() + "  " + user2.getName() + " " + user2.getLastName());
         }
     }
 
+    /**
+     * Maneja el evento de aceptación para modificar la conversación.
+     *
+     * @param actionEvent El evento de acción.
+     */
     public void handleAccept(ActionEvent actionEvent) {
-
         String[] partes = ChoiceBoxModifyConverUser1.getValue().toString().split("\\s", 2);
         conver.setUser1Id(Long.valueOf(partes[0]));
         partes = ChoiceBoxModifyConverUser2.getValue().toString().split("\\s", 2);
@@ -69,7 +76,7 @@ public class ModifyConversationController {
         if (result.isPresent() && result.get() == ButtonType.OK) {
             converCtrl.updateConversation(conver);
             ItemConversationListController itemCtrl;
-            itemCtrl= (ItemConversationListController) btnAccept.getScene().getWindow().getUserData();
+            itemCtrl = (ItemConversationListController) btnAccept.getScene().getWindow().getUserData();
             itemCtrl.updateConversationData(conver);
             adminDashboardController.refresh();
         }

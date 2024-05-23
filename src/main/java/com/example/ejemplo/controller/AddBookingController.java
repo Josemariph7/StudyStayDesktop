@@ -2,7 +2,6 @@ package com.example.ejemplo.controller;
 
 import com.example.ejemplo.model.Accommodation;
 import com.example.ejemplo.model.Booking;
-import com.example.ejemplo.model.ForumTopic;
 import com.example.ejemplo.model.User;
 import com.example.ejemplo.utils.Constants;
 import javafx.event.ActionEvent;
@@ -12,13 +11,16 @@ import javafx.stage.StageStyle;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * Controlador para agregar una nueva reserva.
+ */
 public class AddBookingController {
+
     public Button btnCancel;
     public Button btnAccept;
     public ChoiceBox ChoiceBoxStatus;
@@ -30,30 +32,31 @@ public class AddBookingController {
     public BookingController bookingController;
     private Booking booking;
 
+    /**
+     * Maneja la acción de aceptar para agregar una nueva reserva.
+     *
+     * @param actionEvent el evento de acción
+     */
     public void handleAccept(ActionEvent actionEvent) {
         UserController userController = new UserController();
         AccommodationController accommodationController = new AccommodationController();
-        String user=ChoiceBoxUser.getValue().toString();
+        String user = ChoiceBoxUser.getValue().toString();
         String[] partes = user.split("\\s", 2);
         booking.setUser(userController.getById(Long.parseLong(partes[0])));
-        String accommodation=ChoiceBoxAccommodation.getValue().toString();
-        partes=accommodation.split("\\s", 2);
+        String accommodation = ChoiceBoxAccommodation.getValue().toString();
+        partes = accommodation.split("\\s", 2);
         booking.setAccommodation(accommodationController.getAccommodationById(Long.parseLong(partes[0])));
-        if (ChoiceBoxStatus.getValue()!=null){
-            if(Objects.equals(ChoiceBoxStatus.getValue(), "Pending")){
+        if (ChoiceBoxStatus.getValue() != null) {
+            if (Objects.equals(ChoiceBoxStatus.getValue(), "Pending")) {
                 booking.setStatus(Booking.BookingStatus.PENDING);
-            }else {
-                if (Objects.equals(ChoiceBoxStatus.getValue(), "Confirmed")) {
-                    booking.setStatus(Booking.BookingStatus.CONFIRMED);
-                } else {
-                    if (Objects.equals(ChoiceBoxStatus.getValue(), "Canceled")) {
-                        booking.setStatus(Booking.BookingStatus.CANCELLED);
-                    }
-                }
+            } else if (Objects.equals(ChoiceBoxStatus.getValue(), "Confirmed")) {
+                booking.setStatus(Booking.BookingStatus.CONFIRMED);
+            } else if (Objects.equals(ChoiceBoxStatus.getValue(), "Canceled")) {
+                booking.setStatus(Booking.BookingStatus.CANCELLED);
             }
         }
-        if (DatePickerEnd.getValue() != null && DatePickerStart.getValue() !=null) {
-            if(DatePickerEnd.getValue().isAfter(DatePickerStart.getValue())&&DatePickerStart.getValue().isBefore(LocalDate.now())){
+        if (DatePickerEnd.getValue() != null && DatePickerStart.getValue() != null) {
+            if (DatePickerEnd.getValue().isAfter(DatePickerStart.getValue()) && DatePickerStart.getValue().isBefore(LocalDate.now())) {
                 booking.setStartDate(DatePickerStart.getValue().atStartOfDay());
                 booking.setEndDate(DatePickerEnd.getValue().atStartOfDay());
             }
@@ -70,13 +73,13 @@ public class AddBookingController {
             alert.setContentText("Are you sure to add the new Booking?");
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
-                if(booking.getAccommodation().getCapacity()<=booking.getAccommodation().getTenants().size()) {
+                if (booking.getAccommodation().getCapacity() <= booking.getAccommodation().getTenants().size()) {
                     bookingController.createBooking(booking);
                     booking.getAccommodation().getTenants().add(booking.getUser());
                     AdminDashboardController itemCtrl;
                     itemCtrl = (AdminDashboardController) btnAccept.getScene().getWindow().getUserData();
                     itemCtrl.refresh();
-                }else{
+                } else {
                     booking.getAccommodation().setAvailability(false);
                     Alert alerta = new Alert(Alert.AlertType.INFORMATION);
                     alert.setHeaderText(null);
@@ -91,6 +94,9 @@ public class AddBookingController {
         }
     }
 
+    /**
+     * Inicializa los datos necesarios para la interfaz de usuario.
+     */
     public void initData() {
         bookingController = new BookingController();
         booking = new Booking();
@@ -103,18 +109,25 @@ public class AddBookingController {
         }
         List<Accommodation> accommodationlist;
         AccommodationController accommodationCtrl = new AccommodationController();
-        accommodationlist=accommodationCtrl.getAllAccommodations();
+        accommodationlist = accommodationCtrl.getAllAccommodations();
         List<String> accommodations = new ArrayList<>();
         for (Accommodation accommodation : accommodationlist) {
-            accommodations.add(accommodation.getAccommodationId()+"  "+accommodation.getAddress());
+            accommodations.add(accommodation.getAccommodationId() + "  " + accommodation.getAddress());
         }
         ChoiceBoxAccommodation.getItems().addAll(accommodations);
         ChoiceBoxUser.getItems().addAll(users);
-        String[] status={"Pending", "Confirmed", "Canceled"};
+        String[] status = {"Pending", "Confirmed", "Canceled"};
         ChoiceBoxStatus.getItems().addAll(status);
         ChoiceBoxStatus.setValue("Status");
     }
 
+    /**
+     * Verifica si la reserva ya existe.
+     *
+     * @param book la reserva a verificar
+     * @return true si la reserva existe, false en caso contrario
+     * @throws SQLException si ocurre un error al acceder a la base de datos
+     */
     private boolean bookingExists(Booking book) throws SQLException {
         List<Booking> bookings = bookingController.getAllBookings();
         for (Booking booking : bookings) {
@@ -125,6 +138,11 @@ public class AddBookingController {
         return false;
     }
 
+    /**
+     * Muestra un mensaje de error.
+     *
+     * @param message el mensaje de error a mostrar
+     */
     private void showError(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
@@ -132,5 +150,4 @@ public class AddBookingController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
 }

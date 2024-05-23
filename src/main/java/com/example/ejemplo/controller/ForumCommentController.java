@@ -18,7 +18,7 @@ public class ForumCommentController {
 
     /**
      * Obtiene todos los comentarios de un tema específico del foro.
-     * @param topicId ID del tema del foro
+     * @param topicId del tema del foro
      * @return Lista de comentarios del tema del foro
      */
     public List<ForumComment> getCommentsByTopic(Long topicId) {

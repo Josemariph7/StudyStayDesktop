@@ -1,7 +1,6 @@
 package com.example.ejemplo.controller;
 
 import com.example.ejemplo.model.Booking;
-import com.example.ejemplo.model.ForumTopic;
 import com.example.ejemplo.utils.Constants;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,6 +20,9 @@ import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
+/**
+ * Controlador para la vista de elementos de la lista de reservas.
+ */
 public class ItemBookingListController {
     @FXML
     public Button btnModifyTopic;
@@ -39,6 +41,11 @@ public class ItemBookingListController {
     private VBox pnItemsBooking;
     private AdminDashboardController adminDashboardController;
 
+    /**
+     * Maneja la acción de modificar la reserva.
+     *
+     * @param actionEvent El evento de acción.
+     */
     public void handleModify(ActionEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.MODIFYBOOKING_FXML));
@@ -60,6 +67,15 @@ public class ItemBookingListController {
         }
     }
 
+    /**
+     * Inicializa los datos de la reserva y la interfaz de usuario.
+     *
+     * @param booking La reserva.
+     * @param bookingController El controlador de reserva.
+     * @param node El nodo actual.
+     * @param pnBookingsItems El VBox de los elementos de reserva.
+     * @param adminDashboardController El controlador del panel de administrador.
+     */
     public void initData(Booking booking, BookingController bookingController, Node node, VBox pnBookingsItems, AdminDashboardController adminDashboardController) {
         this.booking = booking;
         this.node = node;
@@ -67,37 +83,47 @@ public class ItemBookingListController {
         this.adminDashboardController = adminDashboardController;
         this.bookingController = bookingController;
         lblBookingid.setText(booking.getBookingId().toString());
-        if(booking.getUser()!=null) {
+        if (booking.getUser() != null) {
             lblBookingUser.setText(booking.getUser().getName() + " " + booking.getUser().getLastName());
-        }else{
+        } else {
             //eliminar
         }
-        AccommodationController accommodationController= new AccommodationController();
+        AccommodationController accommodationController = new AccommodationController();
 
-        if(accommodationController.getAccommodationById(booking.getBookingId())!=null){
+        if (accommodationController.getAccommodationById(booking.getBookingId()) != null) {
             lblBookingCity.setText(accommodationController.getAccommodationById(booking.getBookingId()).getCity());
-        }else{
+        } else {
             lblBookingCity.setText("Unknown");
         }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formattedDate = booking.getStartDate().format(formatter);
         lblStartDate.setText(formattedDate);
-        formattedDate=booking.getEndDate().format(formatter);
+        formattedDate = booking.getEndDate().format(formatter);
         lblEndDate.setText(formattedDate);
         lblStatus.setText(booking.getStatus().toString());
     }
 
+    /**
+     * Actualiza los datos de la reserva en la interfaz de usuario.
+     *
+     * @param book La reserva actualizada.
+     */
     public void updateForumTopicData(Booking book) {
         this.booking = book;
         lblStatus.setText(booking.getStatus().toString());
         lblStartDate.setText(booking.getStartDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         lblBookingid.setText(book.getBookingId().toString());
-        lblBookingUser.setText(booking.getUser().getName()+" " +booking.getUser().getLastName());
+        lblBookingUser.setText(booking.getUser().getName() + " " + booking.getUser().getLastName());
         lblEndDate.setText(booking.getEndDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        AccommodationController accommodationController= new AccommodationController();
+        AccommodationController accommodationController = new AccommodationController();
         lblBookingCity.setText(accommodationController.getAccommodationById(booking.getBookingId()).getCity());
     }
 
+    /**
+     * Maneja la acción de eliminar la reserva.
+     *
+     * @param actionEvent El evento de acción.
+     */
     public void handleDelete(ActionEvent actionEvent) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText(null);
@@ -114,6 +140,5 @@ public class ItemBookingListController {
             }
             adminDashboardController.refresh();
         }
-
     }
 }

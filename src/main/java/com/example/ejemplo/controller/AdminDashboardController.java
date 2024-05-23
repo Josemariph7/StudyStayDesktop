@@ -196,6 +196,9 @@ public class AdminDashboardController implements Initializable {
         refresh();
     }
 
+    /**
+     * Actualiza la interfaz de usuario y las estadísticas.
+     */
     public void refresh() {
         pnItems.getChildren().clear();
         pnItemsForum.getChildren().clear();
@@ -262,7 +265,7 @@ public class AdminDashboardController implements Initializable {
             }
         }
 
-        // Obtener todos los alojamientos y actualizar estadísticas
+        // Obtener todas las conversaciones y actualizar estadísticas
         List<Conversation> conversations = conversationController.getAllConversations();
         for (Conversation conver : conversations) {
             try {
@@ -283,6 +286,9 @@ public class AdminDashboardController implements Initializable {
         updateAccommodationStatistics();
     }
 
+    /**
+     * Actualiza las estadísticas de conversaciones.
+     */
     private void updateConversationStatistics() {
         List<Conversation> convers = conversationController.getAllConversations();
         MessageController messageController = new MessageController();
@@ -305,6 +311,9 @@ public class AdminDashboardController implements Initializable {
         NewMessages.setText(String.valueOf(newMessages));
     }
 
+    /**
+     * Actualiza las estadísticas del foro.
+     */
     private void updateForumStatistics() {
         List<ForumTopic> topics = topicController.getAllTopics();
         List<ForumComment> forumComments = new ForumCommentController().getAllComments();
@@ -326,9 +335,11 @@ public class AdminDashboardController implements Initializable {
         this.NewComments.setText(String.valueOf(commentsLastWeek));
         this.TotalForumComments.setText(String.valueOf(totalForumComments));
         this.TotalForumTopics.setText(String.valueOf(totalForums));
-
     }
 
+    /**
+     * Actualiza las estadísticas de reservas.
+     */
     private void updateBookingStatistics() {
         int totalBookings = bookingController.getAllBookings().size();
         int currentBookings = 0;
@@ -350,7 +361,9 @@ public class AdminDashboardController implements Initializable {
         this.bookingsLastWeek1.setText(String.valueOf(cancelledBookings));
     }
 
-
+    /**
+     * Actualiza las estadísticas de alojamientos.
+     */
     private void updateAccommodationStatistics() {
         List<Accommodation> allAccommodations = accommodationController.getAllAccommodations();
         List<AccommodationReview> reviews = new AccommodationReviewController().getAllReviews();
@@ -373,7 +386,6 @@ public class AdminDashboardController implements Initializable {
         this.availableAccommodations.setText(String.valueOf(availableAccommodations));
         this.totalAccommodations.setText(String.valueOf(totalAccommodations));
     }
-
 
     /**
      * Actualiza las estadísticas de usuarios.
@@ -493,6 +505,9 @@ public class AdminDashboardController implements Initializable {
         }
     }
 
+    /**
+     * Actualiza la información del perfil del usuario.
+     */
     public void refreshProfile() {
         username.setText(currentUser.getName());
         namelabel.setText(currentUser.getName());
@@ -504,17 +519,13 @@ public class AdminDashboardController implements Initializable {
         emaillabel.setText(currentUser.getEmail());
         phonelabel.setText(currentUser.getPhone());
 
-        if(currentUser.getGender()!=null){
+        if(currentUser.getGender() != null){
             if(currentUser.getGender().toString().equalsIgnoreCase("Male")){
                 genrelabel.setText("Male");
-            }else {
-                if (currentUser.getGender().toString().equalsIgnoreCase("Female")) {
-                    genrelabel.setText("Female");
-                } else {
-                    if (currentUser.getGender().toString().equalsIgnoreCase("Other")) {
-                        genrelabel.setText("Other");
-                    }
-                }
+            } else if (currentUser.getGender().toString().equalsIgnoreCase("Female")) {
+                genrelabel.setText("Female");
+            } else if (currentUser.getGender().toString().equalsIgnoreCase("Other")) {
+                genrelabel.setText("Other");
             }
         }
     }
@@ -603,20 +614,16 @@ public class AdminDashboardController implements Initializable {
                 emaillabel.setText(currentUser.getEmail());
                 phonelabel.setText(currentUser.getPhone());
 
-                if(modifyController.genderChoiceBox.getValue()!=null){
+                if(modifyController.genderChoiceBox.getValue() != null){
                     if(modifyController.genderChoiceBox.getValue().toString().equalsIgnoreCase("Male")){
                         currentUser.setGender(User.Gender.MALE);
                         genrelabel.setText("Male");
-                    }else {
-                        if (modifyController.genderChoiceBox.getValue().toString().equalsIgnoreCase("Female")) {
-                            currentUser.setGender(User.Gender.FEMALE);
-                            genrelabel.setText("Female");
-                        } else {
-                            if (modifyController.genderChoiceBox.getValue().toString().equalsIgnoreCase("Other")) {
-                                currentUser.setGender(User.Gender.OTHER);
-                                genrelabel.setText("Other");
-                            }
-                        }
+                    } else if (modifyController.genderChoiceBox.getValue().toString().equalsIgnoreCase("Female")) {
+                        currentUser.setGender(User.Gender.FEMALE);
+                        genrelabel.setText("Female");
+                    } else if (modifyController.genderChoiceBox.getValue().toString().equalsIgnoreCase("Other")) {
+                        currentUser.setGender(User.Gender.OTHER);
+                        genrelabel.setText("Other");
                     }
                 }
                 System.out.println(currentUser);
@@ -692,6 +699,9 @@ public class AdminDashboardController implements Initializable {
         alert.showAndWait();
     }
 
+    /**
+     * Muestra una alerta de confirmación para salir de la aplicación.
+     */
     @FXML
     private void showAlertExitConfirmation() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -704,6 +714,9 @@ public class AdminDashboardController implements Initializable {
         }
     }
 
+    /**
+     * Muestra una alerta de confirmación para cerrar sesión.
+     */
     @FXML
     private void showAlertLogOutConfirmation() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -731,6 +744,11 @@ public class AdminDashboardController implements Initializable {
         }
     }
 
+    /**
+     * Abre la ventana para agregar un nuevo usuario.
+     *
+     * @param actionEvent El evento de acción.
+     */
     @FXML
     public void handleAddUser(ActionEvent actionEvent) {
         try {
@@ -753,6 +771,11 @@ public class AdminDashboardController implements Initializable {
         }
     }
 
+    /**
+     * Abre la ventana para agregar una nueva conversación.
+     *
+     * @param actionEvent El evento de acción.
+     */
     @FXML
     public void handleAddConversation(ActionEvent actionEvent) {
         try {
@@ -775,6 +798,11 @@ public class AdminDashboardController implements Initializable {
         }
     }
 
+    /**
+     * Abre la ventana para agregar un nuevo tema en el foro.
+     *
+     * @param actionEvent El evento de acción.
+     */
     @FXML
     public void handleAddForumTopic(ActionEvent actionEvent) {
         try {
@@ -797,6 +825,11 @@ public class AdminDashboardController implements Initializable {
         }
     }
 
+    /**
+     * Abre la ventana para agregar un nuevo alojamiento.
+     *
+     * @param actionEvent El evento de acción.
+     */
     @FXML
     public void handleAddAccommodation(ActionEvent actionEvent) {
         try {
@@ -819,6 +852,11 @@ public class AdminDashboardController implements Initializable {
         }
     }
 
+    /**
+     * Abre la ventana para agregar una nueva reserva.
+     *
+     * @param actionEvent El evento de acción.
+     */
     @FXML
     public void handleAddBooking(ActionEvent actionEvent) {
         try {
@@ -841,12 +879,22 @@ public class AdminDashboardController implements Initializable {
         }
     }
 
+    /**
+     * Minimiza la ventana.
+     *
+     * @param event El evento del mouse.
+     */
     @FXML
     private void handleMinimize(MouseEvent event) {
         Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
         stage.setIconified(true);
     }
 
+    /**
+     * Refresca la interfaz de usuario y muestra una alerta de información.
+     *
+     * @param actionEvent El evento de acción.
+     */
     public void handleRefresh(ActionEvent actionEvent) {
         refresh();
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -856,6 +904,11 @@ public class AdminDashboardController implements Initializable {
         alert.show();
     }
 
+    /**
+     * Maneja la acción de respaldo de la base de datos.
+     *
+     * @param actionEvent El evento de acción.
+     */
     public void handleBackup(ActionEvent actionEvent) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Select an option");
@@ -882,6 +935,9 @@ public class AdminDashboardController implements Initializable {
         }
     }
 
+    /**
+     * Exporta la base de datos a un archivo SQL.
+     */
     public void exportDB() {
         String dbName = "studystaydb";
         String dbUser = "admin";
@@ -921,13 +977,16 @@ public class AdminDashboardController implements Initializable {
                     alert.setContentText("Error creating a backup. Output code: " + exitCode);
                     alert.show();
                 }
-               // removeCommentsFromFile(backupPath);
+                // removeCommentsFromFile(backupPath);
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
             }
         }
     }
 
+    /**
+     * Importa un archivo SQL a la base de datos.
+     */
     public void importDB() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select the SQL file to import");
@@ -995,5 +1054,4 @@ public class AdminDashboardController implements Initializable {
             System.out.println("File was not selected");
         }
     }
-
 }

@@ -20,6 +20,9 @@ import javafx.scene.text.TextFlow;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
+/**
+ * Controlador para la vista de detalles de la conversación.
+ */
 public class ConversationDetailsController {
     @FXML public Label idUser1;
     @FXML public Label nameUser1;
@@ -36,7 +39,13 @@ public class ConversationDetailsController {
     public ConversationController converCtrl;
     private AdminDashboardController adminDashboardController;
 
-    // Método para inicializar los datos
+    /**
+     * Inicializa los datos de la conversación y la interfaz de usuario.
+     *
+     * @param conversation La conversación actual.
+     * @param conversationController El controlador de la conversación.
+     * @param adminDashboardController El controlador del panel de administrador.
+     */
     public void initData(Conversation conversation, ConversationController conversationController, AdminDashboardController adminDashboardController) {
         this.converCtrl = conversationController;
         this.conver = conversation;
@@ -127,13 +136,21 @@ public class ConversationDetailsController {
         });
     }
 
-    // Método para manejar el mensaje seleccionado
+    /**
+     * Maneja el mensaje seleccionado.
+     *
+     * @param selectedMessage El mensaje seleccionado.
+     */
     private void handleSelectedMessage(Message selectedMessage) {
         // Aquí puedes manejar el mensaje seleccionado
         System.out.println("Mensaje seleccionado: " + selectedMessage.getContent());
     }
 
-    // Método para eliminar el mensaje seleccionado
+    /**
+     * Maneja la acción de eliminar el mensaje seleccionado.
+     *
+     * @param actionEvent El evento de acción.
+     */
     public void handleDelete(ActionEvent actionEvent) {
         Message selectedMessage = listViewMessages.getSelectionModel().getSelectedItem();
         if (selectedMessage != null) {
@@ -153,7 +170,11 @@ public class ConversationDetailsController {
         }
     }
 
-    // Método para añadir mensajes a la lista
+    /**
+     * Añade un mensaje a la lista.
+     *
+     * @param message El mensaje a añadir.
+     */
     private void addMessage(Message message) {
         messages.add(message);
         // Desplazarse automáticamente al final para ver el nuevo mensaje

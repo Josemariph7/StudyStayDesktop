@@ -3,7 +3,6 @@ package com.example.ejemplo.controller;
 import com.example.ejemplo.model.Accommodation;
 import com.example.ejemplo.model.AccommodationPhoto;
 import com.example.ejemplo.model.AccommodationReview;
-import com.example.ejemplo.model.User;
 import com.example.ejemplo.utils.Constants;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -20,7 +19,11 @@ import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Controlador para mostrar los detalles de un alojamiento.
+ */
 public class AccommodationDetailsController {
+
     @FXML
     public Button btnBack;
     @FXML
@@ -53,18 +56,28 @@ public class AccommodationDetailsController {
     private AccommodationController accommodationController = new AccommodationController();
     private AdminDashboardController adminDashboardController = new AdminDashboardController();
 
+    /**
+     * Inicializa los datos del alojamiento y configura la interfaz de usuario con la información del alojamiento.
+     *
+     * @param accommodation el alojamiento a mostrar
+     * @param accommodationController el controlador de alojamiento
+     * @param dashboard el controlador del panel de administración
+     */
     public void initData(Accommodation accommodation, AccommodationController accommodationController, AdminDashboardController dashboard) {
         this.accommodation = accommodation;
         this.adminDashboardController = dashboard;
         this.accommodationController = accommodationController;
         displayAccommodationInfo();
         loadReviews();
-      //  setupImageCarousel();
+        //setupImageCarousel();
     }
 
+    /**
+     * Muestra la información del alojamiento en la interfaz de usuario.
+     */
     private void displayAccommodationInfo() {
         lblAuthor.setText(accommodation.getOwner().getName() + " " + accommodation.getOwner().getLastName());
-        lblCreationDate.setText(accommodation.getDescription());  // Assuming description is the creation date, adjust as needed
+        lblCreationDate.setText(accommodation.getDescription());  // Asumiendo que la descripción es la fecha de creación, ajustar según sea necesario
         lblAddress.setText("Address: " + accommodation.getAddress());
         lblCity.setText("City: " + accommodation.getCity());
         lblPrice.setText("Price: " + accommodation.getPrice().toString());
@@ -74,6 +87,9 @@ public class AccommodationDetailsController {
         lblRating.setText("Rating: " + accommodation.getRating());
     }
 
+    /**
+     * Carga y muestra las reseñas del alojamiento.
+     */
     private void loadReviews() {
         List<AccommodationReview> reviews = reviewController.getAllReviews();
         List<String> formattedReviews = new ArrayList<>();
@@ -85,6 +101,12 @@ public class AccommodationDetailsController {
         listViewComments.getItems().addAll(formattedReviews);
     }
 
+    /**
+     * Formatea una reseña para mostrarla en la interfaz de usuario.
+     *
+     * @param review la reseña a formatear
+     * @return la cadena formateada que representa la reseña
+     */
     private String formatReview(AccommodationReview review) {
         return String.format("Author: %s\nRating: %.1f\nDate: %s\nComment: %s\n",
                 review.getAuthor().getName(),
@@ -93,7 +115,9 @@ public class AccommodationDetailsController {
                 review.getComment());
     }
 
-
+    /**
+     * Configura el carrusel de imágenes del alojamiento.
+     */
     private void setupImageCarousel() {
         List<AccommodationPhoto> photos = accommodation.getPhotos();
         if (photos == null || photos.isEmpty()) {
@@ -112,6 +136,9 @@ public class AccommodationDetailsController {
         }
     }
 
+    /**
+     * Maneja la acción de eliminar una reseña seleccionada.
+     */
     @FXML
     private void handleDelete() {/*
         String selectedReview = listViewComments.getSelectionModel().getSelectedItem();

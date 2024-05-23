@@ -1,6 +1,7 @@
 package com.example.ejemplo.controller;
 
-import com.example.ejemplo.model.Conversation;
+import com.example.ejemplo.model.User;
+import com.example.ejemplo.utils.Constants;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -13,8 +14,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import com.example.ejemplo.model.User;
-import com.example.ejemplo.utils.Constants;
 
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
@@ -64,10 +63,10 @@ public class ItemUserListController {
     /**
      * Inicializa los datos del usuario en el elemento de la lista.
      *
-     * @param user                      El usuario a mostrar.
-     * @param userController            El controlador de usuario.
-     * @param node                      El nodo de la lista.
-     * @param pnItems                   El contenedor de la lista.
+     * @param user El usuario a mostrar.
+     * @param userController El controlador de usuario.
+     * @param node El nodo de la lista.
+     * @param pnItems El contenedor de la lista.
      * @param adminDashboardController El controlador del panel de administrador.
      */
     public void initData(User user, UserController userController, Node node, VBox pnItems, AdminDashboardController adminDashboardController) {
@@ -77,14 +76,10 @@ public class ItemUserListController {
         this.node = node;
         this.userController = userController;
         lblUserId.setText(String.valueOf(user.getUserId()));
-        lblName.setText(user.getName()+" "+user.getLastName());
+        lblName.setText(user.getName() + " " + user.getLastName());
         lblEmail.setText(user.getEmail());
         lblPhone.setText(user.getPhone());
-        if(user.isAdmin()) {
-            lblRole.setText("Admin");
-        }else{
-            lblRole.setText("User");
-        }
+        lblRole.setText(user.isAdmin() ? "Admin" : "User");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formattedDate = user.getRegistrationDate().format(formatter);
         lblRegDate.setText(formattedDate);
@@ -153,16 +148,10 @@ public class ItemUserListController {
         lblName.setText(user.getName());
         lblEmail.setText(user.getEmail());
         lblPhone.setText(user.getPhone());
-        if(user.isAdmin()) {
-            lblRole.setText("Administrator");
-        }else{
-            lblRole.setText("User");
-        }
+        lblRole.setText(user.isAdmin() ? "Administrator" : "User");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedDate = user.getRegistrationDate().format(formatter);
         lblRegDate.setText(formattedDate);
         dashboard.refresh();
     }
-
 }
-

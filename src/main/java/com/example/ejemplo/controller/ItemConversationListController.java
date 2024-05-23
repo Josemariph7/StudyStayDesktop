@@ -22,6 +22,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Controlador para la vista de elementos de la lista de conversaciones.
+ */
 public class ItemConversationListController {
     @FXML public Label lblConversationId;
     @FXML public Label lblConversationUser1;
@@ -31,13 +34,21 @@ public class ItemConversationListController {
     @FXML public Button btnModifyConver;
     @FXML public Button btnDeleteConver;
 
-
     private ConversationController conversationController;
     private Conversation conversation;
     private Node node;
     private VBox pnItemsConver;
     private AdminDashboardController adminDashboardController;
 
+    /**
+     * Inicializa los datos de la conversación y la interfaz de usuario.
+     *
+     * @param conver La conversación.
+     * @param conversationController El controlador de la conversación.
+     * @param node El nodo actual.
+     * @param pnItems El VBox de los elementos de conversación.
+     * @param adminDashboardController El controlador del panel de administrador.
+     */
     public void initData(Conversation conver, ConversationController conversationController, Node node, VBox pnItems, AdminDashboardController adminDashboardController) {
         this.adminDashboardController = adminDashboardController;
         this.pnItemsConver = pnItems;
@@ -45,18 +56,21 @@ public class ItemConversationListController {
         this.node = node;
         this.conversationController = conversationController;
         lblConversationId.setText(String.valueOf(conver.getConversationId()));
-        if(conver.getUser1Id()!=null && conver.getUser2Id()!=null) {
-            UserController userController=new UserController();
+        if (conver.getUser1Id() != null && conver.getUser2Id() != null) {
+            UserController userController = new UserController();
             lblConversationUser1.setText(userController.getById(conver.getUser1Id()).getName() + " " + userController.getById(conver.getUser1Id()).getLastName());
             lblConversationUser2.setText(userController.getById(conver.getUser2Id()).getName() + " " + userController.getById(conver.getUser2Id()).getLastName());
-        }else{
-            //conversationController.deleteConversation(conver.getConversationId());
         }
-        MessageController messageController=new MessageController();
-        List<Message> messages=messageController.getMessagesByConversation(conver.getConversationId());
-        lblNumberMessages.setText(String.valueOf(messages.size())+" Messages in the Conversation");
+        MessageController messageController = new MessageController();
+        List<Message> messages = messageController.getMessagesByConversation(conver.getConversationId());
+        lblNumberMessages.setText(String.valueOf(messages.size()) + " Messages in the Conversation");
     }
 
+    /**
+     * Maneja la acción de modificar la conversación.
+     *
+     * @param actionEvent El evento de acción.
+     */
     public void handleModify(ActionEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.MODIFYCONVERSATION_FXML));
@@ -81,23 +95,26 @@ public class ItemConversationListController {
     /**
      * Actualiza los datos de la conversación después de la modificación.
      *
-     * @param conver La conversacion modificada.
+     * @param conver La conversación modificada.
      */
     public void updateConversationData(Conversation conver) {
         this.conversation = conver;
         lblConversationId.setText(String.valueOf(conver.getConversationId()));
-        if(conver.getUser1Id()!=null && conver.getUser2Id()!=null) {
-            UserController userController=new UserController();
+        if (conver.getUser1Id() != null && conver.getUser2Id() != null) {
+            UserController userController = new UserController();
             lblConversationUser1.setText(userController.getById(conver.getUser1Id()).getName() + " " + userController.getById(conver.getUser1Id()).getLastName());
             lblConversationUser2.setText(userController.getById(conver.getUser2Id()).getName() + " " + userController.getById(conver.getUser2Id()).getLastName());
-        }else{
-            //conversationController.deleteConversation(conver.getConversationId());
         }
-        MessageController messageController=new MessageController();
-        List<Message> messages=messageController.getMessagesByConversation(conver.getConversationId());
-        lblNumberMessages.setText(String.valueOf(messages.size())+" Messages in the Conversation");
+        MessageController messageController = new MessageController();
+        List<Message> messages = messageController.getMessagesByConversation(conver.getConversationId());
+        lblNumberMessages.setText(String.valueOf(messages.size()) + " Messages in the Conversation");
     }
 
+    /**
+     * Maneja la acción de eliminar la conversación.
+     *
+     * @param actionEvent El evento de acción.
+     */
     public void handleDelete(ActionEvent actionEvent) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText(null);
@@ -116,6 +133,11 @@ public class ItemConversationListController {
         }
     }
 
+    /**
+     * Maneja la acción de mostrar los detalles de la conversación.
+     *
+     * @param actionEvent El evento del mouse.
+     */
     public void handleDetails(MouseEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.DETAILSCONVERSATION_FXML));

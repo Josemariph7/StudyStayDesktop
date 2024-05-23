@@ -1,6 +1,5 @@
 package com.example.ejemplo.controller;
 
-import com.example.ejemplo.model.Conversation;
 import com.example.ejemplo.model.ForumTopic;
 import com.example.ejemplo.model.User;
 import com.example.ejemplo.utils.Constants;
@@ -17,6 +16,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * Controlador para agregar un nuevo tema en el foro.
+ */
 public class AddForumTopicController {
     @FXML public Button btnCancel;
     @FXML public Button btnAccept;
@@ -27,9 +29,12 @@ public class AddForumTopicController {
     public ForumTopicController forumTopicController;
     private ForumTopic forumTopic;
 
+    /**
+     * Inicializa los datos necesarios para la interfaz de usuario.
+     */
     public void initData() {
-        forumTopic=new ForumTopic();
-        forumTopicController=new ForumTopicController();
+        forumTopic = new ForumTopic();
+        forumTopicController = new ForumTopicController();
         List<User> userlist;
         UserController userCtrl = new UserController();
         userlist = userCtrl.getAll();
@@ -43,10 +48,15 @@ public class AddForumTopicController {
         txtAreaDescription.setText(forumTopic.getDescription());
     }
 
+    /**
+     * Maneja la acción de aceptar para agregar un nuevo tema en el foro.
+     *
+     * @param actionEvent el evento de acción
+     */
     public void handleAccept(ActionEvent actionEvent) {
         UserController userController = new UserController();
         ForumCommentController forumCommentController = new ForumCommentController();
-        String id=ChoiceBoxAuthor.getValue().toString();
+        String id = ChoiceBoxAuthor.getValue().toString();
         String[] partes = id.split("\\s", 2);
         forumTopic.setAuthor(userController.getById(Long.valueOf(partes[0])));
         forumTopic.setComments(forumCommentController.getCommentsByTopic(forumTopic.getTopicId()));
@@ -76,6 +86,13 @@ public class AddForumTopicController {
         }
     }
 
+    /**
+     * Verifica si el tema del foro ya existe.
+     *
+     * @param forumTopic el tema del foro a verificar
+     * @return true si el tema del foro existe, false en caso contrario
+     * @throws SQLException si ocurre un error al acceder a la base de datos
+     */
     private boolean forumTopicExists(ForumTopic forumTopic) throws SQLException {
         List<ForumTopic> topics = forumTopicController.getAllTopics();
         for (ForumTopic topic : topics) {
@@ -87,7 +104,9 @@ public class AddForumTopicController {
     }
 
     /**
-     * Método para mostrar un mensaje de error.
+     * Muestra un mensaje de error.
+     *
+     * @param message el mensaje de error a mostrar
      */
     private void showError(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);

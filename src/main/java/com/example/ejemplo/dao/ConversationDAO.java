@@ -133,7 +133,7 @@ public class ConversationDAO {
      * @param conversationId ID de la conversación
      * @return Lista de mensajes de la conversación ordenados por fecha
      */
-    private List<Message> getMessagesForConversation(Long conversationId) {
+    public List<Message> getMessagesForConversation(Long conversationId) {
         List<Message> messages = new ArrayList<>();
         String sql = "SELECT * FROM ChatMessages WHERE ConversationId=?";
         try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);

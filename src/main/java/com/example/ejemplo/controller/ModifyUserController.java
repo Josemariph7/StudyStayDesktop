@@ -40,6 +40,7 @@ public class ModifyUserController {
 
     /**
      * Maneja la acción de aceptar la modificación de usuario.
+     *
      * @param actionEvent Evento del botón de aceptar
      */
     public void handleAccept(ActionEvent actionEvent) {
@@ -48,44 +49,44 @@ public class ModifyUserController {
         user.setPassword(txtPassword.getText());
         user.setPhone(txtPhone.getText());
 
-        if(genderChoiceBox.getValue()!=null){
-            if(genderChoiceBox.getValue().toString().equalsIgnoreCase("Male")){
+        if(genderChoiceBox.getValue() != null) {
+            if(genderChoiceBox.getValue().toString().equalsIgnoreCase("Male")) {
                 user.setGender(User.Gender.MALE);
                 if(Objects.equals(user.getUserId(), adminDashboardController.currentUser.getUserId()))
                     adminDashboardController.genrelabel.setText("Male");
-            }else {
-                if (genderChoiceBox.getValue().toString().equalsIgnoreCase("Female")) {
-                    user.setGender(User.Gender.FEMALE);
-                    if(Objects.equals(user.getUserId(), adminDashboardController.currentUser.getUserId()))
-                        adminDashboardController.genrelabel.setText("Female");
-                } else {
-                    if (genderChoiceBox.getValue().toString().equalsIgnoreCase("Other")) {
-                        user.setGender(User.Gender.OTHER);
-                        if(Objects.equals(user.getUserId(), adminDashboardController.currentUser.getUserId()))
-                            adminDashboardController.genrelabel.setText("Other");
-                    }
-                }
+            } else if(genderChoiceBox.getValue().toString().equalsIgnoreCase("Female")) {
+                user.setGender(User.Gender.FEMALE);
+                if(Objects.equals(user.getUserId(), adminDashboardController.currentUser.getUserId()))
+                    adminDashboardController.genrelabel.setText("Female");
+            } else if(genderChoiceBox.getValue().toString().equalsIgnoreCase("Other")) {
+                user.setGender(User.Gender.OTHER);
+                if(Objects.equals(user.getUserId(), adminDashboardController.currentUser.getUserId()))
+                    adminDashboardController.genrelabel.setText("Other");
             }
         }
+
         user.setLastName(txtApellidos.getText());
         user.setDni(txtDNI.getText());
         System.out.println(user);
+
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText(null);
-        alert.setTitle("Modify User");
-        alert.setContentText("Are you sure to modify this User?");
+        alert.setTitle("Modificar Usuario");
+        alert.setContentText("¿Está seguro de que desea modificar este usuario?");
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
+        if(result.isPresent() && result.get() == ButtonType.OK) {
             userController.update(user);
             updateItemAdminList();
             adminDashboardController.refresh();
         }
+
         // Cierra la ventana de modificación
         ((Stage) btnAccept.getScene().getWindow()).close();
     }
 
     /**
      * Maneja la acción de cancelar la modificación de usuario.
+     *
      * @param actionEvent Evento del botón de cancelar
      */
     public void handleCancel(ActionEvent actionEvent) {
@@ -96,34 +97,31 @@ public class ModifyUserController {
     /**
      * Inicializa los datos del usuario en la ventana de modificación.
      *
-     * @param user           Usuario a modificar
+     * @param user Usuario a modificar
      * @param userController Controlador de usuarios
-     * @param dashboard
+     * @param dashboard Controlador del panel de administrador
      */
     public void initData(User user, UserController userController, AdminDashboardController dashboard) {
         this.userController = userController;
         this.user = user;
-        this.adminDashboardController=dashboard;
-        // Configura los valores iniciales de los campos con los datos del usuario
-        if (user != null) {
-            String[] genders={"Male", "Female", "Other"};
-            genderChoiceBox.getItems().addAll(genders);
+        this.adminDashboardController = dashboard;
 
+        // Configura los valores iniciales de los campos con los datos del usuario
+        if(user != null) {
+            String[] genders = {"Male", "Female", "Other"};
+            genderChoiceBox.getItems().addAll(genders);
             genderChoiceBox.setValue("Gender");
 
-            if(user.getGender()!=null){
-                if(user.getGender().equals(User.Gender.MALE)){
+            if(user.getGender() != null) {
+                if(user.getGender().equals(User.Gender.MALE)) {
                     genderChoiceBox.setValue("Male");
-                }else {
-                    if (user.getGender().equals(User.Gender.FEMALE)) {
-                        genderChoiceBox.setValue("Female");
-                    } else {
-                        if (user.getGender().equals(User.Gender.OTHER)) {
-                            genderChoiceBox.setValue("Other");
-                        }
-                    }
+                } else if(user.getGender().equals(User.Gender.FEMALE)) {
+                    genderChoiceBox.setValue("Female");
+                } else if(user.getGender().equals(User.Gender.OTHER)) {
+                    genderChoiceBox.setValue("Other");
                 }
             }
+
             txtName.setText(user.getName());
             txtEmail.setText(user.getEmail());
             txtPhone.setText(user.getPhone());
@@ -139,11 +137,15 @@ public class ModifyUserController {
     private void updateItemAdminList() {
         // Obtiene el controlador de la lista de usuarios de la ventana de administrador
         ItemUserListController itemAdminListController = (ItemUserListController) btnAccept.getScene().getWindow().getUserData();
-
         // Actualiza los datos del usuario en la lista
         itemAdminListController.updateUserData(user);
     }
 
+    /**
+     * Obtiene el usuario.
+     *
+     * @return El usuario
+     */
     public User getUser() {
         return user;
     }
