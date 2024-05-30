@@ -201,15 +201,15 @@ public class AdminDashboardController implements Initializable {
      * Actualiza la interfaz de usuario y las estadísticas.
      */
     public void refresh() {
+        if (this.currentUser != null) {
+            refreshProfile();
+        }
+
         pnItems.getChildren().clear();
         pnItemsForum.getChildren().clear();
         pnAccommodationItems.getChildren().clear();
         pnConversationsItems.getChildren().clear();
         pnBookingsItems.getChildren().clear();
-
-        if (this.currentUser != null) {
-            refreshProfile();
-        }
 
         List<User> users = userController.getAll();
         for (User user : users) {
@@ -521,6 +521,7 @@ public class AdminDashboardController implements Initializable {
         emaillabel.setText(currentUser.getEmail());
         phonelabel.setText(currentUser.getPhone());
 
+
         if(currentUser.getGender() != null){
             if(currentUser.getGender().toString().equalsIgnoreCase("Male")){
                 genrelabel.setText("Male");
@@ -538,26 +539,26 @@ public class AdminDashboardController implements Initializable {
      * @param user El usuario actual.
      */
     public void initData(User user) {
+    // Cargar la imagen de perfil del usuario desde la base de datos
+    this.currentUser = user;
+    byte[] profilePictureBytes = currentUser.getProfilePicture();
+    if (profilePictureBytes != null && profilePictureBytes.length > 0) {
+        try {
+            Image profilePicture = new Image(new ByteArrayInputStream(profilePictureBytes));
 
-        // Cargar la imagen de perfil del usuario desde la base de datos
-        this.currentUser = user;
-        byte[] profilePictureBytes = currentUser.getProfilePicture();
-        if (profilePictureBytes != null && profilePictureBytes.length > 0) {
-            try {
-                Image profilePicture = new Image(new ByteArrayInputStream(profilePictureBytes));
-
-                circle.setFill(new ImagePattern(profilePicture));
-                circleProfile.setFill(new ImagePattern(profilePicture));
-                circleProfile.setStroke(Color.web("#151928"));
-                circleProfile.setStrokeWidth(3);
-            } catch (Exception e) {
-                e.printStackTrace();
-                cargarImagenPredeterminada(); // Cargar imagen predeterminada en caso de error
-            }
-        } else {
-            cargarImagenPredeterminada(); // Cargar imagen predeterminada si los bytes son nulos o vacíos
+            circle.setFill(new ImagePattern(profilePicture));
+            circleProfile.setFill(new ImagePattern(profilePicture));
+            circleProfile.setStroke(Color.web("#151928"));
+            circleProfile.setStrokeWidth(3);
+        } catch (Exception e) {
+            e.printStackTrace();
+            cargarImagenPredeterminada(); // Cargar imagen predeterminada en caso de error
         }
-        refresh();
+    } else {
+        cargarImagenPredeterminada(); // Cargar imagen predeterminada si los bytes son nulos o vacíos
+    }
+    refresh();
+
     }
 
     /**

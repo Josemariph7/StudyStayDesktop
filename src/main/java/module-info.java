@@ -21,8 +21,6 @@ module com.example.proyectofinal {
     opens com.example.ejemplo.view to javafx.graphics;
     exports com.example.ejemplo.view;
     opens com.example.ejemplo.model to javafx.base;
-    /*opens com.example.ejemplo.test to org.junit.jupiter.api;
-    exports com.example.ejemplo.test;*/
     exports com.example.ejemplo.model;
     exports com.example.ejemplo.test;
 
