@@ -71,7 +71,7 @@ public class ModifyBookingController {
             bookingController.updateBooking(booking);
             ItemBookingListController itemCtrl;
             itemCtrl = (ItemBookingListController) btnAccept.getScene().getWindow().getUserData();
-            adminDashboardController.refresh();
+            adminDashboardController.refreshBookings();
         }
         ((Stage) btnAccept.getScene().getWindow()).close();
     }

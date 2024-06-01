@@ -165,7 +165,7 @@ public class ConversationDetailsController {
                 messageController.deleteMessage(selectedMessage.getMessageId());
                 // Eliminar el mensaje de la lista
                 messages.remove(selectedMessage);
-                adminDashboardController.refresh();
+                adminDashboardController.refreshConversations();
             }
         }
     }

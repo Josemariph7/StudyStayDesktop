@@ -78,7 +78,7 @@ public class AddForumTopicController {
                 forumTopicController.createTopic(forumTopic);
                 AdminDashboardController itemCtrl;
                 itemCtrl = (AdminDashboardController) btnAccept.getScene().getWindow().getUserData();
-                itemCtrl.refresh();
+                itemCtrl.refreshForumTopics();
             }
             ((Stage) btnAccept.getScene().getWindow()).close();
         } catch (SQLException e) {

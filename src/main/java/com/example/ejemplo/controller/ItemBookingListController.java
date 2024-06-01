@@ -57,7 +57,7 @@ public class ItemBookingListController {
             stage.setScene(new Scene(root));
             stage.setUserData(this);
             ModifyBookingController modifyController = loader.getController();
-            adminDashboardController.refresh();
+            adminDashboardController.refreshBookings();
             modifyController.btnCancel.setOnAction(event -> {
                 stage.close();
             });
@@ -138,7 +138,7 @@ public class ItemBookingListController {
             } else {
                 System.out.println("El nodo no se encontró en el VBox.");
             }
-            adminDashboardController.refresh();
+            adminDashboardController.refreshBookings();
         }
     }
 }

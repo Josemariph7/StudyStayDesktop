@@ -79,7 +79,7 @@ public class AddConversationController {
                 converCtrl.createConversation(conver);
                 AdminDashboardController itemCtrl;
                 itemCtrl = (AdminDashboardController) btnAccept.getScene().getWindow().getUserData();
-                itemCtrl.refresh();
+                itemCtrl.refreshConversations();
             }
             ((Stage) btnAccept.getScene().getWindow()).close();
         } catch (SQLException e) {

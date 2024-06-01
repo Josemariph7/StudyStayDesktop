@@ -78,7 +78,7 @@ public class AddBookingController {
                     booking.getAccommodation().getTenants().add(booking.getUser());
                     AdminDashboardController itemCtrl;
                     itemCtrl = (AdminDashboardController) btnAccept.getScene().getWindow().getUserData();
-                    itemCtrl.refresh();
+                    itemCtrl.refreshBookings();
                 } else {
                     booking.getAccommodation().setAvailability(false);
                     Alert alerta = new Alert(Alert.AlertType.INFORMATION);

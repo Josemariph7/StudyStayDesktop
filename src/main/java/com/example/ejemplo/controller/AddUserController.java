@@ -131,7 +131,7 @@ public class AddUserController {
      */
     private void updateItemAdminList() {
         AdminDashboardController adminDashboardController = (AdminDashboardController) btnAccept.getScene().getWindow().getUserData();
-        adminDashboardController.refresh();
+        adminDashboardController.refreshUsers();
     }
 
     /**

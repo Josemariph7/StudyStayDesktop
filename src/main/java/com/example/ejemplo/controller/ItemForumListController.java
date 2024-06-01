@@ -90,7 +90,7 @@ public class ItemForumListController {
             stage.setScene(new Scene(root));
             stage.setUserData(this);
             ModifyForumTopicController modifyController = loader.getController();
-            dashboard.refresh();
+            dashboard.refreshForumTopics();
             modifyController.btnCancel.setOnAction(event -> {
                 stage.close();
             });
@@ -131,7 +131,7 @@ public class ItemForumListController {
             } else {
                 System.out.println("El nodo no se encontró en el VBox.");
             }
-            dashboard.refresh();
+            dashboard.refreshForumTopics();
         }
     }
 
@@ -151,7 +151,6 @@ public class ItemForumListController {
             stage.setScene(new Scene(root));
             stage.setUserData(this);
             ForumDetailsController detailsController = loader.getController();
-            dashboard.refresh();
             detailsController.btnBack.setOnAction(event -> {
                 stage.close();
             });

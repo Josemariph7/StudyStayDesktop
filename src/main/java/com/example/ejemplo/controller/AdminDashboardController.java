@@ -175,6 +175,13 @@ public class AdminDashboardController implements Initializable {
     private final BookingController bookingController = new BookingController();
     private final LocalDate oneWeekAgo = now().minusWeeks(1);
 
+    private boolean usersNeedRefresh = true;
+    private boolean forumTopicsNeedRefresh = true;
+    private boolean bookingsNeedRefresh = true;
+    private boolean accommodationsNeedRefresh = true;
+    private boolean conversationsNeedRefresh = true;
+    private boolean profileNeedRefresh = true;
+
     /**
      * Inicializa el controlador.
      *
@@ -205,12 +212,33 @@ public class AdminDashboardController implements Initializable {
             refreshProfile();
         }
 
+        clearPanels();
+
+        refreshUsers();
+        refreshForumTopics();
+        refreshBookings();
+        refreshAccommodations();
+        refreshConversations();
+
+        updateStatistics();
+    }
+
+    /**
+     * Limpia los paneles de la interfaz de usuario.
+     */
+    private void clearPanels() {
         pnItems.getChildren().clear();
         pnItemsForum.getChildren().clear();
         pnAccommodationItems.getChildren().clear();
         pnConversationsItems.getChildren().clear();
         pnBookingsItems.getChildren().clear();
+    }
 
+    /**
+     * Refresca la lista de usuarios.
+     */
+    void refreshUsers() {
+        pnItems.getChildren().clear();
         List<User> users = userController.getAll();
         for (User user : users) {
             try {
@@ -223,8 +251,14 @@ public class AdminDashboardController implements Initializable {
                 e.printStackTrace();
             }
         }
+        System.out.println("Refrescando usuarios...");
+    }
 
-        // Obtener todos los temas del foro y actualizar estadísticas
+    /**
+     * Refresca los temas del foro.
+     */
+    void refreshForumTopics() {
+        pnItemsForum.getChildren().clear();
         List<ForumTopic> topics = topicController.getAllTopics();
         for (ForumTopic topic : topics) {
             try {
@@ -237,11 +271,17 @@ public class AdminDashboardController implements Initializable {
                 e.printStackTrace();
             }
         }
+        System.out.println("Refrescando foro...");
+    }
 
+    /**
+     * Refresca las reservas.
+     */
+    void refreshBookings() {
+        pnBookingsItems.getChildren().clear();
         List<Booking> bookings = bookingController.getAllBookings();
         for (Booking booking : bookings) {
             try {
-                System.out.println(booking);
                 FXMLLoader loaderBookings = new FXMLLoader(getClass().getResource(Constants.ITEM_BOOKING_LIST_FXML));
                 Node node = loaderBookings.load();
                 ItemBookingListController controller = loaderBookings.getController();
@@ -251,8 +291,14 @@ public class AdminDashboardController implements Initializable {
                 e.printStackTrace();
             }
         }
+        System.out.println("Refrescando reservas...");
+    }
 
-        // Obtener todos los alojamientos y actualizar estadísticas
+    /**
+     * Refresca los alojamientos.
+     */
+    void refreshAccommodations() {
+        pnAccommodationItems.getChildren().clear();
         List<Accommodation> accommodations = accommodationController.getAllAccommodations();
         for (Accommodation acco : accommodations) {
             try {
@@ -265,8 +311,14 @@ public class AdminDashboardController implements Initializable {
                 e.printStackTrace();
             }
         }
+        System.out.println("Refrescando alojamientos...");
+    }
 
-        // Obtener todas las conversaciones y actualizar estadísticas
+    /**
+     * Refresca las conversaciones.
+     */
+    void refreshConversations() {
+        pnConversationsItems.getChildren().clear();
         List<Conversation> conversations = conversationController.getAllConversations();
         for (Conversation conver : conversations) {
             try {
@@ -279,14 +331,19 @@ public class AdminDashboardController implements Initializable {
                 e.printStackTrace();
             }
         }
+        System.out.println("Refrescando conversaciones...");
+    }
 
+    /**
+     * Actualiza las estadísticas de usuarios, foros, conversaciones, reservas y alojamientos.
+     */
+    private void updateStatistics() {
         updateUserStatistics();
         updateForumStatistics();
         updateConversationStatistics();
         updateBookingStatistics();
         updateAccommodationStatistics();
     }
-
 
     /**
      * Actualiza las estadísticas de conversaciones.
@@ -511,7 +568,11 @@ public class AdminDashboardController implements Initializable {
      * Actualiza la información del perfil del usuario.
      */
     public void refreshProfile() {
-        username.setText(currentUser.getName());
+        if (currentUser == null) {
+            return; // Asegurarse de que currentUser no sea null
+        }
+
+        username.setText(currentUser.getName()+" "+currentUser.getLastName());
         namelabel.setText(currentUser.getName());
         idlabel.setText(String.valueOf(currentUser.getUserId()));
         passwordlabel.setText(currentUser.getPassword());
@@ -521,9 +582,8 @@ public class AdminDashboardController implements Initializable {
         emaillabel.setText(currentUser.getEmail());
         phonelabel.setText(currentUser.getPhone());
 
-
-        if(currentUser.getGender() != null){
-            if(currentUser.getGender().toString().equalsIgnoreCase("Male")){
+        if (currentUser.getGender() != null) {
+            if (currentUser.getGender().toString().equalsIgnoreCase("Male")) {
                 genrelabel.setText("Male");
             } else if (currentUser.getGender().toString().equalsIgnoreCase("Female")) {
                 genrelabel.setText("Female");
@@ -531,6 +591,7 @@ public class AdminDashboardController implements Initializable {
                 genrelabel.setText("Other");
             }
         }
+        System.out.println("Refrescando perfil...");
     }
 
     /**
@@ -539,26 +600,24 @@ public class AdminDashboardController implements Initializable {
      * @param user El usuario actual.
      */
     public void initData(User user) {
-    // Cargar la imagen de perfil del usuario desde la base de datos
-    this.currentUser = user;
-    byte[] profilePictureBytes = currentUser.getProfilePicture();
-    if (profilePictureBytes != null && profilePictureBytes.length > 0) {
-        try {
-            Image profilePicture = new Image(new ByteArrayInputStream(profilePictureBytes));
-
-            circle.setFill(new ImagePattern(profilePicture));
-            circleProfile.setFill(new ImagePattern(profilePicture));
-            circleProfile.setStroke(Color.web("#151928"));
-            circleProfile.setStrokeWidth(3);
-        } catch (Exception e) {
-            e.printStackTrace();
-            cargarImagenPredeterminada(); // Cargar imagen predeterminada en caso de error
+        this.currentUser = user; // Almacenar el usuario actual
+        byte[] profilePictureBytes = currentUser.getProfilePicture();
+        if (profilePictureBytes != null && profilePictureBytes.length > 0) {
+            try {
+                Image profilePicture = new Image(new ByteArrayInputStream(profilePictureBytes));
+                circle.setFill(new ImagePattern(profilePicture));
+                circleProfile.setFill(new ImagePattern(profilePicture));
+                circleProfile.setStroke(Color.web("#151928"));
+                circleProfile.setStrokeWidth(3);
+            } catch (Exception e) {
+                e.printStackTrace();
+                cargarImagenPredeterminada(); // Cargar imagen predeterminada en caso de error
+            }
+        } else {
+            cargarImagenPredeterminada(); // Cargar imagen predeterminada si los bytes son nulos o vacíos
         }
-    } else {
-        cargarImagenPredeterminada(); // Cargar imagen predeterminada si los bytes son nulos o vacíos
-    }
-    refresh();
-
+        //refresh(); // Llamar a refresh para cargar la interfaz y las estadísticas
+        refreshProfile();
     }
 
     /**
@@ -603,6 +662,7 @@ public class AdminDashboardController implements Initializable {
 
                 currentUser.setName(modifyController.txtName.getText());
                 currentUser.setPhone(modifyController.txtPhone.getText());
+                currentUser.setLastName(modifyController.txtApellidos.getText());
                 currentUser.setAdmin(modifyController.getUser().isAdmin());
                 currentUser.setPassword(modifyController.txtPassword.getText());
                 currentUser.setEmail(modifyController.txtEmail.getText());
@@ -630,14 +690,12 @@ public class AdminDashboardController implements Initializable {
                     }
                 }
                 System.out.println(currentUser);
-                initData(currentUser);
                 userController.update(currentUser);
-                refresh();
+                refreshProfile();
+                refreshUsers();
                 stage.close();
             });
             stage.show();
-            refresh();
-            initData(currentUser);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -791,7 +849,6 @@ public class AdminDashboardController implements Initializable {
             stage.setScene(new Scene(root));
             stage.setUserData(this);
             AddConversationController addController = loader.getController();
-            refresh();
             addController.btnCancel.setOnAction(event -> {
                 stage.close();
             });
@@ -818,7 +875,6 @@ public class AdminDashboardController implements Initializable {
             stage.setScene(new Scene(root));
             stage.setUserData(this);
             AddForumTopicController addController = loader.getController();
-            refresh();
             addController.btnCancel.setOnAction(event -> {
                 stage.close();
             });
@@ -845,7 +901,6 @@ public class AdminDashboardController implements Initializable {
             stage.setScene(new Scene(root));
             stage.setUserData(this);
             AddAccommodationController addController = loader.getController();
-            refresh();
             addController.btnCancel.setOnAction(event -> {
                 stage.close();
             });
@@ -872,7 +927,6 @@ public class AdminDashboardController implements Initializable {
             stage.setScene(new Scene(root));
             stage.setUserData(this);
             AddBookingController addController = loader.getController();
-            refresh();
             addController.btnCancel.setOnAction(event -> {
                 stage.close();
             });

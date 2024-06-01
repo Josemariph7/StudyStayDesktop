@@ -152,6 +152,6 @@ public class ItemUserListController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedDate = user.getRegistrationDate().format(formatter);
         lblRegDate.setText(formattedDate);
-        dashboard.refresh();
+        dashboard.refreshUsers();
     }
 }

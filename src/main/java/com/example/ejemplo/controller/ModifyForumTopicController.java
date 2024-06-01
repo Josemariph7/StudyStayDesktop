@@ -48,7 +48,7 @@ public class ModifyForumTopicController {
             ItemForumListController itemCtrl;
             itemCtrl = (ItemForumListController) btnAccept.getScene().getWindow().getUserData();
             itemCtrl.updateForumTopicData(forumTopic);
-            adminDashboardController.refresh();
+            adminDashboardController.refreshForumTopics();
         }
         ((Stage) btnAccept.getScene().getWindow()).close();
     }

@@ -78,7 +78,7 @@ public class ModifyConversationController {
             ItemConversationListController itemCtrl;
             itemCtrl = (ItemConversationListController) btnAccept.getScene().getWindow().getUserData();
             itemCtrl.updateConversationData(conver);
-            adminDashboardController.refresh();
+            adminDashboardController.refreshConversations();
         }
         ((Stage) btnAccept.getScene().getWindow()).close();
     }

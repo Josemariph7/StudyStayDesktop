@@ -82,7 +82,7 @@ public class ItemConversationListController {
             stage.setScene(new Scene(root));
             stage.setUserData(this);
             ModifyConversationController modifyController = loader.getController();
-            adminDashboardController.refresh();
+            adminDashboardController.refreshConversations();
             modifyController.btnCancel.setOnAction(event -> {
                 stage.close();
             });
@@ -129,7 +129,7 @@ public class ItemConversationListController {
             } else {
                 System.out.println("El nodo no se encontró en el VBox.");
             }
-            adminDashboardController.refresh();
+            adminDashboardController.refreshConversations();
         }
     }
 
@@ -149,7 +149,7 @@ public class ItemConversationListController {
             stage.setScene(new Scene(root));
             stage.setUserData(this);
             ConversationDetailsController detailsController = loader.getController();
-            adminDashboardController.refresh();
+            adminDashboardController.refreshConversations();
             detailsController.btnBack.setOnAction(event -> {
                 stage.close();
             });

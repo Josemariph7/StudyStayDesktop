@@ -72,7 +72,7 @@ public class ModifyAccommodationController {
             ItemAccommodationListController itemCtrl;
             itemCtrl = (ItemAccommodationListController) btnAccept.getScene().getWindow().getUserData();
             itemCtrl.updateAccommodationData(accommodation);
-            adminDashboardController.refresh();
+            adminDashboardController.refreshAccommodations();
         }
         ((Stage) btnAccept.getScene().getWindow()).close();
     }

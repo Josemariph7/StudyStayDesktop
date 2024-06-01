@@ -77,7 +77,6 @@ public class ModifyUserController {
         if(result.isPresent() && result.get() == ButtonType.OK) {
             userController.update(user);
             updateItemAdminList();
-            adminDashboardController.refresh();
         }
 
         // Cierra la ventana de modificación

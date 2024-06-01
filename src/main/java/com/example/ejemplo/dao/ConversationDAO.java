@@ -26,7 +26,6 @@ public class ConversationDAO {
 
             while (resultSet.next()) {
                 Conversation conversation = mapConversation(resultSet);
-                System.out.println(conversation);
                 conversations.add(conversation);
             }
         } catch (SQLException e) {

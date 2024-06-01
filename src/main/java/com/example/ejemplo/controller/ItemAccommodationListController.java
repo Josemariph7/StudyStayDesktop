@@ -138,7 +138,7 @@ public class ItemAccommodationListController {
             stage.setScene(new Scene(root));
             stage.setUserData(this);
             ModifyAccommodationController modifyController = loader.getController();
-            dashboard.refresh();
+           // dashboard.refreshAccommodations();
             modifyController.btnCancel.setOnAction(event -> {
                 stage.close();
             });
@@ -182,7 +182,7 @@ public class ItemAccommodationListController {
             } else {
                 System.out.println("El nodo no se encontró en el VBox.");
             }
-            dashboard.refresh();
+            dashboard.refreshAccommodations();
         }
     }
 
@@ -201,7 +201,7 @@ public class ItemAccommodationListController {
         lblAvailability.setText("Availability: " + accommodation.isAvailability());
         lblRating.setText("Rating: " + accommodation.getRating());
         areaDescription.setText(accommodation.getDescription());
-        dashboard.refresh();
+        dashboard.refreshAccommodations();
     }
 
     /**
@@ -220,7 +220,7 @@ public class ItemAccommodationListController {
             stage.setScene(new Scene(root));
             stage.setUserData(this);
             AccommodationDetailsController detailsController = loader.getController();
-            dashboard.refresh();
+            //dashboard.refreshAccommodations();
             detailsController.btnBack.setOnAction(event -> {
                 stage.close();
             });

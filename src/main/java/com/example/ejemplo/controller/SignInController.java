@@ -85,24 +85,29 @@ public class SignInController {
             Parent dashboard = loader.load();
 
             // Obtener el controlador cargado
-            Object controller = loader.getController();
-            if (!(controller instanceof AdminDashboardController)) {
+            AdminDashboardController controller = loader.getController();
+            if (controller == null) {
                 showError(Constants.DASHBOARD_LOAD_ERROR);
                 return;
             }
-            ((AdminDashboardController) controller).initData(user);
+
+            // Pasar el usuario al controlador del dashboard
+            controller.initData(user);
+
+            // Establecer la escena y mostrar el dashboard
             Scene scene = new Scene(dashboard);
             Stage stage = (Stage) emailField.getScene().getWindow();
             stage.setScene(scene);
             stage.show();
 
             // Cerrar la pantalla de carga (splash screen)
-           closeSplashScreen();
+            closeSplashScreen();
         } catch (IOException ex) {
             showError(Constants.DASHBOARD_LOAD_ERROR);
             ex.printStackTrace();
         }
     }
+
 
     /**
      * Método para mostrar un mensaje de error.

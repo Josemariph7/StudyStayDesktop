@@ -151,7 +151,7 @@ public class ForumDetailsController {
                 commentController.deleteComment(selectedComment.getCommentId());
                 // Eliminar el comentario de la lista
                 comments.remove(selectedComment);
-                adminDashboardController.refresh();
+                adminDashboardController.refreshForumTopics();
             }
         }
     }
