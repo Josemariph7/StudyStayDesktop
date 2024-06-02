@@ -22,7 +22,6 @@ public class AddUserController {
 
     @FXML public Button btnCancel;
     @FXML public Button btnAccept;
-    @FXML public CheckBox adminCheckbox;
     @FXML public DatePicker birthDatePicker;
     @FXML public ChoiceBox genderChoiceBox;
     @FXML public TextField txtDNI;
@@ -66,7 +65,6 @@ public class AddUserController {
             }
         }
         String dni = txtDNI.getText();
-        boolean isAdmin = adminCheckbox.isSelected();
         String password = txtPassword.getText();
         String phone = txtPhone.getText();
         try {
@@ -76,7 +74,7 @@ public class AddUserController {
                 return;
             }
             // Crea un nuevo objeto de usuario y lo guarda en la base de datos
-            User user = new User(name, surnames, email, password, phone, birthDate, LocalDateTime.now(), gender, dni, null, null, isAdmin);
+            User user = new User(name, surnames, email, password, phone, birthDate, LocalDateTime.now(), gender, dni, null, null, false);
             UserController userController = new UserController();
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setHeaderText(null);
