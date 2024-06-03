@@ -1,5 +1,6 @@
 package com.example.ejemplo.controller;
 
+import com.example.ejemplo.model.Booking;
 import com.example.ejemplo.model.User;
 import com.example.ejemplo.utils.Constants;
 import javafx.fxml.FXML;
@@ -16,7 +17,9 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -98,17 +101,44 @@ public class ItemUserListController {
         alert.setContentText("Are you sure you want to delete this User?");
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            userController.delete(user.getUserId());
-            int index = pnItems.getChildren().indexOf(node);
-            if (index != -1) {
-                pnItems.getChildren().remove(index);
-            } else {
-                System.out.println("El nodo no se encontró en el VBox.");
+            try {
+                // Eliminar las reservas del usuario
+                BookingController bookingController = new BookingController();
+                List<Booking> userBookings = bookingController.getBookingsByUser(user.getUserId());
+                for (Booking booking : userBookings) {
+                    bookingController.deleteBooking(booking.getBookingId());
+                }
+
+                // Eliminar el usuario
+                userController.delete(user.getUserId());
+
+                int index = pnItems.getChildren().indexOf(node);
+                if (index != -1) {
+                    pnItems.getChildren().remove(index);
+                } else {
+                    System.out.println("Node not found in VBox.");
+                }
+                dashboard.updateUserStatistics();
+                System.out.println("Deleted user and their bookings: " + user);
+            } catch (SQLException e) {
+                showError("Database error: " + e.getMessage());
             }
-            dashboard.updateUserStatistics();
-            System.out.println("Eliminar usuario: " + user);
         }
     }
+
+    /**
+     * Muestra un mensaje de error.
+     *
+     * @param message el mensaje de error a mostrar
+     */
+    private void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
 
     /**
      * Maneja el evento de modificación de usuario.

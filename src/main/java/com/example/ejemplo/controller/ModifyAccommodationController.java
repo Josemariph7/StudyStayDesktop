@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 /**
  * Controlador para modificar un alojamiento.
@@ -21,9 +22,9 @@ public class ModifyAccommodationController {
     public Button btnCancel;
     public Button btnAccept;
     public TextArea txtAreaDescription;
-    public ChoiceBox CapacityChoiceBox;
-    public ChoiceBox CityChoiceBox;
-    public ChoiceBox OwnerChoiceBox;
+    public ChoiceBox<Integer> CapacityChoiceBox;
+    public ChoiceBox<String> CityChoiceBox;
+    public ChoiceBox<String> OwnerChoiceBox;
     public TextField txtServices;
     public TextField txtPrice;
     public TextField txtAddress;
@@ -31,6 +32,11 @@ public class ModifyAccommodationController {
     private Accommodation accommodation;
     public AccommodationController accommodationController;
     private AdminDashboardController adminDashboardController;
+
+    private static final Pattern ADDRESS_PATTERN = Pattern.compile("^[\\p{L}0-9\\s]+$");
+    private static final Pattern PRICE_PATTERN = Pattern.compile("^\\d+(\\.\\d{1,2})?$");
+    private static final Pattern SERVICES_PATTERN = Pattern.compile("^[\\p{L},\\s]+$");
+    private static final Pattern DESCRIPTION_PATTERN = Pattern.compile("^[\\p{L}0-9\\s]+$");
 
     /**
      * Inicializa los datos del alojamiento.
@@ -52,20 +58,55 @@ public class ModifyAccommodationController {
      * @param actionEvent El evento de acción.
      */
     public void handleAccept(ActionEvent actionEvent) {
+        String description = txtAreaDescription.getText();
+        String priceText = txtPrice.getText();
+        String address = txtAddress.getText();
+        String services = txtServices.getText();
+        StringBuilder errors = new StringBuilder();
+
+        // Verificar campos obligatorios
+        if (description.isEmpty() || priceText.isEmpty() || address.isEmpty() || services.isEmpty() || CityChoiceBox.getValue() == null ||
+                OwnerChoiceBox.getValue() == null || CapacityChoiceBox.getValue() == null) {
+            showFieldError("All fields are required.");
+            return;
+        }
+
+        // Validar formato de los campos
+        if (!ADDRESS_PATTERN.matcher(address).matches()) {
+            errors.append("The address contains invalid characters.\n");
+        }
+        if (!PRICE_PATTERN.matcher(priceText).matches()) {
+            errors.append("The price format is invalid.\n");
+        }
+        if (!SERVICES_PATTERN.matcher(services).matches()) {
+            errors.append("The services contain invalid characters.\n");
+        }
+        if (!DESCRIPTION_PATTERN.matcher(description).matches()) {
+            errors.append("The description contains invalid characters.\n");
+        }
+
+        if (errors.length() > 0) {
+            showError(errors.toString());
+            return;
+        }
+
+        BigDecimal price = new BigDecimal(priceText);
+
         UserController userController = new UserController();
         String[] partes = OwnerChoiceBox.getValue().toString().split("\\s", 2);
         accommodation.setOwner(userController.getById(Long.valueOf(partes[0])));
-        accommodation.setDescription(txtAreaDescription.getText());
+        accommodation.setDescription(description);
         accommodation.setCapacity(Integer.parseInt(CapacityChoiceBox.getValue().toString()));
         accommodation.setCity(CityChoiceBox.getValue().toString());
-        accommodation.setServices(txtServices.getText());
-        accommodation.setPrice(BigDecimal.valueOf(Long.parseLong(txtPrice.getText())));
-        accommodation.setAddress(txtAddress.getText());
+        accommodation.setServices(services);
+        accommodation.setPrice(price);
+        accommodation.setAddress(address);
+
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText(null);
         alert.initStyle(StageStyle.UTILITY);
         alert.setTitle("Modify Accommodation");
-        alert.setContentText("Are you sure to modify this Accommodation?");
+        alert.setContentText("Are you sure you want to modify this accommodation?");
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             accommodationController.updateAccommodation(accommodation);
@@ -147,5 +188,31 @@ public class ModifyAccommodationController {
             capacity.add(i);
         }
         CapacityChoiceBox.setItems(capacity);
+    }
+
+    /**
+     * Muestra un mensaje de error de campos incompletos.
+     *
+     * @param message el mensaje de error a mostrar
+     */
+    private void showFieldError(String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Incomplete Fields");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    /**
+     * Muestra un mensaje de error.
+     *
+     * @param message el mensaje de error a mostrar
+     */
+    private void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

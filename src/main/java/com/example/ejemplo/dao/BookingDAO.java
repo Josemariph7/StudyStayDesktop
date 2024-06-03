@@ -137,17 +137,41 @@ public class BookingDAO {
 
         // Cargar el objeto Accommodation asociado al ID
         AccommodationDAO accommodationDAO = new AccommodationDAO();
-        Accommodation accommodation = AccommodationDAO.getById(accommodationId);
+        Accommodation accommodation = accommodationDAO.getById(accommodationId);
         booking.setAccommodation(accommodation);
 
         // Cargar el objeto User asociado al ID
         UserDAO userDAO = new UserDAO();
-        User user = UserDAO.getById(userId);
+        User user = userDAO.getById(userId);
         booking.setUser(user);
 
         booking.setStartDate(resultSet.getObject("StartDate", LocalDateTime.class));
         booking.setEndDate(resultSet.getObject("EndDate", LocalDateTime.class));
         booking.setStatus(Booking.BookingStatus.valueOf(resultSet.getString("Status")));
         return booking;
+    }
+
+    /**
+     * Obtiene todas las reservas de un usuario específico.
+     * @param userId ID del usuario
+     * @return Lista de reservas del usuario
+     */
+    public List<Booking> getByUserId(Long userId) throws SQLException {
+        List<Booking> bookingList = new ArrayList<>();
+        String sql = "SELECT * FROM Bookings WHERE UserId = ?";
+        try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setLong(1, userId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    Booking booking = mapBooking(resultSet);
+                    bookingList.add(booking);
+                }
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Error retrieving bookings for user: " + e.getMessage(), e);
+        }
+        return bookingList;
     }
 }

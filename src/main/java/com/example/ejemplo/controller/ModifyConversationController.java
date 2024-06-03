@@ -11,16 +11,18 @@ import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
  * Controlador para modificar una conversación.
  */
 public class ModifyConversationController {
-    @FXML public ChoiceBox ChoiceBoxModifyConverUser1;
-    @FXML public ChoiceBox ChoiceBoxModifyConverUser2;
+    @FXML public ChoiceBox<String> ChoiceBoxModifyConverUser1;
+    @FXML public ChoiceBox<String> ChoiceBoxModifyConverUser2;
     @FXML public Button btnAccept;
     @FXML public Button btnCancel;
 
@@ -62,24 +64,83 @@ public class ModifyConversationController {
      * @param actionEvent El evento de acción.
      */
     public void handleAccept(ActionEvent actionEvent) {
+        if (ChoiceBoxModifyConverUser1.getValue() == null || ChoiceBoxModifyConverUser2.getValue() == null) {
+            showFieldError("All fields are required.");
+            return;
+        } else if (ChoiceBoxModifyConverUser1.getValue().equals(ChoiceBoxModifyConverUser2.getValue())) {
+            showFieldError("The same user cannot be selected for both fields.");
+            return;
+        }
+
         String[] partes = ChoiceBoxModifyConverUser1.getValue().toString().split("\\s", 2);
         conver.setUser1Id(Long.valueOf(partes[0]));
         partes = ChoiceBoxModifyConverUser2.getValue().toString().split("\\s", 2);
         conver.setUser2Id(Long.valueOf(partes[0]));
 
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setHeaderText(null);
-        alert.initStyle(StageStyle.UTILITY);
-        alert.setTitle("Modify Conversation");
-        alert.setContentText("Are you sure to modify this Conversation?");
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            converCtrl.updateConversation(conver);
-            ItemConversationListController itemCtrl;
-            itemCtrl = (ItemConversationListController) btnAccept.getScene().getWindow().getUserData();
-            itemCtrl.updateConversationData(conver);
-            adminDashboardController.refreshConversations();
+        try {
+            if (conversationExists(conver)) {
+                showError("This conversation already exists.");
+                return;
+            }
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setHeaderText(null);
+            alert.initStyle(StageStyle.UTILITY);
+            alert.setTitle("Modify Conversation");
+            alert.setContentText("Are you sure you want to modify this Conversation?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                converCtrl.updateConversation(conver);
+                ItemConversationListController itemCtrl;
+                itemCtrl = (ItemConversationListController) btnAccept.getScene().getWindow().getUserData();
+                itemCtrl.updateConversationData(conver);
+                adminDashboardController.refreshConversations();
+            }
+            ((Stage) btnAccept.getScene().getWindow()).close();
+        } catch (Exception e) {
+            showError("Database error: " + e.getMessage());
         }
-        ((Stage) btnAccept.getScene().getWindow()).close();
+    }
+
+    /**
+     * Verifica si la conversación ya existe.
+     *
+     * @param conver la conversación a verificar
+     * @return true si la conversación existe, false en caso contrario
+     */
+    private boolean conversationExists(Conversation conver) throws SQLException {
+        List<Conversation> convers = converCtrl.getAllConversations();
+        for (Conversation conversation : convers) {
+            if ((Objects.equals(conversation.getUser1Id(), conver.getUser1Id()) && Objects.equals(conversation.getUser2Id(), conver.getUser2Id())) ||
+                    (Objects.equals(conversation.getUser2Id(), conver.getUser1Id()) && Objects.equals(conversation.getUser1Id(), conver.getUser2Id()))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Muestra un mensaje de error de campos incompletos.
+     *
+     * @param message el mensaje de error a mostrar
+     */
+    private void showFieldError(String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Incomplete Fields");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    /**
+     * Muestra un mensaje de error.
+     *
+     * @param message el mensaje de error a mostrar
+     */
+    private void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

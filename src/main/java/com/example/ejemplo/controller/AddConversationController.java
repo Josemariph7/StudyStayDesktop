@@ -22,8 +22,8 @@ import java.util.Optional;
  */
 public class AddConversationController {
 
-    public ChoiceBox ChoiceBoxAddConverUser1;
-    public ChoiceBox ChoiceBoxAddConverUser2;
+    public ChoiceBox<String> ChoiceBoxAddConverUser1;
+    public ChoiceBox<String> ChoiceBoxAddConverUser2;
     public Button btnAccept;
     public Button btnCancel;
 
@@ -55,35 +55,43 @@ public class AddConversationController {
      * @param actionEvent el evento de acción
      */
     public void handleAccept(ActionEvent actionEvent) {
-        UserController userController = new UserController();
-        String id = ChoiceBoxAddConverUser1.getValue().toString();
-        String[] partes = id.split("\\s", 2);
+        if (Objects.equals(ChoiceBoxAddConverUser1.getValue(), "Select User 1") || Objects.equals(ChoiceBoxAddConverUser2.getValue(), "Select User 2")) {
+            showFieldError("All fields are required.");
+            return;
+        } else if (ChoiceBoxAddConverUser1.getValue().equals(ChoiceBoxAddConverUser2.getValue())) {
+            showFieldError("The same user cannot be selected for both fields.");
+            return;
+        } else {
+            UserController userController = new UserController();
+            String id = ChoiceBoxAddConverUser1.getValue().toString();
+            String[] partes = id.split("\\s", 2);
 
-        conver.setUser1Id(Long.valueOf(partes[0]));
-        id = ChoiceBoxAddConverUser2.getValue().toString();
-        partes = id.split("\\s", 2);
-        conver.setUser2Id(Long.valueOf(partes[0]));
-        conver.setMessages(null);
-        try {
-            if (conversationExists(conver)) {
-                showError("This conversation already exists");
-                return;
+            conver.setUser1Id(Long.valueOf(partes[0]));
+            id = ChoiceBoxAddConverUser2.getValue().toString();
+            partes = id.split("\\s", 2);
+            conver.setUser2Id(Long.valueOf(partes[0]));
+            conver.setMessages(null);
+            try {
+                if (conversationExists(conver)) {
+                    showError("This conversation already exists.");
+                    return;
+                }
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setHeaderText(null);
+                alert.initStyle(StageStyle.UTILITY);
+                alert.setTitle("Create Conversation");
+                alert.setContentText("Are you sure you want to create this Conversation?");
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.isPresent() && result.get() == ButtonType.OK) {
+                    converCtrl.createConversation(conver);
+                    AdminDashboardController itemCtrl;
+                    itemCtrl = (AdminDashboardController) btnAccept.getScene().getWindow().getUserData();
+                    itemCtrl.refreshConversations();
+                }
+                ((Stage) btnAccept.getScene().getWindow()).close();
+            } catch (SQLException e) {
+                showError(Constants.DATABASE_ERROR + e.getMessage());
             }
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setHeaderText(null);
-            alert.initStyle(StageStyle.UTILITY);
-            alert.setTitle("Create Conversation");
-            alert.setContentText("Are you sure to create this Conversation?");
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.isPresent() && result.get() == ButtonType.OK) {
-                converCtrl.createConversation(conver);
-                AdminDashboardController itemCtrl;
-                itemCtrl = (AdminDashboardController) btnAccept.getScene().getWindow().getUserData();
-                itemCtrl.refreshConversations();
-            }
-            ((Stage) btnAccept.getScene().getWindow()).close();
-        } catch (SQLException e) {
-            showError(Constants.DATABASE_ERROR + e.getMessage());
         }
     }
 
@@ -106,13 +114,25 @@ public class AddConversationController {
     private boolean conversationExists(Conversation conver) throws SQLException {
         List<Conversation> convers = converCtrl.getAllConversations();
         for (Conversation conversation : convers) {
-            if (Objects.equals(conversation.getUser1Id(), conver.getUser1Id()) && Objects.equals(conversation.getUser2Id(), conver.getUser2Id())
-                    || Objects.equals(conversation.getUser2Id(), conver.getUser1Id()) && Objects.equals(conversation.getUser1Id(), conver.getUser2Id())
-                    || Objects.equals(conver.getUser1Id(), conver.getUser2Id())) {
+            if ((Objects.equals(conversation.getUser1Id(), conver.getUser1Id()) && Objects.equals(conversation.getUser2Id(), conver.getUser2Id())) ||
+                    (Objects.equals(conversation.getUser2Id(), conver.getUser1Id()) && Objects.equals(conversation.getUser1Id(), conver.getUser2Id()))) {
                 return true;
             }
         }
         return false;
+    }
+
+    /**
+     * Muestra un mensaje de error de campos incompletos.
+     *
+     * @param message el mensaje de error a mostrar
+     */
+    private void showFieldError(String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Incomplete Fields");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     /**

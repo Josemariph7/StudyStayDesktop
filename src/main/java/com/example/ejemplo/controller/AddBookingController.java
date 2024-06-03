@@ -40,6 +40,14 @@ public class AddBookingController {
     public void handleAccept(ActionEvent actionEvent) {
         UserController userController = new UserController();
         AccommodationController accommodationController = new AccommodationController();
+
+        // Verificar campos obligatorios
+        if (ChoiceBoxUser.getValue() == null || ChoiceBoxAccommodation.getValue() == null || Objects.equals(ChoiceBoxStatus.getValue(), "Status") ||
+                DatePickerStart.getValue() == null || DatePickerEnd.getValue() == null) {
+            showFieldError("All fields are required.");
+            return;
+        }
+
         String user = ChoiceBoxUser.getValue();
         String[] partes = user.split("\\s", 2);
         booking.setUser(userController.getById(Long.parseLong(partes[0])));
@@ -48,41 +56,39 @@ public class AddBookingController {
         booking.setAccommodation(accommodationController.getAccommodationById(Long.parseLong(partes[0])));
 
         // Validar el estado de la reserva
-        if (ChoiceBoxStatus.getValue() != null) {
-            switch (ChoiceBoxStatus.getValue()) {
-                case "Pending":
-                    booking.setStatus(Booking.BookingStatus.PENDING);
-                    break;
-                case "Confirmed":
-                    booking.setStatus(Booking.BookingStatus.CONFIRMED);
-                    break;
-                case "Canceled":
-                    booking.setStatus(Booking.BookingStatus.CANCELLED);
-                    break;
-            }
+        switch (ChoiceBoxStatus.getValue()) {
+            case "Pending":
+                booking.setStatus(Booking.BookingStatus.PENDING);
+                break;
+            case "Confirmed":
+                booking.setStatus(Booking.BookingStatus.CONFIRMED);
+                break;
+            case "Canceled":
+                booking.setStatus(Booking.BookingStatus.CANCELLED);
+                break;
         }
 
         // Validar las fechas de inicio y fin
-        if (DatePickerEnd.getValue() != null && DatePickerStart.getValue() != null) {
-            LocalDate startDate = DatePickerStart.getValue();
-            LocalDate endDate = DatePickerEnd.getValue();
-            LocalDate today = LocalDate.now();
+        LocalDate startDate = DatePickerStart.getValue();
+        LocalDate endDate = DatePickerEnd.getValue();
+        LocalDate today = LocalDate.now();
 
-            if (!startDate.isAfter(today)) {
-                showError("La fecha de inicio debe ser posterior a la fecha actual.");
-                return;
-            }
-            if (!endDate.isAfter(startDate)) {
-                showError("La fecha de fin debe ser posterior a la fecha de inicio.");
-                return;
-            }
+        StringBuilder errors = new StringBuilder();
 
-            booking.setStartDate(startDate.atStartOfDay());
-            booking.setEndDate(endDate.atStartOfDay());
-        } else {
-            showError("Por favor, selecciona las fechas de inicio y fin.");
+        if (!startDate.isAfter(today)) {
+            errors.append("The start date must be after today's date.\n");
+        }
+        if (!endDate.isAfter(startDate)) {
+            errors.append("The end date must be after the start date.\n");
+        }
+
+        if (errors.length() > 0) {
+            showError(errors.toString());
             return;
         }
+
+        booking.setStartDate(startDate.atStartOfDay());
+        booking.setEndDate(endDate.atStartOfDay());
 
         // Verificar la disponibilidad del alojamiento
         try {
@@ -93,12 +99,12 @@ public class AddBookingController {
                     .count();
 
             if (currentBookings >= accommodationObj.getCapacity()) {
-                showError("Este alojamiento está completo.");
+                showError("This accommodation is fully booked.");
                 return;
             }
 
             if (bookingExists(booking)) {
-                showError("La reserva ya existe.");
+                showError("The booking already exists.");
                 return;
             }
 
@@ -106,7 +112,7 @@ public class AddBookingController {
             alert.setHeaderText(null);
             alert.initStyle(StageStyle.UTILITY);
             alert.setTitle("Add Booking");
-            alert.setContentText("¿Estás seguro de que deseas agregar la nueva reserva?");
+            alert.setContentText("Are you sure you want to add this booking?");
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 bookingController.createBooking(booking);
@@ -120,6 +126,7 @@ public class AddBookingController {
             showError(Constants.DATABASE_ERROR + e.getMessage());
         }
     }
+
 
     /**
      * Inicializa los datos necesarios para la interfaz de usuario.
@@ -164,6 +171,19 @@ public class AddBookingController {
             }
         }
         return false;
+    }
+
+    /**
+     * Muestra un mensaje de error de campos incompletos.
+     *
+     * @param message el mensaje de error a mostrar
+     */
+    private void showFieldError(String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Incomplete Fields");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     /**

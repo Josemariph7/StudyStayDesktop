@@ -19,11 +19,11 @@ import java.util.Optional;
  * Controlador para modificar una reserva.
  */
 public class ModifyBookingController {
-    @FXML public ChoiceBox ChoiceBoxUser;
-    @FXML public ChoiceBox ChoiceBoxAccommodation;
+    @FXML public ChoiceBox<String> ChoiceBoxUser;
+    @FXML public ChoiceBox<String> ChoiceBoxAccommodation;
     @FXML public DatePicker DatePickerStart;
     @FXML public DatePicker DatePickerEnd;
-    @FXML public ChoiceBox ChoiceBoxStatus;
+    @FXML public ChoiceBox<String> ChoiceBoxStatus;
     @FXML public Button btnAccept;
     @FXML public Button btnCancel;
 
@@ -39,42 +39,88 @@ public class ModifyBookingController {
     public void handleAccept(ActionEvent actionEvent) {
         UserController userController = new UserController();
         AccommodationController accommodationController = new AccommodationController();
-        String user = ChoiceBoxUser.getValue().toString();
-        String[] partes = user.split("\\s", 2);
-        booking.setUser(userController.getById(Long.parseLong(partes[0])));
-        String accommodation = ChoiceBoxAccommodation.getValue().toString();
-        partes = accommodation.split("\\s", 2);
-        booking.setAccommodation(accommodationController.getAccommodationById(Long.parseLong(partes[0])));
-        if (ChoiceBoxStatus.getValue() != null) {
-            if (Objects.equals(ChoiceBoxStatus.getValue(), "Pending")) {
-                booking.setStatus(Booking.BookingStatus.PENDING);
-            } else if (Objects.equals(ChoiceBoxStatus.getValue(), "Confirmed")) {
-                booking.setStatus(Booking.BookingStatus.CONFIRMED);
-            } else if (Objects.equals(ChoiceBoxStatus.getValue(), "Canceled")) {
-                booking.setStatus(Booking.BookingStatus.CANCELLED);
-            }
-        }
-        if (DatePickerEnd.getValue() != null && DatePickerStart.getValue() != null) {
-            if (DatePickerEnd.getValue().isAfter(DatePickerStart.getValue()) && DatePickerStart.getValue().isBefore(LocalDate.now())) {
-                booking.setStartDate(DatePickerStart.getValue().atStartOfDay());
-                booking.setEndDate(DatePickerEnd.getValue().atStartOfDay());
-            }
+
+        // Verificar campos obligatorios
+        if (ChoiceBoxUser.getValue() == null || ChoiceBoxAccommodation.getValue() == null || Objects.equals(ChoiceBoxStatus.getValue(), "Status") ||
+                DatePickerStart.getValue() == null || DatePickerEnd.getValue() == null) {
+            showFieldError("All fields are required.");
+            return;
         }
 
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setHeaderText(null);
-        alert.initStyle(StageStyle.UTILITY);
-        alert.setTitle("Modify Booking");
-        alert.setContentText("Are you sure to modify this Booking?");
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            bookingController.updateBooking(booking);
-            ItemBookingListController itemCtrl;
-            itemCtrl = (ItemBookingListController) btnAccept.getScene().getWindow().getUserData();
-            adminDashboardController.refreshBookings();
+        String user = ChoiceBoxUser.getValue();
+        String[] partes = user.split("\\s", 2);
+        booking.setUser(userController.getById(Long.parseLong(partes[0])));
+        String accommodation = ChoiceBoxAccommodation.getValue();
+        partes = accommodation.split("\\s", 2);
+        Accommodation selectedAccommodation = accommodationController.getAccommodationById(Long.parseLong(partes[0]));
+
+        // Validar el estado de la reserva
+        switch (ChoiceBoxStatus.getValue()) {
+            case "Pending":
+                booking.setStatus(Booking.BookingStatus.PENDING);
+                break;
+            case "Confirmed":
+                booking.setStatus(Booking.BookingStatus.CONFIRMED);
+                break;
+            case "Canceled":
+                booking.setStatus(Booking.BookingStatus.CANCELLED);
+                break;
         }
-        ((Stage) btnAccept.getScene().getWindow()).close();
+
+        // Validar las fechas de inicio y fin
+        LocalDate startDate = DatePickerStart.getValue();
+        LocalDate endDate = DatePickerEnd.getValue();
+        LocalDate today = LocalDate.now();
+
+        StringBuilder errors = new StringBuilder();
+
+        if (!startDate.isAfter(today)) {
+            errors.append("The start date must be after today's date.\n");
+        }
+        if (!endDate.isAfter(startDate)) {
+            errors.append("The end date must be after the start date.\n");
+        }
+
+        if (errors.length() > 0) {
+            showError(errors.toString());
+            return;
+        }
+
+        booking.setStartDate(startDate.atStartOfDay());
+        booking.setEndDate(endDate.atStartOfDay());
+
+        // Verificar la disponibilidad del alojamiento si se cambia
+        try {
+            if (!booking.getAccommodation().getAccommodationId().equals(selectedAccommodation.getAccommodationId())) {
+                List<Booking> bookings = bookingController.getAllBookings();
+                long currentBookings = bookings.stream()
+                        .filter(b -> b.getAccommodation().getAccommodationId().equals(selectedAccommodation.getAccommodationId()))
+                        .count();
+
+                if (currentBookings >= selectedAccommodation.getCapacity()) {
+                    showError("This accommodation is fully booked.");
+                    return;
+                }
+
+                booking.setAccommodation(selectedAccommodation);
+            }
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setHeaderText(null);
+            alert.initStyle(StageStyle.UTILITY);
+            alert.setTitle("Modify Booking");
+            alert.setContentText("Are you sure you want to modify this booking?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                bookingController.updateBooking(booking);
+                adminDashboardController.refreshBookings();
+                ((Stage) btnAccept.getScene().getWindow()).close();
+            }
+        } catch (Exception e) {
+            showError("Database error: " + e.getMessage());
+        }
     }
+
 
     /**
      * Inicializa los datos de la reserva.
@@ -113,6 +159,32 @@ public class ModifyBookingController {
         DatePickerStart.setValue(booking.getStartDate().toLocalDate());
         String[] status = {"Pending", "Confirmed", "Canceled"};
         ChoiceBoxStatus.getItems().addAll(status);
-        ChoiceBoxStatus.setValue(booking.getStatus());
+        ChoiceBoxStatus.setValue(booking.getStatus().toString());
+    }
+
+    /**
+     * Muestra un mensaje de error de campos incompletos.
+     *
+     * @param message el mensaje de error a mostrar
+     */
+    private void showFieldError(String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Incomplete fields");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    /**
+     * Muestra un mensaje de error.
+     *
+     * @param message el mensaje de error a mostrar
+     */
+    private void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

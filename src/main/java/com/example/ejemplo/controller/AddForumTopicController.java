@@ -22,7 +22,7 @@ import java.util.Optional;
 public class AddForumTopicController {
     @FXML public Button btnCancel;
     @FXML public Button btnAccept;
-    @FXML public ChoiceBox ChoiceBoxAuthor;
+    @FXML public ChoiceBox<String> ChoiceBoxAuthor;
     @FXML public TextArea txtAreaDescription;
     @FXML public TextField lblTopicTitle;
 
@@ -44,8 +44,6 @@ public class AddForumTopicController {
         }
         ChoiceBoxAuthor.getItems().addAll(users);
         ChoiceBoxAuthor.setValue("Select an Author");
-        lblTopicTitle.setText(forumTopic.getTitle());
-        txtAreaDescription.setText(forumTopic.getDescription());
     }
 
     /**
@@ -56,23 +54,31 @@ public class AddForumTopicController {
     public void handleAccept(ActionEvent actionEvent) {
         UserController userController = new UserController();
         ForumCommentController forumCommentController = new ForumCommentController();
-        String id = ChoiceBoxAuthor.getValue().toString();
+
+        // Verificar campos obligatorios
+        if (Objects.equals(ChoiceBoxAuthor.getValue(), "Select an Author") || lblTopicTitle.getText().isEmpty() || txtAreaDescription.getText().isEmpty()) {
+            showFieldError("All fields are required.");
+            return;
+        }
+
+        String id = ChoiceBoxAuthor.getValue();
         String[] partes = id.split("\\s", 2);
         forumTopic.setAuthor(userController.getById(Long.valueOf(partes[0])));
-        forumTopic.setComments(forumCommentController.getCommentsByTopic(forumTopic.getTopicId()));
+       // forumTopic.setComments(forumCommentController.getCommentsByTopic(forumTopic.getTopicId()));
         forumTopic.setTitle(lblTopicTitle.getText());
         forumTopic.setDescription(txtAreaDescription.getText());
         forumTopic.setDateTime(LocalDateTime.now());
+
         try {
             if (forumTopicExists(forumTopic)) {
-                showError("This conversation already exists");
+                showError("This forum topic already exists.");
                 return;
             }
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setHeaderText(null);
             alert.initStyle(StageStyle.UTILITY);
             alert.setTitle("Create Forum Topic");
-            alert.setContentText("Are you sure to create this Forum Topic?");
+            alert.setContentText("Are you sure you want to create this Forum Topic?");
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 forumTopicController.createTopic(forumTopic);
@@ -101,6 +107,19 @@ public class AddForumTopicController {
             }
         }
         return false;
+    }
+
+    /**
+     * Muestra un mensaje de error de campos incompletos.
+     *
+     * @param message el mensaje de error a mostrar
+     */
+    private void showFieldError(String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Incomplete Fields");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     /**

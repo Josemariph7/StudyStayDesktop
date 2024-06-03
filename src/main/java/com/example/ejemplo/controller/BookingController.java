@@ -3,6 +3,7 @@ package com.example.ejemplo.controller;
 import com.example.ejemplo.dao.BookingDAO;
 import com.example.ejemplo.model.Booking;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -49,5 +50,14 @@ public class BookingController {
      */
     public boolean deleteBooking(Long bookingId) {
         return bookingDAO.delete(bookingId);
+    }
+
+    /**
+     * Obtiene todas las reservas de un usuario.
+     * @param userId ID del usuario
+     * @return Lista de reservas del usuario
+     */
+    public List<Booking> getBookingsByUser(Long userId) throws SQLException, SQLException {
+        return bookingDAO.getByUserId(userId);
     }
 }

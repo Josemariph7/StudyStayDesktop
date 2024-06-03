@@ -17,7 +17,7 @@ import java.util.Optional;
 public class ModifyForumTopicController {
     public Button btnCancel;
     public Button btnAccept;
-    public ChoiceBox ChoiceBoxTopicAuthor;
+    public ChoiceBox<String> ChoiceBoxTopicAuthor;
     public TextArea txtAreaTopicDescription;
     public TextField lblForumTopicTitle;
 
@@ -31,17 +31,24 @@ public class ModifyForumTopicController {
      * @param actionEvent El evento de acción.
      */
     public void handleAccept(ActionEvent actionEvent) {
-        User user1 = new User();
         UserController userController = new UserController();
+
+        // Verificar campos obligatorios
+        if (ChoiceBoxTopicAuthor.getValue() == null || lblForumTopicTitle.getText().isEmpty() || txtAreaTopicDescription.getText().isEmpty()) {
+            showFieldError("All fields are required.");
+            return;
+        }
+
         String[] partes = ChoiceBoxTopicAuthor.getValue().toString().split("\\s", 2);
         forumTopic.setAuthor(userController.getById(Long.valueOf(partes[0])));
         forumTopic.setDescription(txtAreaTopicDescription.getText());
         forumTopic.setTitle(lblForumTopicTitle.getText());
+
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText(null);
         alert.initStyle(StageStyle.UTILITY);
         alert.setTitle("Modify Forum Topic");
-        alert.setContentText("Are you sure to modify this Forum Topic?");
+        alert.setContentText("Are you sure you want to modify this Forum Topic?");
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             forumTopicController.updateTopic(forumTopic);
@@ -76,5 +83,31 @@ public class ModifyForumTopicController {
         ChoiceBoxTopicAuthor.setValue(author);
         lblForumTopicTitle.setText(forumTopic.getTitle());
         txtAreaTopicDescription.setText(forumTopic.getDescription());
+    }
+
+    /**
+     * Muestra un mensaje de error de campos incompletos.
+     *
+     * @param message el mensaje de error a mostrar
+     */
+    private void showFieldError(String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Incomplete Fields");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    /**
+     * Muestra un mensaje de error.
+     *
+     * @param message el mensaje de error a mostrar
+     */
+    private void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

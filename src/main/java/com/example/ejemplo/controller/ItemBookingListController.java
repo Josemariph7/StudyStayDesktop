@@ -1,5 +1,6 @@
 package com.example.ejemplo.controller;
 
+import com.example.ejemplo.model.Accommodation;
 import com.example.ejemplo.model.Booking;
 import com.example.ejemplo.utils.Constants;
 import javafx.event.ActionEvent;
@@ -88,10 +89,9 @@ public class ItemBookingListController {
         } else {
             //eliminar
         }
-        AccommodationController accommodationController = new AccommodationController();
-
-        if (accommodationController.getAccommodationById(booking.getBookingId()) != null) {
-            lblBookingCity.setText(accommodationController.getAccommodationById(booking.getBookingId()).getCity());
+        Accommodation accommodation = booking.getAccommodation();
+        if (accommodation != null) {
+            lblBookingCity.setText(accommodation.getCity());
         } else {
             lblBookingCity.setText("Unknown");
         }
@@ -115,8 +115,7 @@ public class ItemBookingListController {
         lblBookingid.setText(book.getBookingId().toString());
         lblBookingUser.setText(booking.getUser().getName() + " " + booking.getUser().getLastName());
         lblEndDate.setText(booking.getEndDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        AccommodationController accommodationController = new AccommodationController();
-        lblBookingCity.setText(accommodationController.getAccommodationById(booking.getBookingId()).getCity());
+        lblBookingCity.setText(booking.getAccommodation().getCity());
     }
 
     /**
