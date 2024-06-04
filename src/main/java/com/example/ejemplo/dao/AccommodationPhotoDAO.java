@@ -26,7 +26,8 @@ public class AccommodationPhotoDAO {
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setLong(1, photo.getAccommodation().getAccommodationId());
-            statement.setBytes(2, photo.getPhotoData());
+            statement.setObject(2, photo.getAccommodation());
+            statement.setBytes(3, photo.getPhotoData());
 
             int rowsAffected = statement.executeUpdate();
             connection.close();
@@ -116,7 +117,9 @@ public class AccommodationPhotoDAO {
         photo.setPhotoId(resultSet.getLong("PhotoId"));
         // Aquí deberías establecer la propiedad accommodation del objeto photo si es relevante en tu caso
         // photo.setAccommodation(accommodation);
-        photo.setPhotoData(resultSet.getBytes("Photo"));
+        AccommodationDAO accommodationDAO = new AccommodationDAO();
+        photo.setAccommodation(accommodationDAO.getById(resultSet.getLong("AccommodationId")));
+        photo.setPhotoData(resultSet.getBytes("photoData"));
         return photo;
     }
 }

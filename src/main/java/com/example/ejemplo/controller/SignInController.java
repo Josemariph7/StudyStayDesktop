@@ -83,7 +83,9 @@ public class SignInController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent dashboard = loader.load();
-
+            System.out.println(dashboard.getLayoutBounds());
+            System.out.println(dashboard.boundsInLocalProperty());
+            System.out.println(dashboard.getBoundsInParent());
             // Obtener el controlador cargado
             AdminDashboardController controller = loader.getController();
             if (controller == null) {

@@ -27,7 +27,7 @@ public class Constants {
     public static final String DASHBOARD_ADMIN_FXML = "/com/example/ejemplo/fxml/DashboardAdmin.fxml";
     public static final String SPLASH_SCREEN_FXML = "/com/example/ejemplo/fxml/SplashScreen.fxml";
     public static final String DEFAULT_PROFILE_PICTURE = "/com/example/ejemplo/multimedia/default.png";
-    public static final String DEFAULT_ACCOMMODATION_PICTURE = "/com/example/ejemplo/multimedia/logofondoazulclaro.png";
+    public static final String DEFAULT_ACCOMMODATION_PICTURE = "/com/example/ejemplo/multimedia/icons8-cabaña-100.png";
 
     // Mensajes de error
     public static final String FILE_NOT_FOUND_ERROR = "Program cant load fxml";

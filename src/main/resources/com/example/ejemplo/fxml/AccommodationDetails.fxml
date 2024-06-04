@@ -22,7 +22,7 @@
          </Label>
       </children>
    </Pane>
-   <VBox alignment="CENTER" layoutX="1.0" layoutY="95.0" prefHeight="745.0" prefWidth="636.0" spacing="10.0" style="-fx-background-color: #edf1ff;">
+   <VBox alignment="CENTER" layoutX="1.0" layoutY="104.0" prefHeight="745.0" prefWidth="636.0" spacing="10.0" style="-fx-background-color: #edf1ff;">
       <padding>
          <Insets left="20.0" right="20.0" />
       </padding>
@@ -141,12 +141,15 @@
          </HBox>
       </children>
    </VBox>
-   <StackPane fx:id="imageCarousel" layoutX="10.0" layoutY="22.0" minHeight="216.0" prefHeight="220.0" prefWidth="336.0" translateX="142.0" translateY="272.0" />
-   <Button fx:id="previousPhoto" onAction="#setPreviousPhoto" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="98.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Previous photo" translateX="16.0" translateY="380.0" />
-   <Button fx:id="nextPhoto" layoutX="10.0" onAction="#setNextPhoto"  layoutY="10.0" minWidth="98.0" mnemonicParsing="false" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Next photo" translateX="506.0" translateY="379.0" />
+   <StackPane fx:id="imageCarousel" maxHeight="220.0" maxWidth="336.0" minHeight="220.0" minWidth="336.0" prefHeight="220.0" prefWidth="336.0" scaleShape="false" snapToPixel="false" translateX="152.0" translateY="298.0">
+      <padding>
+         <Insets left="160.0" right="160.0" />
+      </padding></StackPane>
+   <Button fx:id="previousPhoto" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#setPreviousPhoto" prefHeight="27.0" prefWidth="98.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Previous photo" translateX="16.0" translateY="380.0" />
+   <Button fx:id="nextPhoto" layoutX="10.0" layoutY="10.0" minWidth="98.0" mnemonicParsing="false" onAction="#setNextPhoto" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Next photo" translateX="506.0" translateY="379.0" />
    <ScrollPane layoutX="10.0" layoutY="10.0" minHeight="262.0" prefHeight="262.0" prefWidth="302.0" style="-fx-background-color: #e0e7ff; -fx-border-color: #151928;" stylesheets="@../css/stylesdashboard.css" translateX="2.0" translateY="516.0">
       <content>
-         <ListView fx:id="listViewComments" prefHeight="264.0" prefWidth="283.0" translateX="-5.0" />
+         <ListView fx:id="listViewComments" prefHeight="259.0" prefWidth="283.0" translateX="-5.0" />
       </content>
    </ScrollPane>
    <Label text="Tenants" translateX="558.0" translateY="500.0">
@@ -164,7 +167,7 @@
          <Font size="16.0" />
       </font>
    </Button>
-   <Button fx:id="deletePhoto" onAction="#handleDeletePhoto" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="98.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Delete photo" translateX="7.0" translateY="411.0" />
+   <Button fx:id="deletePhoto" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleDeletePhoto" prefHeight="27.0" prefWidth="98.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Delete photo" translateX="7.0" translateY="411.0" />
    <ScrollPane layoutX="20.0" layoutY="20.0" minHeight="262.0" prefHeight="262.0" prefWidth="302.0" style="-fx-background-color: #e0e7ff; -fx-border-color: #151928;" stylesheets="@../css/stylesdashboard.css" translateX="306.0" translateY="506.0">
       <content>
          <ListView fx:id="listViewTenants" prefHeight="264.0" prefWidth="282.0" />

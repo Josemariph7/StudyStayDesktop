@@ -19,8 +19,8 @@
 
 <AnchorPane maxHeight="900.0" maxWidth="1440.0" minHeight="900.0" minWidth="1440.0" prefHeight="900.0" prefWidth="1440.0" style="-fx-background-color: #02030A;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ejemplo.controller.AdminDashboardController">
     <children>
-        <Pane id="dragArea" fx:id="dragArea" prefHeight="53.0" prefWidth="1387.0" style="-fx-background-color: transparent;" />
-        <VBox alignment="TOP_CENTER" prefHeight="576.0" prefWidth="256.0" style="-fx-background-color: #151928;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Pane id="dragArea" fx:id="dragArea" prefHeight="53.0" prefWidth="1387.0" style="-fx-background-color: transparent;" translateX="1.0" translateY="1.0" />
+        <VBox alignment="TOP_CENTER" maxHeight="576.0" maxWidth="256.0" minHeight="576.0" minWidth="256.0" prefHeight="576.0" prefWidth="256.0" style="-fx-background-color: #151928;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <StackPane>
                     <Circle fx:id="circle" centerX="100" centerY="100" fill="WHITE" radius="92.0" translateY="-2.0" />
