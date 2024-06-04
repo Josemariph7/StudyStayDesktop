@@ -226,8 +226,8 @@ public class AccommodationDAO {
         accommodation.setRating(resultSet.getDouble("Rating"));
 
         // Mapeo de las fotos del alojamiento
-        List<AccommodationPhoto> photoList = getPhotosForAccommodation(accommodation.getAccommodationId()); // Llamamos al método estático getPhotosForAccommodation
-        accommodation.setPhotos(photoList);
+        //List<AccommodationPhoto> photoList = getPhotosForAccommodation(accommodation.getAccommodationId()); // Llamamos al método estático getPhotosForAccommodation
+        //accommodation.setPhotos(photoList);
 
         // Mapeo de las reseñas del alojamiento
         //List<AccommodationReview> reviews = getReviewsByAccommodation(accommodation.getAccommodationId());

@@ -6,6 +6,7 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
@@ -25,74 +26,158 @@
       <padding>
          <Insets left="20.0" right="20.0" />
       </padding>
+      <children>
+         <HBox prefHeight="25.0" prefWidth="596.0" translateY="-227.0">
+            <children>
+               <Label prefHeight="27.0" prefWidth="301.0" text="Adress">
+                  <font>
+                     <Font name="System Bold" size="18.0" />
+                  </font>
+               </Label>
+               <Label text="City">
+                  <font>
+                     <Font name="System Bold" size="18.0" />
+                  </font>
+               </Label>
+            </children>
+         </HBox>
+         <HBox prefHeight="27.0" prefWidth="596.0" translateY="-240.0">
+            <children>
+               <Label fx:id="lblAddress" prefHeight="20.0" prefWidth="300.0">
+                  <font>
+                     <Font size="14.0" />
+                  </font>
+               </Label>
+               <Label fx:id="lblCity" prefHeight="20.0" prefWidth="272.0">
+                  <font>
+                     <Font size="14.0" />
+                  </font>
+               </Label>
+            </children>
+         </HBox>
+         <HBox prefHeight="30.0" prefWidth="596.0" translateY="-255.0">
+            <children>
+               <Label prefHeight="27.0" prefWidth="301.0" text="Owner">
+                  <font>
+                     <Font name="System Bold" size="18.0" />
+                  </font>
+               </Label>
+               <Label text="Description">
+                  <font>
+                     <Font name="System Bold" size="18.0" />
+                  </font>
+               </Label>
+            </children>
+         </HBox>
+         <HBox prefHeight="25.0" prefWidth="596.0" translateY="-272.0">
+            <children>
+               <Label fx:id="lblAuthor" prefHeight="20.0" prefWidth="302.0">
+                  <font>
+                     <Font size="14.0" />
+                  </font>
+               </Label>
+               <Label fx:id="lblCreationDate" prefHeight="20.0" prefWidth="294.0">
+                  <font>
+                     <Font size="14.0" />
+                  </font>
+               </Label>
+            </children>
+         </HBox>
+         <HBox prefHeight="30.0" prefWidth="596.0" translateY="-282.0">
+            <children>
+               <Label prefHeight="27.0" prefWidth="301.0" text="Price">
+                  <font>
+                     <Font name="System Bold" size="18.0" />
+                  </font>
+               </Label>
+               <Label text="Capacity">
+                  <font>
+                     <Font name="System Bold" size="18.0" />
+                  </font>
+               </Label>
+            </children>
+         </HBox>
+         <HBox prefHeight="24.0" prefWidth="596.0" translateY="-299.0">
+            <children>
+               <Label fx:id="lblPrice" prefHeight="20.0" prefWidth="302.0">
+                  <font>
+                     <Font size="14.0" />
+                  </font>
+               </Label>
+               <Label fx:id="lblCapacity" prefHeight="20.0" prefWidth="288.0">
+                  <font>
+                     <Font size="14.0" />
+                  </font>
+               </Label>
+            </children>
+         </HBox>
+         <HBox prefHeight="22.0" prefWidth="596.0" translateY="-310.0">
+            <children>
+               <Label prefHeight="27.0" prefWidth="301.0" text="Availability">
+                  <font>
+                     <Font name="System Bold" size="18.0" />
+                  </font>
+               </Label>
+               <Label text="Rating">
+                  <font>
+                     <Font name="System Bold" size="18.0" />
+                  </font>
+               </Label>
+            </children>
+         </HBox>
+         <HBox prefHeight="25.0" prefWidth="596.0" translateY="-323.0">
+            <children>
+               <Label fx:id="lblAvailability" prefHeight="20.0" prefWidth="302.0">
+                  <font>
+                     <Font size="14.0" />
+                  </font>
+               </Label>
+               <Label fx:id="lblRating" prefHeight="20.0" prefWidth="270.0">
+                  <font>
+                     <Font size="14.0" />
+                  </font>
+               </Label>
+            </children>
+         </HBox>
+      </children>
    </VBox>
-   <Label fx:id="lblAuthor" layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="291.0" translateY="121.0">
-      <font>
-         <Font size="14.0" />
-      </font>
-   </Label>
-   <Label fx:id="lblCreationDate" layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="174.0" translateY="124.0">
-      <font>
-         <Font size="14.0" />
-      </font>
-   </Label>
-   <Label fx:id="lblAddress" layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="291.0" translateY="157.0">
-      <font>
-         <Font size="14.0" />
-      </font>
-   </Label>
-   <Label fx:id="lblCity" layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="174.0" translateY="230.0">
-      <font>
-         <Font size="14.0" />
-      </font>
-   </Label>
-   <Label fx:id="lblPrice" layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="174.0" translateX="320.0" translateY="101.0">
-      <font>
-         <Font size="14.0" />
-      </font>
-   </Label>
-   <Label fx:id="lblCapacity" layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="174.0" translateX="331.0" translateY="124.0">
-      <font>
-         <Font size="14.0" />
-      </font>
-   </Label>
-   <Label fx:id="lblServices" layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="174.0" translateX="329.0" translateY="160.0">
-      <font>
-         <Font size="14.0" />
-      </font>
-   </Label>
-   <Label fx:id="lblAvailability" layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="174.0" translateX="295.0" translateY="210.0">
-      <font>
-         <Font size="14.0" />
-      </font>
-   </Label>
-   <Label fx:id="lblRating" layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="174.0" translateX="339.0" translateY="239.0">
-      <font>
-         <Font size="14.0" />
-      </font>
-   </Label>
-   <StackPane fx:id="imageCarousel" layoutX="10.0" layoutY="10.0" minHeight="216.0" prefHeight="232.0" prefWidth="336.0" translateX="142.0" translateY="269.0" />
-   <Button fx:id="previousPhoto" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Left" translateY="404.0" />
-   <Button fx:id="nextPhoto" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Right" translateX="560.0" translateY="396.0" />
+   <StackPane fx:id="imageCarousel" layoutX="10.0" layoutY="22.0" minHeight="216.0" prefHeight="220.0" prefWidth="336.0" translateX="142.0" translateY="272.0" />
+   <Button fx:id="previousPhoto" onAction="#setPreviousPhoto" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="98.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Previous photo" translateX="16.0" translateY="380.0" />
+   <Button fx:id="nextPhoto" layoutX="10.0" onAction="#setNextPhoto"  layoutY="10.0" minWidth="98.0" mnemonicParsing="false" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Next photo" translateX="506.0" translateY="379.0" />
    <ScrollPane layoutX="10.0" layoutY="10.0" minHeight="262.0" prefHeight="262.0" prefWidth="302.0" style="-fx-background-color: #e0e7ff; -fx-border-color: #151928;" stylesheets="@../css/stylesdashboard.css" translateX="2.0" translateY="516.0">
       <content>
-         <ListView fx:id="listViewComments" prefHeight="264.0" prefWidth="577.0" translateX="-5.0" />
+         <ListView fx:id="listViewComments" prefHeight="264.0" prefWidth="283.0" translateX="-5.0" />
       </content>
    </ScrollPane>
-   <Button fx:id="btnBack" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="112.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Back" translateX="189.0" translateY="786.0">
+   <Label text="Tenants" translateX="558.0" translateY="500.0">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Label>
+   <Button fx:id="btnBack" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="112.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Back" translateX="253.0" translateY="786.0">
       <font>
          <Font size="16.0" />
       </font>
    </Button>
-   <Button fx:id="btnDelete" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleDelete" prefHeight="37.0" prefWidth="113.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Delete" translateX="317.0" translateY="786.0">
+   <Button fx:id="btnDeleteTenant" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleDeleteTenant" prefHeight="37.0" prefWidth="128.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Delete Tenant" translateX="388.0" translateY="786.0">
       <font>
          <Font size="16.0" />
       </font>
    </Button>
-   <Button fx:id="nextPhoto1" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" text="Delete Image" translateX="22.0" translateY="447.0" />
+   <Button fx:id="deletePhoto" onAction="#handleDeletePhoto" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="98.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Delete photo" translateX="7.0" translateY="411.0" />
    <ScrollPane layoutX="20.0" layoutY="20.0" minHeight="262.0" prefHeight="262.0" prefWidth="302.0" style="-fx-background-color: #e0e7ff; -fx-border-color: #151928;" stylesheets="@../css/stylesdashboard.css" translateX="306.0" translateY="506.0">
       <content>
-         <ListView fx:id="listViewComments1" prefHeight="264.0" prefWidth="577.0" />
+         <ListView fx:id="listViewTenants" prefHeight="264.0" prefWidth="282.0" />
       </content>
    </ScrollPane>
+   <Label layoutX="10.0" layoutY="10.0" text="Reviews" translateX="20.0" translateY="489.0">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Label>
+   <Button fx:id="btnDeleteReview" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleDeleteReview" prefHeight="37.0" prefWidth="128.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Delete Review" translateX="92.0" translateY="776.0">
+      <font>
+         <Font size="16.0" />
+      </font>
+   </Button>
 </AnchorPane>

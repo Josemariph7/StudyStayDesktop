@@ -1,23 +1,19 @@
 package com.example.ejemplo.controller;
 
-import com.example.ejemplo.model.Accommodation;
-import com.example.ejemplo.model.AccommodationPhoto;
-import com.example.ejemplo.model.AccommodationReview;
+import com.example.ejemplo.model.*;
 import com.example.ejemplo.utils.Constants;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
-import javafx.util.Duration;
-import org.controlsfx.control.Notifications;
 
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Controlador para mostrar los detalles de un alojamiento.
@@ -26,6 +22,18 @@ public class AccommodationDetailsController {
 
     @FXML
     public Button btnBack;
+    @FXML
+    public Button deletePhoto;
+    @FXML
+    public ListView<String> listViewTenants;
+    @FXML
+    public Button previousPhoto;
+    @FXML
+    public Button nextPhoto;
+    @FXML
+    public Button btnDeleteReview;
+    @FXML
+    public Button btnDeleteTenant;
     @FXML
     private Label lblAuthor;
     @FXML
@@ -53,6 +61,8 @@ public class AccommodationDetailsController {
 
     private Accommodation accommodation;
     private AccommodationReviewController reviewController = new AccommodationReviewController();
+    private UserController userController = new UserController();
+    private BookingController bookingController = new BookingController();
     private AccommodationController accommodationController = new AccommodationController();
     private AdminDashboardController adminDashboardController = new AdminDashboardController();
 
@@ -68,7 +78,9 @@ public class AccommodationDetailsController {
         this.adminDashboardController = dashboard;
         this.accommodationController = accommodationController;
         displayAccommodationInfo();
+        setupImageCarousel();
         loadReviews();
+        loadTenants();
         //setupImageCarousel();
     }
 
@@ -78,13 +90,12 @@ public class AccommodationDetailsController {
     private void displayAccommodationInfo() {
         lblAuthor.setText(accommodation.getOwner().getName() + " " + accommodation.getOwner().getLastName());
         lblCreationDate.setText(accommodation.getDescription());  // Asumiendo que la descripción es la fecha de creación, ajustar según sea necesario
-        lblAddress.setText("Address: " + accommodation.getAddress());
-        lblCity.setText("City: " + accommodation.getCity());
-        lblPrice.setText("Price: " + accommodation.getPrice().toString());
-        lblCapacity.setText("Capacity: " + accommodation.getCapacity());
-        lblServices.setText("Services: " + accommodation.getServices());
-        lblAvailability.setText("Availability: " + (accommodation.isAvailability() ? "Available" : "Not Available"));
-        lblRating.setText("Rating: " + accommodation.getRating());
+        lblAddress.setText(accommodation.getAddress());
+        lblCity.setText(accommodation.getCity());
+        lblPrice.setText(accommodation.getPrice().toString()+" €");
+        lblCapacity.setText(accommodation.getCapacity()+" tenants");
+        lblAvailability.setText((accommodation.isAvailability() ? "Available" : "Not Available"));
+        lblRating.setText(accommodation.getRating()+"/5");
     }
 
     /**
@@ -116,15 +127,43 @@ public class AccommodationDetailsController {
     }
 
     /**
+     * Carga y muestra las reseñas del alojamiento.
+     */
+    private void loadTenants() {
+        List<Booking> bookings = bookingController.getAllBookings();
+        List<String> formattedTenants = new ArrayList<>();
+        for (Booking book : bookings) {
+            if (Objects.equals(book.getAccommodation().getAccommodationId(), accommodation.getAccommodationId())) {
+                formattedTenants.add(formatTenant(userController.getById(book.getUser().getUserId()), book));
+            }
+        }
+        listViewTenants.getItems().addAll(formattedTenants);
+    }
+
+    /**
+     * Formatea una reseña para mostrarla en la interfaz de usuario.
+     *
+     * @param user
+     * @param book
+     * @return la cadena formateada que representa la reseña
+     */
+    private String formatTenant(User user, Booking book) {
+        return String.format("Tenant Name: %s\nStart Date: %s\nEnd Date: %s",
+                user.getName()+" "+user.getLastName(),
+                book.getStartDate().toLocalDate(),
+                book.getEndDate().toLocalDate());
+    }
+
+    /**
      * Configura el carrusel de imágenes del alojamiento.
      */
     private void setupImageCarousel() {
         List<AccommodationPhoto> photos = accommodation.getPhotos();
         if (photos == null || photos.isEmpty()) {
-            ImageView defaultImageView = new ImageView(new Image(Constants.DEFAULT_ACCOMMODATION_PICTURE));
+            //ImageView defaultImageView = new ImageView(new Image(Constants.DEFAULT_ACCOMMODATION_PICTURE));
             //defaultImageView.setFitHeight(200);
             //defaultImageView.setFitWidth(600);
-            imageCarousel.getChildren().add(defaultImageView);
+           // imageCarousel.getChildren().add(defaultImageView);
         } else {
             for (AccommodationPhoto photo : photos) {
                 Image image = new Image(new ByteArrayInputStream(photo.getPhotoData()));
@@ -140,7 +179,7 @@ public class AccommodationDetailsController {
      * Maneja la acción de eliminar una reseña seleccionada.
      */
     @FXML
-    private void handleDelete() {/*
+    private void handleDeleteReview() {/*
         String selectedReview = listViewComments.getSelectionModel().getSelectedItem();
         if (selectedReview != null) {
             boolean result = reviewController.deleteReview(selectedReview.getReviewId());
@@ -163,5 +202,24 @@ public class AccommodationDetailsController {
             alert.setHeaderText("No review selected.");
             alert.showAndWait();
         }*/
+    }
+
+    @FXML
+    private void handleDeleteTenant() {
+
+    }
+
+    @FXML
+    private void handleDeletePhoto() {
+
+    }
+
+    @FXML
+    private void setNextPhoto() {
+
+    }
+    @FXML
+    private void setPreviousPhoto() {
+
     }
 }
