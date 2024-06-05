@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -531,6 +532,7 @@
                                 </VBox>
                             </children>
                         </HBox>
+
                         <HBox alignment="CENTER_LEFT" layoutX="7.0" layoutY="190.0" prefHeight="42.0" prefWidth="1046.0" spacing="80.0" style="-fx-background-color: #edf1ff;" translateY="3.0">
                             <children>
                                 <Label prefHeight="22.0" prefWidth="92.0" style="-fx-text-fill: #0c0e17;" text="ID" textFill="#e7e5e5" translateX="-36.0">
@@ -601,7 +603,7 @@
                                 <Image url="@../multimedia/logoTransparente.png" />
                             </image>
                         </ImageView>
-                        <Button fx:id="btnAddUser" layoutX="1043.0" layoutY="192.0" mnemonicParsing="false" onAction="#handleAddUser" prefHeight="32.0" prefWidth="127.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Create New User">
+                        <Button fx:id="btnAddUser" layoutX="1043.0" layoutY="192.0" mnemonicParsing="false" onAction="#handleAddUser" prefHeight="32.0" prefWidth="127.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Create New User" translateX="-60.0" translateY="-39.0">
                             <font>
                                 <Font size="14.0" />
                             </font>
@@ -616,15 +618,11 @@
                                 <Image url="@../multimedia/icons8-línea-horizontal-24.png" />
                             </image>
                         </ImageView>
+                        <TextField fx:id="searchField" layoutX="50.0" layoutY="50.0" prefHeight="32.0" prefWidth="167.0" promptText="Search by name" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent;" translateX="913.0" translateY="144.0" />
                     </children>
                 </Pane>
                 <Pane fx:id="pnlAccommodations" style="-fx-background-color: #edf1ff;" visible="false">
                     <children>
-                        <Button fx:id="btnAddAccommodation" layoutX="1017.0" layoutY="150.0" mnemonicParsing="false" onAction="#handleAddAccommodation" prefHeight="32.0" prefWidth="154.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Add Accommodation">
-                            <font>
-                                <Font size="14.0" />
-                            </font>
-                        </Button>
                         <Label layoutX="57.0" layoutY="25.0" prefHeight="66.0" prefWidth="580.0" style="-fx-text-fill: #0c0e17;" text="Accommodation Management" textFill="#e7e5e5">
                             <font>
                                 <Font size="40.0" />
@@ -734,6 +732,12 @@
                                 <Image url="@../multimedia/icons8-línea-horizontal-24.png" />
                             </image>
                         </ImageView>
+                  <TextField fx:id="searchAccommodationField" prefHeight="32.0" prefWidth="200.0" promptText="Search by address" style="-fx-background-color: transparent; -fx-border-radius: 20; -fx-border-color: #080a12;" translateX="799.0" translateY="150.0" />
+                        <Button fx:id="btnAddAccommodation" layoutX="1017.0" layoutY="150.0" mnemonicParsing="false" onAction="#handleAddAccommodation" prefHeight="32.0" prefWidth="154.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Add Accommodation">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Button>
                     </children>
                 </Pane>
                 <Pane fx:id="pnlBookings" style="-fx-background-color: #edf1ff;" visible="false">
@@ -893,11 +897,12 @@
                                 </Label>
                             </children>
                         </HBox>
-                        <Button fx:id="btnAddBooking" layoutX="1017.0" layoutY="193.0" mnemonicParsing="false" onAction="#handleAddBooking" prefHeight="32.0" prefWidth="154.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Create New Booking">
+                        <Button fx:id="btnAddBooking" layoutX="1017.0" layoutY="193.0" mnemonicParsing="false" onAction="#handleAddBooking" prefHeight="32.0" prefWidth="154.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Create New Booking" translateX="-58.0" translateY="-38.0">
                             <font>
                                 <Font size="14.0" />
                             </font>
                         </Button>
+                  <TextField fx:id="searchBookingField" prefHeight="30.0" prefWidth="200.0" promptText="Buscar por nombre/apellidos" style="-fx-background-color: transparent; -fx-border-radius: 20; -fx-border-color: #080a12;" translateX="936.0" translateY="195.0" />
                     </children>
                 </Pane>
                 <Pane fx:id="pnlForum" style="-fx-background-color: #edf1ff;" visible="false">
@@ -1047,11 +1052,12 @@
                                 <Image url="@../multimedia/icons8-línea-horizontal-24.png" />
                             </image>
                         </ImageView>
-                        <Button fx:id="btnAddTopic" layoutX="1033.0" layoutY="193.0" mnemonicParsing="false" onAction="#handleAddForumTopic" prefHeight="32.0" prefWidth="139.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Create New Topic">
+                        <Button fx:id="btnAddTopic" layoutX="1033.0" layoutY="193.0" mnemonicParsing="false" onAction="#handleAddForumTopic" prefHeight="32.0" prefWidth="139.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Create New Topic" translateX="-93.0" translateY="-41.0">
                             <font>
                                 <Font size="14.0" />
                             </font>
                         </Button>
+                  <TextField fx:id="searchForumField" prefHeight="32.0" prefWidth="200.0" promptText="Search by Title" style="-fx-background-color: transparent; -fx-border-radius: 20; -fx-border-color: #080a12;" translateX="910.0" translateY="193.0" />
                     </children>
                 </Pane>
                 <Pane fx:id="pnlConversations" style="-fx-background-color: #edf1ff;" visible="false">
@@ -1191,7 +1197,7 @@
                                 <Image url="@../multimedia/logoTransparente.png" />
                             </image>
                         </ImageView>
-                        <Button fx:id="btnAddConversation" layoutX="990.0" layoutY="193.0" mnemonicParsing="false" onAction="#handleAddConversation" prefHeight="32.0" prefWidth="182.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Create New Conversation">
+                        <Button fx:id="btnAddConversation" layoutX="990.0" layoutY="193.0" mnemonicParsing="false" onAction="#handleAddConversation" prefHeight="32.0" prefWidth="182.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Create New Conversation" translateX="-100.0" translateY="-41.0">
                             <font>
                                 <Font size="14.0" />
                             </font>
@@ -1206,6 +1212,7 @@
                                 <Image url="@../multimedia/icons8-línea-horizontal-24.png" />
                             </image>
                         </ImageView>
+                  <TextField fx:id="searchConversationField" prefHeight="32.0" prefWidth="199.0" promptText="Search by Users" style="-fx-background-color: transparent; -fx-border-color: #080a12; -fx-border-radius: 20;" translateX="882.0" translateY="193.0" />
                     </children>
                 </Pane>
                 <Pane fx:id="pnlAboutUs" style="-fx-background-color: #edf1ff;" visible="false">

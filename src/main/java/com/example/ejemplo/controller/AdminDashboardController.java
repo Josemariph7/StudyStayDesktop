@@ -1,6 +1,11 @@
 package com.example.ejemplo.controller;
 
 import com.example.ejemplo.model.*;
+import com.example.ejemplo.utils.FilterUtils;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -34,6 +39,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
 import static com.example.ejemplo.utils.Constants.*;
 import static java.time.LocalDate.now;
@@ -163,6 +169,8 @@ public class AdminDashboardController implements Initializable {
     private Circle circleProfile;
     @FXML
     private VBox pnItemsForumTopics;
+    @FXML
+    private TextField searchField, searchBookingField, searchForumField, searchConversationField, searchAccommodationField;
 
     // Otros atributos
     public User currentUser;
@@ -174,13 +182,11 @@ public class AdminDashboardController implements Initializable {
     private final ConversationController conversationController = new ConversationController();
     private final BookingController bookingController = new BookingController();
     private final LocalDate oneWeekAgo = now().minusWeeks(1);
-
-    private boolean usersNeedRefresh = true;
-    private boolean forumTopicsNeedRefresh = true;
-    private boolean bookingsNeedRefresh = true;
-    private boolean accommodationsNeedRefresh = true;
-    private boolean conversationsNeedRefresh = true;
-    private boolean profileNeedRefresh = true;
+    private ObservableList<User> allUsers = FXCollections.observableArrayList();
+    private ObservableList<Booking> allBookings = FXCollections.observableArrayList();
+    private ObservableList<ForumTopic> allTopics = FXCollections.observableArrayList();
+    private ObservableList<Conversation> allConversations = FXCollections.observableArrayList();
+    private ObservableList<Accommodation> allAccommodations = FXCollections.observableArrayList();
 
     /**
      * Inicializa el controlador.
@@ -200,28 +206,154 @@ public class AdminDashboardController implements Initializable {
             dragArea.getScene().getWindow().setY(event.getScreenY() - yOffset);
         });
         dragArea.toFront();
+
+        setupUserFilter();
+        setupBookingFilter();
+        setupForumFilter();
+        setupConversationFilter();
+        setupAccommodationFilter();
+
         refresh();
     }
 
+    private void setupUserFilter() {
+        searchField.textProperty().addListener((observable, oldValue, newValue) ->
+                filterUsers(newValue)
+        );
+    }
 
-    /**
-     * Actualiza la interfaz de usuario y las estadísticas.
-     */
+    private void setupBookingFilter() {
+        searchBookingField.textProperty().addListener((observable, oldValue, newValue) ->
+                filterBookings(newValue)
+        );
+    }
+
+    private void setupForumFilter() {
+        searchForumField.textProperty().addListener((observable, oldValue, newValue) ->
+                filterForumTopics(newValue)
+        );
+    }
+
+    private void setupConversationFilter() {
+        searchConversationField.textProperty().addListener((observable, oldValue, newValue) ->
+                filterConversations(newValue)
+        );
+    }
+
+    private void setupAccommodationFilter() {
+        searchAccommodationField.textProperty().addListener((observable, oldValue, newValue) ->
+                filterAccommodations(newValue)
+        );
+    }
+
+    private void filterUsers(String filter) {
+        ObservableList<User> filteredList = allUsers.filtered(user ->
+                (user.getName() + " " + user.getLastName()).toLowerCase().contains(filter.toLowerCase())
+        );
+        FilterUtils.populateList(pnItems, filteredList, ITEM_USER_LIST_FXML, this::initUserListData);
+    }
+
+    private void filterBookings(String filter) {
+        ObservableList<Booking> filteredList = allBookings.filtered(booking ->
+                (booking.getUser().getName() + " " + booking.getUser().getLastName()).toLowerCase().contains(filter.toLowerCase())
+        );
+        FilterUtils.populateList(pnBookingsItems, filteredList, ITEM_BOOKING_LIST_FXML, this::initBookingListData);
+    }
+
+    private void filterForumTopics(String filter) {
+        ObservableList<ForumTopic> filteredList = allTopics.filtered(topic ->
+                topic.getTitle().toLowerCase().contains(filter.toLowerCase())
+        );
+        FilterUtils.populateList(pnItemsForum, filteredList, ITEM_FORUMTOPIC_LIST_FXML, this::initForumListData);
+    }
+
+    private void filterConversations(String filter) {
+        ObservableList<Conversation> filteredList = allConversations.filtered(conversation -> {
+            UserController userController = new UserController();
+            User user1 = userController.getById(conversation.getUser1Id());
+            User user2 = userController.getById(conversation.getUser2Id());
+            return (user1.getName() + " " + user1.getLastName() + " " + user2.getName() + " " + user2.getLastName()).toLowerCase().contains(filter.toLowerCase());
+        });
+        FilterUtils.populateList(pnConversationsItems, filteredList, ITEM_CONVERSATION_LIST_FXML, this::initConversationListData);
+    }
+
+    private void filterAccommodations(String filter) {
+        ObservableList<Accommodation> filteredList = allAccommodations.filtered(accommodation ->
+                (accommodation.getAddress() + " " + accommodation.getCity()).toLowerCase().contains(filter.toLowerCase())
+        );
+        FilterUtils.populateList(pnAccommodationItems, filteredList, ITEM_ACCOMMODATION_LIST_FXML, this::initAccommodationListData);
+    }
+
+    private void initUserListData(Object controller, User user, Node node, VBox vbox) {
+        ItemUserListController userListController = (ItemUserListController) controller;
+        userListController.initData(user, userController, node, vbox, this);
+    }
+
+    private void initBookingListData(Object controller, Booking booking, Node node, VBox vbox) {
+        ItemBookingListController bookingListController = (ItemBookingListController) controller;
+        bookingListController.initData(booking, bookingController, node, vbox, this);
+    }
+
+    private void initForumListData(Object controller, ForumTopic forumTopic, Node node, VBox vbox) {
+        ItemForumListController forumListController = (ItemForumListController) controller;
+        forumListController.initData(forumTopic, topicController, node, vbox, this);
+    }
+
+    private void initConversationListData(Object controller, Conversation conversation, Node node, VBox vbox) {
+        ItemConversationListController conversationListController = (ItemConversationListController) controller;
+        conversationListController.initData(conversation, conversationController, node, vbox, this);
+    }
+
+    private void initAccommodationListData(Object controller, Accommodation accommodation, Node node, VBox vbox) {
+        ItemAccommodationListController accommodationListController = (ItemAccommodationListController) controller;
+        accommodationListController.initData(accommodation, accommodationController, node, vbox, this);
+    }
+
+    public void refreshUsers() {
+        allUsers.setAll(userController.getAll());
+        FilterUtils.populateList(pnItems, allUsers, ITEM_USER_LIST_FXML, this::initUserListData);
+        updateUserStatistics();
+    }
+
+    public void refreshBookings() {
+        allBookings.setAll(bookingController.getAllBookings());
+        FilterUtils.populateList(pnBookingsItems, allBookings, ITEM_BOOKING_LIST_FXML, this::initBookingListData);
+        updateBookingStatistics();
+    }
+
+    public void refreshForumTopics() {
+        allTopics.setAll(topicController.getAllTopics());
+        FilterUtils.populateList(pnItemsForum, allTopics, ITEM_FORUMTOPIC_LIST_FXML, this::initForumListData);
+        updateForumStatistics();
+    }
+
+    public void refreshConversations() {
+        allConversations.setAll(conversationController.getAllConversations());
+        FilterUtils.populateList(pnConversationsItems, allConversations, ITEM_CONVERSATION_LIST_FXML, this::initConversationListData);
+        updateConversationStatistics();
+    }
+
+    public void refreshAccommodations() {
+        allAccommodations.setAll(accommodationController.getAllAccommodations());
+        FilterUtils.populateList(pnAccommodationItems, allAccommodations, ITEM_ACCOMMODATION_LIST_FXML, this::initAccommodationListData);
+        updateAccommodationStatistics();
+    }
+
     public void refresh() {
         if (this.currentUser != null) {
             refreshProfile();
         }
 
-        clearPanels();
-
         refreshUsers();
-        refreshForumTopics();
         refreshBookings();
-        refreshAccommodations();
+        refreshForumTopics();
         refreshConversations();
+        refreshAccommodations();
 
         updateStatistics();
     }
+
+
 
     /**
      * Limpia los paneles de la interfaz de usuario.
@@ -234,105 +366,6 @@ public class AdminDashboardController implements Initializable {
         pnBookingsItems.getChildren().clear();
     }
 
-    /**
-     * Refresca la lista de usuarios.
-     */
-    void refreshUsers() {
-        pnItems.getChildren().clear();
-        List<User> users = userController.getAll();
-        for (User user : users) {
-            try {
-                FXMLLoader loaderUsers = new FXMLLoader(getClass().getResource(Constants.ITEM_USER_LIST_FXML));
-                Node node = loaderUsers.load();
-                ItemUserListController controller = loaderUsers.getController();
-                controller.initData(user, userController, node, pnItems, this);
-                pnItems.getChildren().add(node);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        System.out.println("Refrescando usuarios...");
-    }
-
-    /**
-     * Refresca los temas del foro.
-     */
-    void refreshForumTopics() {
-        pnItemsForum.getChildren().clear();
-        List<ForumTopic> topics = topicController.getAllTopics();
-        for (ForumTopic topic : topics) {
-            try {
-                FXMLLoader loaderForumTopics = new FXMLLoader(getClass().getResource(Constants.ITEM_FORUMTOPIC_LIST_FXML));
-                Node node = loaderForumTopics.load();
-                ItemForumListController controller = loaderForumTopics.getController();
-                controller.initData(topic, topicController, node, pnItemsForum, this);
-                pnItemsForum.getChildren().add(node);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        System.out.println("Refrescando foro...");
-    }
-
-    /**
-     * Refresca las reservas.
-     */
-    void refreshBookings() {
-        pnBookingsItems.getChildren().clear();
-        List<Booking> bookings = bookingController.getAllBookings();
-        for (Booking booking : bookings) {
-            try {
-                FXMLLoader loaderBookings = new FXMLLoader(getClass().getResource(Constants.ITEM_BOOKING_LIST_FXML));
-                Node node = loaderBookings.load();
-                ItemBookingListController controller = loaderBookings.getController();
-                controller.initData(booking, bookingController, node, pnBookingsItems, this);
-                pnBookingsItems.getChildren().add(node);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        System.out.println("Refrescando reservas...");
-    }
-
-    /**
-     * Refresca los alojamientos.
-     */
-    void refreshAccommodations() {
-        pnAccommodationItems.getChildren().clear();
-        List<Accommodation> accommodations = accommodationController.getAllAccommodations();
-        for (Accommodation acco : accommodations) {
-            try {
-                FXMLLoader loaderAccommodation = new FXMLLoader(getClass().getResource(Constants.ITEM_ACCOMMODATION_LIST_FXML));
-                Node node = loaderAccommodation.load();
-                ItemAccommodationListController controller = loaderAccommodation.getController();
-                controller.initData(acco, accommodationController, node, pnAccommodationItems, this);
-                pnAccommodationItems.getChildren().add(node);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        System.out.println("Refrescando alojamientos...");
-    }
-
-    /**
-     * Refresca las conversaciones.
-     */
-    void refreshConversations() {
-        pnConversationsItems.getChildren().clear();
-        List<Conversation> conversations = conversationController.getAllConversations();
-        for (Conversation conver : conversations) {
-            try {
-                FXMLLoader loaderConversations = new FXMLLoader(getClass().getResource(Constants.ITEM_CONVERSATION_LIST_FXML));
-                Node node = loaderConversations.load();
-                ItemConversationListController controller = loaderConversations.getController();
-                controller.initData(conver, conversationController, node, pnConversationsItems, this);
-                pnConversationsItems.getChildren().add(node);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        System.out.println("Refrescando conversaciones...");
-    }
 
     /**
      * Actualiza las estadísticas de usuarios, foros, conversaciones, reservas y alojamientos.
@@ -573,7 +606,7 @@ public class AdminDashboardController implements Initializable {
         }
 
         username.setText(currentUser.getName()+" "+currentUser.getLastName());
-        namelabel.setText(currentUser.getName());
+        namelabel.setText(currentUser.getName()+" "+currentUser.getLastName());
         idlabel.setText(String.valueOf(currentUser.getUserId()));
         passwordlabel.setText(currentUser.getPassword());
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");

@@ -22,7 +22,7 @@
          </Label>
       </children>
    </Pane>
-   <VBox alignment="CENTER" layoutX="1.0" layoutY="104.0" prefHeight="745.0" prefWidth="636.0" spacing="10.0" style="-fx-background-color: #edf1ff;">
+   <VBox alignment="CENTER" layoutX="1.0" layoutY="104.0" prefHeight="745.0" prefWidth="636.0" spacing="10.0" style="-fx-background-color: #edf1ff;" translateY="-1.0">
       <padding>
          <Insets left="20.0" right="20.0" />
       </padding>

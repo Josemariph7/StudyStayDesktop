@@ -16,7 +16,6 @@ import javafx.scene.layout.VBox;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
 import javafx.stage.Stage;
@@ -87,22 +86,27 @@ public class ItemAccommodationListController {
         lblPrice.setText("Price: " + accommodation.getPrice().toString());
         lblCapacity.setText("Capacity: " + accommodation.getCapacity());
 
-        // Cargar las fotos del alojamiento
+        // Cargar la primera foto del alojamiento
+        accommodationPhoto.getChildren().clear(); // Limpiar cualquier imagen previa
         if (accommodation.getPhotos() != null && !accommodation.getPhotos().isEmpty()) {
             // Mostrar la primera foto del alojamiento
             AccommodationPhoto photo = accommodation.getPhotos().get(0);
-            Image image = new Image(new ByteArrayInputStream(photo.getPhotoData()));
-            ImageView imageView = new ImageView(image);
-            imageView.setFitWidth(accommodationPhoto.getPrefWidth());
-            imageView.setFitHeight(accommodationPhoto.getPrefHeight());
-            accommodationPhoto.getChildren().add(imageView);
+            if (photo != null && photo.getPhotoData() != null) {
+                Image image = new Image(new ByteArrayInputStream(photo.getPhotoData()));
+                if (image != null && !image.isError()) {
+                    ImageView imageView = new ImageView(image);
+                    imageView.setFitWidth(accommodationPhoto.getPrefWidth());
+                    imageView.setFitHeight(accommodationPhoto.getPrefHeight());
+                    imageView.setPreserveRatio(true); // Añadir esta línea para preservar el aspecto de la imagen
+                    accommodationPhoto.getChildren().add(imageView);
+                } else {
+                    loadDefaultImage();
+                }
+            } else {
+                loadDefaultImage();
+            }
         } else {
-            // Mostrar la imagen predeterminada
-            Image defaultImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(DEFAULT_ACCOMMODATION_PICTURE)));
-            ImageView defaultImageView = new ImageView(defaultImage);
-            defaultImageView.setFitWidth(accommodationPhoto.getPrefWidth());
-            defaultImageView.setFitHeight(accommodationPhoto.getPrefHeight());
-            accommodationPhoto.getChildren().add(defaultImageView);
+            loadDefaultImage();
         }
 
         // Calcular y mostrar la calificación promedio
@@ -123,6 +127,15 @@ public class ItemAccommodationListController {
         setAvailabilityIcon(accommodation.isAvailability());
     }
 
+    private void loadDefaultImage() {
+        Image defaultImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(DEFAULT_ACCOMMODATION_PICTURE)));
+        ImageView defaultImageView = new ImageView(defaultImage);
+        defaultImageView.setFitWidth(accommodationPhoto.getPrefWidth());
+        defaultImageView.setFitHeight(accommodationPhoto.getPrefHeight());
+        defaultImageView.setPreserveRatio(true); // Añadir esta línea para preservar el aspecto de la imagen
+        accommodationPhoto.getChildren().add(defaultImageView);
+    }
+
     /**
      * Maneja la acción de modificar el alojamiento.
      */
@@ -138,7 +151,7 @@ public class ItemAccommodationListController {
             stage.setScene(new Scene(root));
             stage.setUserData(this);
             ModifyAccommodationController modifyController = loader.getController();
-           // dashboard.refreshAccommodations();
+            // dashboard.refreshAccommodations();
             modifyController.btnCancel.setOnAction(event -> {
                 stage.close();
             });
