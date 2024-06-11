@@ -1,3 +1,23 @@
+/*
+ * StudyStay © 2024
+ *
+ * All rights reserved.
+ *
+ * This software and associated documentation files (the "Software") are owned by StudyStay. Unauthorized copying, distribution, or modification of this Software is strictly prohibited.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this Software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * StudyStay
+ * José María Pozo Hidalgo
+ * Email: josemariph7@gmail.com
+ *
+ *
+ */
+
 package com.example.ejemplo.controller;
 
 import com.example.ejemplo.model.*;
@@ -47,7 +67,8 @@ import static java.time.LocalDate.now;
 /**
  * Controlador para el panel de administrador.
  */
-public class AdminDashboardController implements Initializable {
+public class
+AdminDashboardController implements Initializable {
 
     @FXML
     public VBox pnItemsForum;
@@ -312,30 +333,35 @@ public class AdminDashboardController implements Initializable {
     public void refreshUsers() {
         allUsers.setAll(userController.getAll());
         FilterUtils.populateList(pnItems, allUsers, ITEM_USER_LIST_FXML, this::initUserListData);
+        System.out.println("Refreshing Users...");
         updateUserStatistics();
     }
 
     public void refreshBookings() {
         allBookings.setAll(bookingController.getAllBookings());
         FilterUtils.populateList(pnBookingsItems, allBookings, ITEM_BOOKING_LIST_FXML, this::initBookingListData);
+        System.out.println("Refreshing Bookings...");
         updateBookingStatistics();
     }
 
     public void refreshForumTopics() {
         allTopics.setAll(topicController.getAllTopics());
         FilterUtils.populateList(pnItemsForum, allTopics, ITEM_FORUMTOPIC_LIST_FXML, this::initForumListData);
+        System.out.println("Refreshing Topics...");
         updateForumStatistics();
     }
 
     public void refreshConversations() {
         allConversations.setAll(conversationController.getAllConversations());
         FilterUtils.populateList(pnConversationsItems, allConversations, ITEM_CONVERSATION_LIST_FXML, this::initConversationListData);
+        System.out.println("Refreshing Conversations...");
         updateConversationStatistics();
     }
 
     public void refreshAccommodations() {
         allAccommodations.setAll(accommodationController.getAllAccommodations());
         FilterUtils.populateList(pnAccommodationItems, allAccommodations, ITEM_ACCOMMODATION_LIST_FXML, this::initAccommodationListData);
+        System.out.println("Refreshing Accommodations...");
         updateAccommodationStatistics();
     }
 
@@ -608,10 +634,11 @@ public class AdminDashboardController implements Initializable {
         username.setText(currentUser.getName()+" "+currentUser.getLastName());
         namelabel.setText(currentUser.getName()+" "+currentUser.getLastName());
         idlabel.setText(String.valueOf(currentUser.getUserId()));
-        passwordlabel.setText(currentUser.getPassword());
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formattedDate = currentUser.getRegistrationDate().format(formatter);
         datelabel.setText(formattedDate);
+        formattedDate = currentUser.getBirthDate().format(formatter);
+        txtBirthDate.setText(formattedDate);
         emaillabel.setText(currentUser.getEmail());
         phonelabel.setText(currentUser.getPhone());
 
