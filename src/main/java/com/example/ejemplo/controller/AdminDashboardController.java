@@ -1094,7 +1094,6 @@ AdminDashboardController implements Initializable {
                     alert.setContentText("Error creating a backup. Output code: " + exitCode);
                     alert.show();
                 }
-                // removeCommentsFromFile(backupPath);
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
             }
