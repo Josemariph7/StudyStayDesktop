@@ -101,9 +101,6 @@ public class ModifyAccommodationController {
         if (!SERVICES_PATTERN.matcher(services).matches()) {
             errors.append("The services contain invalid characters.\n");
         }
-        if (!DESCRIPTION_PATTERN.matcher(description).matches()) {
-            errors.append("The description contains invalid characters.\n");
-        }
 
         if (errors.length() > 0) {
             showError(errors.toString());

@@ -46,7 +46,7 @@
       </HBox>
       <HBox prefHeight="140.0" prefWidth="558.0">
          <children>
-            <TextArea fx:id="txtAreaDescription" maxWidth="567.0" prefHeight="140.0" prefWidth="567.0" promptText="Description" style="-fx-background-color: transparent; -fx-border-color: #151928;" translateY="33.0" />
+            <TextArea fx:id="txtAreaDescription" maxWidth="567.0" prefHeight="140.0" prefWidth="567.0" promptText="Description" style="-fx-background-color: transparent; -fx-border-color: #151928;" translateY="33.0" wrapText="true" />
          </children>
       </HBox>
         <HBox alignment="CENTER" prefHeight="37.0" prefWidth="544.0" spacing="10" translateY="64.0">

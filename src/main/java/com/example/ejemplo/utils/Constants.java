@@ -40,10 +40,10 @@ public class Constants {
     public static final String EMPTY_CODE = "To register an administrator you need an admin code";
 
     // Patrones de validación
-    public static final String EMAIL_REGEX = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
-    public static final String PASSWORD_REGEX = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$";
-    public static final String PHONE_REGEX = "^\\[0-9]{9}$";
-    public static final String NAME_REGEX = "^[\\p{L}]+(?: [\\p{L}]+)+$";
+    public static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+    public static final String PASSWORD_REGEX = "^(?=.*[0-9])(?=.*[A-Z]).{8,}$"; // Min 8 caracteres, al menos 1 número y 1 mayúscula
+    public static final String PHONE_REGEX = "^\\d{9}$"; // 9 dígitos
+    public static final String NAME_REGEX = "^[A-Za-záéíóúÁÉÍÓÚñÑ ]{2,}$"; // Solo letras y espacios, min 2 caracteres
 
     // Duraciones
     public static final double TRANSITION_TIME = 0.8;

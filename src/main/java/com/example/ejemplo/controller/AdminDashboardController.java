@@ -730,7 +730,6 @@ AdminDashboardController implements Initializable {
                 username.setText(currentUser.getName());
                 namelabel.setText(currentUser.getName());
                 idlabel.setText(String.valueOf(currentUser.getUserId()));
-                passwordlabel.setText(currentUser.getPassword());
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 String formattedDate = currentUser.getRegistrationDate().format(formatter);
                 datelabel.setText(formattedDate);

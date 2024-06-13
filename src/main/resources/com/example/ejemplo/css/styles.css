@@ -21,6 +21,7 @@
 }
 .tf_box{
     -fx-background-color: transparent;
+    -fx-text-fill:whitesmoke ;
     -fx-border-color: #DEDEE4;
     -fx-border-width: 0px 0px 1px 0px;
 }

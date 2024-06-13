@@ -1,23 +1,3 @@
-/*
- * StudyStay © 2024
- *
- * All rights reserved.
- *
- * This software and associated documentation files (the "Software") are owned by StudyStay. Unauthorized copying, distribution, or modification of this Software is strictly prohibited.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this Software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- *
- * StudyStay
- * José María Pozo Hidalgo
- * Email: josemariph7@gmail.com
- *
- *
- */
-
 package com.example.ejemplo.controller;
 
 import com.example.ejemplo.model.User;
@@ -46,16 +26,6 @@ public class SignUpController implements Initializable {
     private final Pattern phonePattern = Pattern.compile(Constants.PHONE_REGEX);
     private final Pattern namePattern = Pattern.compile(Constants.NAME_REGEX);
 
-    /*
-    *
-    *
-    * REVISAR EL TEMA DE PATTERNS PARA EL RESTO DE CAMPOS DEL REGISTRO
-    * MIRAR TAMBIEN Y CAMBIAR EL PATTER DE APELLIDOS QUE ANTES ERA SOLO 1
-    * TAMBIEN EL TEMA DE LOS MENSAJES DE ERROR
-    *
-    *
-    * */
-
     @FXML
     public TextField nameField;
     @FXML
@@ -80,22 +50,14 @@ public class SignUpController implements Initializable {
 
     public UserController userController = new UserController();
 
-    /**
-     * Método de inicialización del controlador.
-     * Establece las opciones del ChoiceBox para el rol del usuario.
-     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        String[] genders={"Male", "Female", "Other"};
+        String[] genders = {"Male", "Female", "Other"};
         GenderChoiceBox.getItems().addAll(genders);
         GenderChoiceBox.setValue("Gender");
-        birthDatePicker.setValue(LocalDate.now().atStartOfDay().toLocalDate());
-        System.out.println(birthDatePicker.getValue());
+        birthDatePicker.setValue(LocalDate.now());
     }
 
-    /**
-     * Método para registrar un nuevo usuario.
-     */
     @FXML
     public void signUp() {
         String email = signupEmailField.getText();
@@ -103,51 +65,46 @@ public class SignUpController implements Initializable {
         String surnames = surnamesField.getText();
         StringBuilder errors = new StringBuilder();
 
-        //ESTO PUEDE SER NULL, ESTABLECER UNA FECHA PREDETERMINADA O ALGO
-        System.out.println(birthDatePicker.getValue());
-        LocalDate birthDate = null;
-        if (birthDatePicker.getValue() != null) {
-            birthDate = birthDatePicker.getValue().atStartOfDay().toLocalDate();
-        } else {
-            errors.append("Debe establacer una fecha de nacimiento válida.\n");
-        }
-        if (birthDate.isAfter(LocalDate.now())){
-            errors.append("Debe establacer una fecha de nacimiento válida.\n");
+        LocalDate birthDate = birthDatePicker.getValue();
+        if (birthDate == null || birthDate.isAfter(LocalDate.now())) {
+            errors.append("You must set a valid birth date.\n");
         }
 
-        User.Gender gender=null;
-        if(GenderChoiceBox.getValue()!=null){
-            if(Objects.equals(GenderChoiceBox.getValue(), "Male")){
-                gender=User.Gender.MALE;
-            }else {
-                if (Objects.equals(GenderChoiceBox.getValue(), "Female")) {
-                    gender = User.Gender.FEMALE;
-                } else {
-                    if (Objects.equals(GenderChoiceBox.getValue(), "Other")) {
-                        gender = User.Gender.OTHER;
-                    }
-                }
-            }
+        User.Gender gender = null;
+        switch (GenderChoiceBox.getValue()) {
+            case "Male":
+                gender = User.Gender.MALE;
+                break;
+            case "Female":
+                gender = User.Gender.FEMALE;
+                break;
+            case "Other":
+                gender = User.Gender.OTHER;
+                break;
+            default:
+                errors.append("You must select a valid gender.\n");
+                break;
         }
-        String dni= dniField.getText();
-        boolean isAdmin= adminCheckbox.isSelected() ;
+
+        String dni = dniField.getText();
+        boolean isAdmin = adminCheckbox.isSelected();
         String password = passwordField.getText();
         String phone = phoneField.getText();
 
         // Validación de campos
-        if (!validateEmail(email)) errors.append("Formato de email inválido.\n");
-        if (!validateName(name)) errors.append("El nombre debe contener al menos un apellido y solo caracteres válidos.\n");
-        if (!validatePassword(password)) errors.append("La contraseña debe tener más de 8 caracteres y contener al menos una letra mayúscula y un número.\n");
-        if (!validatePhone(phone)) errors.append("El teléfono debe tener 9 dígitos.\n");
+        if (!validateEmail(email)) errors.append("Invalid email format.\n");
+        if (!validateName(name)) errors.append("The name must contain only valid characters.\n");
+        if (!validatePassword(password)) errors.append("The password must be more than 8 characters long and contain at least one uppercase letter and one number.\n");
+        if (!validatePhone(phone)) errors.append("The phone number must have 9 digits.\n");
 
-        if (!errors.isEmpty()) {
+        if (errors.length() > 0) {
             showError(errors.toString());
             return;
         }
 
         // Verifica que todos los campos estén completos
-        if (email.isEmpty() || name.isEmpty() || password.isEmpty() || phone.isEmpty()) {
-            showError("Por favor, rellena todos los campos.");
+        if (email.isEmpty() || name.isEmpty() || password.isEmpty() || phone.isEmpty() || dni.isEmpty()) {
+            showError("Please fill in all the fields.");
             return;
         }
 
@@ -156,47 +113,26 @@ public class SignUpController implements Initializable {
                 showError(Constants.USER_EXISTS_ERROR);
                 return;
             }
-            if (adminCheckbox.isSelected()&& !Objects.equals(adminCodeField.getText(), Constants.ADMINCODE)) {
+            if (isAdmin && !Objects.equals(adminCodeField.getText(), Constants.ADMINCODE)) {
                 showError(Constants.ADMIN_ERROR);
                 return;
             }
-            if (adminCheckbox.isSelected()&& !Objects.equals(adminCodeField.getText(), "")) {
-                showError(Constants.EMPTY_CODE);
-                return;
-            }
+
             // Crea un nuevo objeto de usuario y lo guarda en la base de datos
-            User user = new User(name,surnames,email,password,phone,birthDate, LocalDateTime.now(),gender,dni,null,null,isAdmin);
+            User user = new User(name, surnames, email, password, phone, birthDate, LocalDateTime.now(), gender, dni, null, null, isAdmin);
             userController.create(user);
-            showSuccess("Registro exitoso.");
-            nameField.setText("");
-            signupEmailField.setText("");
-            passwordField.setText("");
-            surnamesField.setText("");
-            phoneField.setText("");
-            dniField.setText("");
-            birthDatePicker.setValue(null);
-            GenderChoiceBox.setValue("");
+            showSuccess("Registration successful.");
+            clearFields();
         } catch (SQLException e) {
             showError(Constants.DATABASE_ERROR + e.getMessage());
         }
     }
 
-    /**
-     * Método para verificar si un usuario ya existe en la base de datos.
-     */
     private boolean userExists(String email) throws SQLException {
         List<User> users = userController.getAll();
-        for (User user : users) {
-            if (user.getEmail().equals(email)) {
-                return true;
-            }
-        }
-        return false;
+        return users.stream().anyMatch(user -> user.getEmail().equals(email));
     }
 
-    /**
-     * Métodos de validación para los diferentes campos del formulario.
-     */
     private boolean validateEmail(String email) {
         Matcher matcher = emailPattern.matcher(email);
         return matcher.matches();
@@ -217,9 +153,6 @@ public class SignUpController implements Initializable {
         return matcher.matches();
     }
 
-    /**
-     * Método para mostrar un mensaje de error.
-     */
     private void showError(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
@@ -228,20 +161,27 @@ public class SignUpController implements Initializable {
         alert.showAndWait();
     }
 
-    /**
-     * Método para mostrar un mensaje de éxito.
-     */
     private void showSuccess(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Éxito");
+        alert.setTitle("Success");
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
     }
 
-    /**
-     * Método para cerrar la aplicación.
-     */
+    private void clearFields() {
+        nameField.setText("");
+        signupEmailField.setText("");
+        passwordField.setText("");
+        surnamesField.setText("");
+        phoneField.setText("");
+        dniField.setText("");
+        birthDatePicker.setValue(null);
+        GenderChoiceBox.setValue("Gender");
+        adminCodeField.setText("");
+        adminCheckbox.setSelected(false);
+    }
+
     @FXML
     private void closeApp() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -255,10 +195,6 @@ public class SignUpController implements Initializable {
     }
 
     public void handleDisable(ActionEvent actionEvent) {
-        if(adminCheckbox.isSelected()){
-            adminCodeField.setVisible(true);
-        }else{
-            adminCodeField.setVisible(false);
-        }
+        adminCodeField.setVisible(adminCheckbox.isSelected());
     }
 }

@@ -13,12 +13,12 @@
 
 <HBox fx:id="itemC" alignment="CENTER_LEFT" centerShape="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="152.0" prefWidth="1145.0" style="-fx-background-color: #edf1ff; -fx-background-radius: 5;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ejemplo.controller.ItemAccommodationListController">
     <children>
-      <Pane prefHeight="152.0" prefWidth="149.0">
+      <Pane prefHeight="152.0" prefWidth="163.0">
          <children>
-            <Pane fx:id="accommodationPhoto" layoutX="8.0" layoutY="9.0" prefHeight="134.0" prefWidth="141.0" />
+            <Pane fx:id="accommodationPhoto" layoutX="8.0" layoutY="9.0" prefHeight="141.0" prefWidth="141.0" translateX="-2.0" translateY="-3.0" />
          </children>
       </Pane>
-      <VBox alignment="CENTER_RIGHT" prefHeight="152.0" prefWidth="505.0" translateX="51.0">
+      <VBox alignment="CENTER_RIGHT" prefHeight="152.0" prefWidth="505.0" translateX="30.0">
          <children>
             <HBox prefHeight="46.0" prefWidth="91.0" translateX="10.0" translateY="-13.0">
                <children>
@@ -74,7 +74,7 @@
                      </font></Label>
                   <Pane prefHeight="33.0" prefWidth="64.0">
                      <children>
-                        <ImageView fitHeight="18.0" fitWidth="18.0" layoutX="-3.0" layoutY="-11.0" translateX="-94.0" translateY="18.0">
+                        <ImageView fitHeight="18.0" fitWidth="18.0" layoutX="-3.0" layoutY="-11.0" translateX="-88.0" translateY="18.0">
                            <image>
                               <Image url="@../multimedia/icons8-estrella-48.png" />
                            </image>
@@ -85,17 +85,17 @@
          </children>
       </VBox>
       <TextArea fx:id="areaDescription" editable="false" maxHeight="125.0" maxWidth="293.0" prefHeight="125.0" prefWidth="293.0" promptText="Description" style="-fx-background-color: #edf1ff;" translateX="60.0" wrapText="true" />
-        <Button fx:id="btnModifyAccommodation" mnemonicParsing="false" onAction="#handleModify" prefHeight="32.0" prefWidth="75.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Modify" translateX="147.0" translateY="-48.0">
+        <Button fx:id="btnModifyAccommodation" mnemonicParsing="false" onAction="#handleModify" prefHeight="32.0" prefWidth="92.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Modify" translateX="150.0" translateY="-48.0">
             <font>
                 <Font size="14.0" />
             </font>
         </Button>
-      <Button fx:id="btnDetailedAccommodation" mnemonicParsing="false" onAction="#handleDetails" prefHeight="32.0" prefWidth="109.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Show Details" translateX="48.0" translateY="-1.0">
+      <Button fx:id="btnDetailedAccommodation" mnemonicParsing="false" onAction="#handleDetails" prefHeight="32.0" prefWidth="120.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Show Details" translateX="48.0" translateY="-1.0">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-        <Button fx:id="btnDeleteAccommodation" mnemonicParsing="false" onAction="#handleDelete" prefHeight="32.0" prefWidth="70.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Delete" translateX="-14.0" translateY="46.0">
+        <Button fx:id="btnDeleteAccommodation" mnemonicParsing="false" onAction="#handleDelete" prefHeight="32.0" prefWidth="77.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" text="Delete" translateX="-14.0" translateY="46.0">
             <font>
                 <Font size="14.0" />
             </font>

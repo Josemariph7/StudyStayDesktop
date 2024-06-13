@@ -30,7 +30,7 @@
                         <Insets bottom="20.0" top="26.0" />
                     </padding>
                 </StackPane>
-                <Label fx:id="username" prefHeight="77.0" prefWidth="225.0" style="-fx-alignment: center;" textFill="#e7e5e5" translateY="-27.0" wrapText="true">
+                <Label fx:id="username" prefHeight="77.0" prefWidth="225.0" style="-fx-alignment: center;" textAlignment="CENTER" textFill="#e7e5e5" translateY="-27.0" wrapText="true">
                     <VBox.margin>
                         <Insets bottom="20.0" />
                     </VBox.margin>

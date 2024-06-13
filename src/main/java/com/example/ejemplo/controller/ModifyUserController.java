@@ -75,21 +75,17 @@ public class ModifyUserController {
         String email = txtEmail.getText();
         String name = txtName.getText();
         String surnames = txtApellidos.getText();
-        String dni = txtDNI.getText();
         String password = txtPassword.getText();
         String phone = txtPhone.getText();
         StringBuilder errors = new StringBuilder();
 
         // Verifica los campos obligatorios
-        if (name.isEmpty() || surnames.isEmpty() || email.isEmpty() || password.isEmpty() || phone.isEmpty() || dni.isEmpty() || genderChoiceBox.getValue() == null) {
+        if (name.isEmpty() || surnames.isEmpty() || email.isEmpty() || password.isEmpty() || phone.isEmpty() || genderChoiceBox.getValue() == null) {
             showFieldError("All fields are required.");
             return;
         }
 
         // Verifica el formato de los campos
-        if (!DNI_PATTERN.matcher(dni).matches()) {
-            errors.append("The DNI format is invalid.\n");
-        }
         if (!EMAIL_PATTERN.matcher(email).matches()) {
             errors.append("The email format is invalid.\n");
         }
@@ -144,7 +140,6 @@ public class ModifyUserController {
         user.setPhone(phone);
         user.setGender(gender);
         user.setLastName(surnames);
-        user.setDni(dni);
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText(null);
@@ -207,7 +202,6 @@ public class ModifyUserController {
             txtPhone.setText(user.getPhone());
             txtPassword.setText(user.getPassword());
             txtApellidos.setText(user.getLastName());
-            txtDNI.setText(user.getDni());
         }
     }
 

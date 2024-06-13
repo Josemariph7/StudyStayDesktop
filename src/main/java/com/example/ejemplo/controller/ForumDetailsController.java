@@ -1,23 +1,3 @@
-/*
- * StudyStay © 2024
- *
- * All rights reserved.
- *
- * This software and associated documentation files (the "Software") are owned by StudyStay. Unauthorized copying, distribution, or modification of this Software is strictly prohibited.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this Software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- *
- * StudyStay
- * José María Pozo Hidalgo
- * Email: josemariph7@gmail.com
- *
- *
- */
-
 package com.example.ejemplo.controller;
 
 import com.example.ejemplo.model.ForumTopic;
@@ -30,9 +10,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 
@@ -56,6 +37,9 @@ public class ForumDetailsController {
             "#FF5733", "#33FF57", "#3357FF", "#FF33A1", "#A133FF", "#33FFD5",
             "#FFD733", "#C70039", "#900C3F", "#581845"
     };
+
+    // Mapa para almacenar los colores asignados a cada usuario
+    private Map<Integer, String> userColors = new HashMap<>();
 
     public void initData(ForumTopic forumTopic, ForumTopicController forumTopicController, AdminDashboardController dashboard) {
         this.forumTopicController = forumTopicController;
@@ -100,8 +84,12 @@ public class ForumDetailsController {
                     UserController userController = new UserController();
                     User author = userController.getById(comment.getAuthor().getUserId());
                     userName.setText(author.getName() + " " + author.getLastName());
-                    String color = getRandomColor();
+
+                    // Obtener o asignar color aleatorio al usuario
+                    int userId = Math.toIntExact(author.getUserId());
+                    String color = userColors.computeIfAbsent(userId, k -> getRandomColor());
                     userName.setStyle("-fx-fill: " + color + "; -fx-font-weight: bold;"); // Estilo para el nombre del usuario
+
                     commentContent.setText(comment.getContent());
                     commentContent.setStyle("-fx-fill: black;"); // Estilo para el contenido del comentario
                     dateTime.setText(comment.getDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
@@ -176,4 +164,3 @@ public class ForumDetailsController {
         }
     }
 }
-
