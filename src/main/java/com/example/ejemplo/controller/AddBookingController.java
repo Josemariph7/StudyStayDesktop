@@ -26,6 +26,8 @@ import com.example.ejemplo.model.User;
 import com.example.ejemplo.utils.Constants;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -117,7 +119,6 @@ public class AddBookingController {
             long currentBookings = bookings.stream()
                     .filter(b -> b.getAccommodation().getAccommodationId().equals(accommodationObj.getAccommodationId()))
                     .count();
-
             if (currentBookings >= accommodationObj.getCapacity()) {
                 showError("This accommodation is fully booked.");
                 return;
@@ -137,6 +138,7 @@ public class AddBookingController {
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 bookingController.createBooking(booking);
                 accommodationObj.getTenants().add(booking.getUser());
+                System.out.println(accommodationObj.getTenants().toString());
                 AdminDashboardController itemCtrl;
                 itemCtrl = (AdminDashboardController) btnAccept.getScene().getWindow().getUserData();
                 itemCtrl.refreshBookings();

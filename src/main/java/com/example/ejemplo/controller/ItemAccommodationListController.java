@@ -125,6 +125,17 @@ public class ItemAccommodationListController {
         areaDescription.setText(accommodation.getDescription());
 
         // Establecer el ícono de disponibilidad
+        BookingController bookingController = new BookingController();
+        List<Booking> bookings = bookingController.getAllBookings();
+        int counter=0;
+        for (Booking book : bookings) {
+            if (Objects.equals(book.getAccommodation().getAccommodationId(), accommodation.getAccommodationId())) {
+                counter++;
+            }
+        }
+        if(counter>=accommodation.getCapacity()){
+            accommodation.setAvailability(false);
+        }
         setAvailabilityIcon(accommodation.isAvailability());
     }
 
