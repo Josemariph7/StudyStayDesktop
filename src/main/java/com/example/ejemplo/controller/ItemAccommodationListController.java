@@ -215,6 +215,10 @@ public class ItemAccommodationListController {
             e.printStackTrace();
             System.err.println("Error: Unable to load availability icon. Check the file path.");
         }
+        if(isAvailable==false){
+            accommodation.setAvailability(false);
+            accommodationController.updateAccommodation(accommodation);
+        }
     }
 
     /**
