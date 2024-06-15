@@ -151,27 +151,6 @@ public class AccommodationDAO {
             if (rowsAffected == 0) {
                 return false;
             }
-/*
-            // Eliminamos las fotos antiguas asociadas al alojamiento
-            String deletePhotosSql = "DELETE FROM AccommodationPhotos WHERE AccommodationId=?";
-            try (PreparedStatement deleteStatement = connection.prepareStatement(deletePhotosSql)) {
-                deleteStatement.setLong(1, accommodation.getAccommodationId());
-                deleteStatement.executeUpdate();
-            }
-
-            // Ahora, insertamos las fotos asociadas al alojamiento
-            List<AccommodationPhoto> photoList = accommodation.getPhotos();
-            if (photoList != null && !photoList.isEmpty()) {
-                for (AccommodationPhoto photo : photoList) {
-                    String insertPhotoSql = "INSERT INTO AccommodationPhotos (AccommodationId, Photo) VALUES (?, ?)";
-                    try (PreparedStatement photoStatement = connection.prepareStatement(insertPhotoSql)) {
-                        photoStatement.setLong(1, accommodation.getAccommodationId());
-                        photoStatement.setBytes(2, photo.getPhotoData());
-                        photoStatement.executeUpdate();
-                    }
-                }
-            }
-*/
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -244,14 +223,6 @@ public class AccommodationDAO {
         accommodation.setServices(resultSet.getString("Services"));
         accommodation.setAvailability(resultSet.getBoolean("Availability"));
         accommodation.setRating(resultSet.getDouble("Rating"));
-
-        // Mapeo de las fotos del alojamiento
-        //List<AccommodationPhoto> photoList = getPhotosForAccommodation(accommodation.getAccommodationId()); // Llamamos al método estático getPhotosForAccommodation
-        //accommodation.setPhotos(photoList);
-
-        // Mapeo de las reseñas del alojamiento
-        //List<AccommodationReview> reviews = getReviewsByAccommodation(accommodation.getAccommodationId());
-        //accommodation.setReviews(reviews);
 
         return accommodation;
     }
