@@ -2,7 +2,7 @@
 
 Aplicación de escritorio que forma parte de mi proyecto final.
 
-## Documentación
+## Documentación 
 
 [Manual Programador](https://github.com/Josemariph7/StudyStayDesktop/blob/master/ManualProgramador.pdf)
 <br></br>
